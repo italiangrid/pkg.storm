@@ -1,11 +1,10 @@
 FROM  italiangrid/pkg.base:centos6
 
 ENV BUILD_NAME storm-backend-server
-ENV BUILD_REPO git://github.com/italiangrid/storm-backend-server
+ENV BUILD_REPO git://github.com/italiangrid/storm
 ENV BUILD_TAG develop
 ENV PKG_REPO git://github.com/italiangrid/pkg.storm.git
 ENV PKG_TAG master
 ENV PKG_SPEC_FILE storm-backend-server/rpm/storm-backend-server/storm-backend-server.spec
-ENV TARBALL_VERSION_REQUIRED 1
 
 USER build

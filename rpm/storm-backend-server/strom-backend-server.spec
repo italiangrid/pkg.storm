@@ -1,20 +1,21 @@
 ## Turn off meaningless jar repackaging (works only on SL6)
 %define __jar_repack 0
 
-%global release_version 1
+%global base_version 1.11.11
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
-%define release_ 0.build%{build_number}%{?dist}
+%define release_version 0.build.%{build_number}
 %else
-%define release_  %{release_version}%{?dist}
+%define release_version %{base_release}
 %endif
 
 %define _modulename backend-server
 %define prefixname storm
 
 Name:    storm-backend-server
-Version: 1.11.11
-Release: %{release_}
+Version: %{base_version}
+Release: %{base_release}
 Summary: The StoRM backend server
 
 Group: Applications/File

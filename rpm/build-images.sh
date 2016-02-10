@@ -1,6 +1,6 @@
 #!/bin/bash
 
-components="storm-backend-server"
+components="storm-webdav storm-backend-server"
 
 for c in ${components}; do
   pushd $c
