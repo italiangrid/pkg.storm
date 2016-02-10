@@ -51,7 +51,7 @@ This package provides the StoRM WebDAV server.
 %setup -q -n %{name}
 
 %build
-mvn -s mirror-settings.xml -DskipTests -U clean package
+mvn -DskipTests -U clean package
 
 %install
 rm -rf $RPM_BUILD_ROOT
