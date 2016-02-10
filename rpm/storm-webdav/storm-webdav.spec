@@ -22,7 +22,7 @@ Summary: The StoRM WebDAV server
 Group: Applications/File
 License:  ASL 2.0
 Url: https://github.com/italiangrid/storm-webdav
-Source:    %{name}.tar.gz
+Source:    %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch: noarch
