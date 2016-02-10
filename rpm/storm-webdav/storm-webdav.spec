@@ -22,7 +22,7 @@ Summary: The StoRM WebDAV server
 Group: Applications/File
 License:  ASL 2.0
 Url: https://github.com/italiangrid/storm-webdav
-Source:    %{name}-%{version}.tar.gz
+Source:    %{name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch: noarch
@@ -48,7 +48,7 @@ IBM and Lustre from SUN.
 This package provides the StoRM WebDAV server.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q -n %{name}
 
 %build
 mvn -s mirror-settings.xml -DskipTests -U clean package
