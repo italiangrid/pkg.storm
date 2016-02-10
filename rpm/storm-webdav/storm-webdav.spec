@@ -48,7 +48,7 @@ IBM and Lustre from SUN.
 This package provides the StoRM WebDAV server.
 
 %prep
-%setup -q -n %{name}
+%setup -q -n %{name}-%{version}
 
 %build
 mvn -s mirror-settings.xml -DskipTests -U clean package
