@@ -5,6 +5,6 @@ ENV BUILD_REPO git://github.com/italiangrid/storm
 ENV BUILD_TAG develop
 ENV PKG_REPO git://github.com/italiangrid/pkg.storm.git
 ENV PKG_TAG master
-ENV PKG_SPEC_FILE storm/rpm/storm-backend-server/storm-backend-server.spec
+ENV PKG_SPEC_FILE storm-backend-server/rpm/storm-backend-server/storm-backend-server.spec
 
 USER build
