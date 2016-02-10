@@ -1,0 +1,10 @@
+FROM  italiangrid/pkg.base:centos7
+
+ENV BUILD_NAME storm-srm-client
+ENV BUILD_REPO git://github.com/italiangrid/storm-client
+ENV BUILD_TAG develop
+ENV PKG_REPO git://github.com/italiangrid/pkg.storm.git
+ENV PKG_TAG master
+ENV PKG_SPEC_FILE storm-srm-client/rpm/storm-client/storm-srm-client.spec
+
+USER build

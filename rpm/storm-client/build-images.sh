@@ -1,0 +1,9 @@
+#!/bin/bash
+set -ex
+
+IMAGE_TAG=italiangrid/pkg.storm-storm-client
+tags=${tags:-"centos6 centos7"}
+
+for t in ${tags}; do
+  docker build -t ${IMAGE_TAG}:${t} -f Dockerfile.${t} .
+done
