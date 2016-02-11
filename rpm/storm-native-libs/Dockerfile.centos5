@@ -11,17 +11,6 @@ RUN yum -y install pkgconfig \
   lcmaps-without-gsi-devel \
   lcmaps-interface
 
-  BuildRequires: libtool
-  BuildRequires: pkgconfig
-  BuildRequires: apache-maven
-  BuildRequires: jpackage-utils
-  BuildRequires: swig
-  BuildRequires: libacl-devel
-  BuildRequires: lcmaps-without-gsi-devel
-  BuildRequires: lcmaps-interface
-  BuildRequires: java-1.6.0-openjdk-devel
-  BuildRequires: gpfs.base >= 3.3
-
 ENV BUILD_NAME storm-native-libs
 ENV BUILD_REPO git://github.com/italiangrid/storm-native-libs
 ENV BUILD_TAG develop

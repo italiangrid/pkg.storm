@@ -101,7 +101,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 popd
 
 install -dm 755 $RPM_BUILD_ROOT%{_javadir}/storm-backend-server
-install -m 644 target/storm-native-interface-%{pom_version}.jar \
+install -m 644 target/storm-native-interface-%{base_version}.jar \
     $RPM_BUILD_ROOT%{_javadir}/storm-backend-server
 
 # Move libraries
@@ -124,7 +124,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files java
 %defattr(-,root,root,-)
-%{_javadir}/storm-backend-server/storm-native-interface-%{pom_version}.jar
+%{_javadir}/storm-backend-server/storm-native-interface-%{base_version}.jar
 
 %files gpfs
 %defattr(-,root,root,-)
