@@ -22,17 +22,17 @@
 %define release_version %{base_release}
 %endif
 
-Name:           storm-srm-client
-Version:        %{base_version}
-Release:	      %{release_version}%{?dist}
-Vendor:         EMI
-License:        ASL 2.0
-URL:            https://github.com/italiangrid/storm-client.git
-Source: 	      %{name}.tar.gz
-Group:          Applications/System
-AutoReqProv:    yes
-BuildRoot: 	    %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-Summary:        Provides the the StoRM SRM v2.2 clients
+Name: storm-srm-client
+Version: %{base_version}
+Release: %{release_version}%{?dist}
+Vendor: EMI
+License: ASL 2.0
+URL: https://github.com/italiangrid/storm-client.git
+Source: %{name}.tar.gz
+Group: Applications/System
+AutoReqProv: yes
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Summary: Provides the the StoRM SRM v2.2 clients
 
 BuildRequires: automake
 BuildRequires: autoconf
@@ -48,9 +48,7 @@ Requires: voms
 Requires: CGSI-gSOAP
 Requires: gsoap
 
-
 %define debug_package %{nil}
-
 
 %description
 This is the installation bundle for the StoRM SRM v2.2 clients.
@@ -64,7 +62,6 @@ interface to a GPFS parallel filesystem.
 ./bootstrap
 ./configure --bindir=/usr/bin --datadir=/usr/share
 make
-
 
 %install
 rm -rf $RPM_BUILD_ROOT

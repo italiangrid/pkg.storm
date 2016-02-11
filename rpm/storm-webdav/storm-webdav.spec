@@ -1,22 +1,20 @@
-## Turn off meaningless jar repackaging 
+## Turn off meaningless jar repackaging
 %define __jar_repack 0
 
-%global release_version 1
+%global base_version 1.11.11
+%global base_release 0
 
-%global pom_version 1.0.4
-%global mvn_settings -s mirror-settings.xml
+%if %{?build_number:1}%{!?build_number:0}
+%define release_version 0.build.%{build_number}
+%else
+%define release_version %{base_release}
+%endif
 
 %global slash_name storm/webdav
 
-%if %{?build_number:1}%{!?build_number:0}
-%define release_ 0.build%{build_number}%{?dist}
-%else
-%define release_ %{release_version}%{?dist}
-%endif
-
 Name:    storm-webdav
-Version: 1.0.4
-Release: %{release_}
+Version: %{base_version}
+Release: %{release_version}%{?dist}
 Summary: The StoRM WebDAV server
 
 Group: Applications/File
@@ -42,8 +40,8 @@ Requires: jpackage-utils
 %description
 StoRM provides an SRM interface to any POSIX filesystem with direct file
 access ("file:" transport protocol), but can take advantage of special
-features of high performance parallel and cluster file systems, as GPFS from 
-IBM and Lustre from SUN. 
+features of high performance parallel and cluster file systems, as GPFS from
+IBM and Lustre from SUN.
 
 This package provides the StoRM WebDAV server.
 

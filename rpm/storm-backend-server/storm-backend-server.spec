@@ -15,13 +15,13 @@
 
 Name:    storm-backend-server
 Version: %{base_version}
-Release: %{base_release}
+Release: %{release_version}%{?dist}
 Summary: The StoRM backend server
 
 Group: Applications/File
 License:  ASL 2.0
 Url: https://github.com/italiangrid/storm
-Source:    %{name}.tar.gz
+Source: %{name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}
 
 BuildArch: noarch
@@ -49,8 +49,8 @@ Requires: storm-native-libs-java >= 1.0.2
 %description
 StoRM provides an SRM interface to any POSIX filesystem with direct file
 access ("file:" transport protocol), but can take advantage of special
-features of high performance parallel and cluster file systems, as GPFS from 
-IBM and Lustre from SUN. 
+features of high performance parallel and cluster file systems, as GPFS from
+IBM and Lustre from SUN.
 
 This package contains the StoRM backend server.
 
@@ -113,7 +113,7 @@ elif [ $1 -gt 1 ] ; then
   # remove old mysql-connector-java jar link
   if [ -L %{_javadir}/%{name}/mysql-connector-java-5.1.12.jar ] ; then
     /bin/unlink %{_javadir}/%{name}/mysql-connector-java-5.1.12.jar
-  fi    
+  fi
   # start the service
   /sbin/service %{name} restart >/dev/null 2>&1 || :
 fi;

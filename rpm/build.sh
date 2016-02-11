@@ -1,10 +1,10 @@
 #!/bin/bash
 set -ex
 
-PLATFORM=${PLATFORM:-centos6}
+PLATFORM=${PLATFORM:-centos7}
 PACKAGES_DIR=${PACKAGES_DIR:-packages}
 MVN_REPO_CONTAINER_NAME=${MVN_REPO_CONTAINER_NAME:-maven-repo}
-COMPONENTS=${COMPONENTS:-"storm-backend-server storm-webdav storm-client"}
+COMPONENTS=${COMPONENTS:-"storm-backend-server storm-client"}
 
 # Create packages dir, if needed
 mkdir -p ${PACKAGES_DIR}
