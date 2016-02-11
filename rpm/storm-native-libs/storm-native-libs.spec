@@ -24,7 +24,7 @@
 
 Name: storm-native-libs
 Version: %{base_version}
-Release: %{release_version}%{?dist}
+Release: %{release_version}
 Summary: The StoRM backend server interface to native libraries
 
 Group: Development/Libraries

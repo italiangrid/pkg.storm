@@ -14,7 +14,7 @@
 
 Name:    storm-webdav
 Version: %{base_version}
-Release: %{release_version}%{?dist}
+Release: %{release_version}
 Summary: The StoRM WebDAV server
 
 Group: Applications/File
