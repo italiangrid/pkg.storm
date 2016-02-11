@@ -1,5 +1,12 @@
 FROM  italiangrid/pkg.base:centos7
 
+RUN yum -y install pkgconfig \
+  globus-gssapi-gsi-devel \
+  globus-gss-assist-devel \
+  gsoap-devel \
+  CGSI-gSOAP-devel \
+  voms
+
 ENV BUILD_NAME storm-srm-client
 ENV BUILD_REPO git://github.com/italiangrid/storm-client
 ENV BUILD_TAG develop
