@@ -1,6 +1,6 @@
 #!/bin/bash
 set -ex
-tags=${tags:-"centos6 centos7"}
+tags=${tags:-"centos5 centos6 centos7"}
 
 IMAGE_TAG=italiangrid/pkg.storm-storm-webdav
 

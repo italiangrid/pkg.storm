@@ -1,11 +1,26 @@
 FROM  italiangrid/pkg.base:centos5
 
+RUN wget --no-check-certificate https://raw.githubusercontent.com/cnaf/ci-puppet-modules/master/modules/puppet-gpfs-repo/files/gpfs.repo -O /etc/yum.repos.d/gpfs.repo
 RUN yum -y install pkgconfig \
   swig \
   libacl-devel \
   gpfs.base \
+  gpfs.docs \
+  gpfs.gpl \
+  gpfs.msg.en_US \
   lcmaps-without-gsi-devel \
   lcmaps-interface
+
+  BuildRequires: libtool
+  BuildRequires: pkgconfig
+  BuildRequires: apache-maven
+  BuildRequires: jpackage-utils
+  BuildRequires: swig
+  BuildRequires: libacl-devel
+  BuildRequires: lcmaps-without-gsi-devel
+  BuildRequires: lcmaps-interface
+  BuildRequires: java-1.6.0-openjdk-devel
+  BuildRequires: gpfs.base >= 3.3
 
 ENV BUILD_NAME storm-native-libs
 ENV BUILD_REPO git://github.com/italiangrid/storm-native-libs

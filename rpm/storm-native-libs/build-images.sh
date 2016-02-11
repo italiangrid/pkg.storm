@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-IMAGE_TAG=italiangrid/pkg.storm-storm-client
+IMAGE_TAG=italiangrid/pkg.storm-storm-native-libs
 tags=${tags:-"centos5 centos6 centos7"}
 
 for t in ${tags}; do
