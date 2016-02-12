@@ -15,7 +15,7 @@
 
 Name:    storm-backend-server
 Version: %{base_version}
-Release: %{release_version}
+Release: %{release_version}.el%{rhel}
 Summary: The StoRM backend server
 
 Group: Applications/File

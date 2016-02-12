@@ -16,7 +16,7 @@
 
 Name: storm-dynamic-info-provider
 Version: %{base_version}
-Release: %{release_version}
+Release: %{release_version}.el%{rhel}
 Summary: The StoRM dynamic info provider component
 
 Group: Development/Libraries

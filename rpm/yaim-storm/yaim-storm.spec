@@ -16,7 +16,7 @@
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
-%define release_version 0.dev.%{build_number}
+%define release_version 0.build.%{build_number}
 %else
 %define release_version %{base_release}
 %endif
@@ -26,7 +26,7 @@
 
 Name:           yaim-storm
 Version:        %{base_version}
-Release:        %{release_version}
+Release:        %{release_version}.el%{rhel}
 Vendor:         EMI
 License:        Apache License
 URL:            http://grid-it.cnaf.infn.it

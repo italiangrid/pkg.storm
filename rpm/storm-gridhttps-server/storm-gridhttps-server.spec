@@ -12,7 +12,7 @@
 
 Name: storm-gridhttps-server
 Version: %{base_version}
-Release: %{release_version}
+Release: %{release_version}.el%{rhel}
 Summary: The StoRM GridHTTPS server
 
 Group: Development/Libraries
