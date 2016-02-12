@@ -29,7 +29,7 @@
 
 Name: 		storm-globus-gridftp-server
 Version: 	%{base_version}
-Release: 	%{release_version}%{?dist}
+Release: 	%{release_version}.el%{rhel}
 
 Vendor:         EMI
 Packager:       Elisabetta Ronchieri <elisabetta.ronchieri@cnaf.infn.it>
