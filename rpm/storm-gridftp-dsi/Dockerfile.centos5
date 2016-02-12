@@ -10,7 +10,7 @@ RUN yum -y install pkgconfig \
 
 ENV BUILD_NAME storm-gridtfp-dsi
 ENV BUILD_REPO git://github.com/italiangrid/storm-gridftp-dsi
-ENV BUILD_TAG develop
+ENV BUILD_TAG GDSI_1.2
 ENV PKG_REPO git://github.com/italiangrid/pkg.storm.git
 ENV PKG_TAG master
 ENV PKG_SPEC_FILE storm-gridftp-dsi/rpm/storm-gridftp-dsi/storm-gridftp-dsi.spec
