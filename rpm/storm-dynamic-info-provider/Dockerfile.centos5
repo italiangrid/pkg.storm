@@ -1,0 +1,13 @@
+FROM  italiangrid/pkg.base:centos5
+
+RUN yum -y install pkgconfig \
+  python2-devel
+
+ENV BUILD_NAME storm-dynamic-info-provider
+ENV BUILD_REPO git://github.com/italiangrid/storm-info-provider
+ENV BUILD_TAG develop
+ENV PKG_REPO git://github.com/italiangrid/pkg.storm.git
+ENV PKG_TAG master
+ENV PKG_SPEC_FILE storm-dynamic-info-provider/rpm/storm-dynamic-info-provider/storm-dynamic-info-provider.spec
+
+USER build
