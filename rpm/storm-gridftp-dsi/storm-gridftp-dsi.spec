@@ -29,12 +29,12 @@
 
 Name: 		storm-globus-gridftp-server
 Version: 	%{base_version}
-Release: 	%{release_version}
+Release: 	%{release_version}%{?dist}
 
 Vendor:         EMI
 Packager:       Elisabetta Ronchieri <elisabetta.ronchieri@cnaf.infn.it>
 License:        Apache License, Version 2.0
-URL: 		https://github.com/italiangrid/storm-gridftp-dsi.git           
+URL: 		https://github.com/italiangrid/storm-gridftp-dsi.git
 
 Source: 	%{name}.tar.gz
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -69,11 +69,11 @@ Requires: globus-gridftp-server-progs
 GridFTP2 DSI calculates checksum on the fly for StoRM
 
 %prep
-%setup -q -n storm-globus-gridftp-server
+%setup -q -n %{name}
 
 %build
 ./bootstrap
-./configure --prefix=/usr --sysconfdir=/etc --datadir=/usr/share --localstatedir=/var   
+./configure --prefix=/usr --sysconfdir=/etc --datadir=/usr/share --localstatedir=/var
 make
 
 %install
@@ -134,7 +134,7 @@ fi
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%files 
+%files
 %defattr(-,root,root)
 %{_sysconfdir}/init.d/storm-globus-gridftp
 %config(noreplace) %attr(644,root,root) %{_sysconfdir}/logrotate.d/storm-globus-gridftp
