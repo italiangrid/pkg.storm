@@ -26,7 +26,7 @@
 
 Name:           yaim-storm
 Version:        %{base_version}
-Release:        %{release_version}.el%{rhel}
+Release:        %{release_version}%{?dist}
 Vendor:         EMI
 License:        Apache License
 URL:            http://grid-it.cnaf.infn.it

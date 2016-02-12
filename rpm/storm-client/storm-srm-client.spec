@@ -24,7 +24,7 @@
 
 Name: storm-srm-client
 Version: %{base_version}
-Release: %{release_version}.el%{rhel}
+Release: %{release_version}%{?dist}
 Vendor: EMI
 License: ASL 2.0
 URL: https://github.com/italiangrid/storm-client.git
