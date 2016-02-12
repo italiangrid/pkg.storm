@@ -4,14 +4,7 @@ set -ex
 PLATFORM=${PLATFORM:-centos6}
 PACKAGES_DIR=${PACKAGES_DIR:-packages}
 MVN_REPO_CONTAINER_NAME=${MVN_REPO_CONTAINER_NAME:-maven-repo}
-COMPONENTS=${COMPONENTS:-"storm-backend-server \
-  storm-webdav \
-  storm-client \
-  storm-native-libs \
-  storm-gridhttps-server \
-  yaim-storm \
-  storm-dynamic-info-provider\
-  storm-gridftp-dsi"}
+COMPONENTS=${COMPONENTS:-"storm-backend-server storm-webdav storm-client storm-gridhttps-server yaim-storm storm-dynamic-info-provider storm-gridftp-dsi"}
 
 # Create packages dir, if needed
 mkdir -p ${PACKAGES_DIR}
