@@ -28,7 +28,7 @@ Packager:       Elisabetta Ronchieri <elisabetta.ronchieri@cnaf.infn.it>
 License:        Apache License
 URL:            https://github.com/italiangrid/storm-frontend
 
-Source: 	%{name}-%{version}.tar.gz
+Source: 	%{name}.tar.gz
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Group:          Applications/System
