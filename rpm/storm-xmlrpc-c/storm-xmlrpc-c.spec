@@ -101,7 +101,7 @@ This package contains some handy XML-RPC demo applications.
 
 %prep
 %setup -q -n %{name}
-rm doc/{INSTALL,configure_doc}
+#rm doc/{INSTALL,configure_doc}
 
 %build
 CFLAGS="${CFLAGS:--O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic}" ; export CFLAGS ;
