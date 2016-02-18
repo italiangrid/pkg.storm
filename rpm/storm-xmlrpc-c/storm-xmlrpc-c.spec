@@ -100,7 +100,7 @@ to a remote server using HTTP, and gets back the response as XML.
 This package contains some handy XML-RPC demo applications.
 
 %prep
-%setup -q
+%setup -q -n %{name}
 rm doc/{INSTALL,configure_doc}
 
 %build
