@@ -2,20 +2,20 @@
 set -ex
 
 PLATFORM=${PLATFORM:-centos6}
-PACKAGES_DIR=${PACKAGES_DIR:-packages}
-MVN_REPO_CONTAINER_NAME=${MVN_REPO_CONTAINER_NAME:-maven-repo}
 COMPONENTS=${COMPONENTS:-"storm-backend-server storm-webdav storm-client storm-gridhttps-server yaim-storm storm-dynamic-info-provider storm-gridftp-dsi"}
 
-# Create packages dir, if needed
-mkdir -p ${PACKAGES_DIR}
+pkg_base_image_name="italiangrid/pkg.base:${PLATFORM}"
 
-# Create stage area data container, if no container is provided
-if [ -z ${STAGE_AREA_CONTAINER_NAME+x} ]; then
-  stage_area_name=$(basename $(mktemp -u -t stage-area-XXXXX))
-  # Create stage area container
-  docker create -v /stage-area --name ${stage_area_name} italiangrid/pkg.base:${PLATFORM}
+if [ -n "${USE_DOCKER_REGISTRY}" ]; then
+  pkg_base_image_name="${DOCKER_REGISTRY_HOST}/${pkg_base_image_name}"
+fi
+
+if [ -z ${MVN_REPO_CONTAINER_NAME+x} ]; then
+  mvn_repo_name=$(basename $(mktemp -u -t mvn-repo-XXXXX))
+  # Create mvn repo container
+  docker create -v /m2-repository --name ${mvn_repo_name} ${pkg_base_image_name}
 else
-  stage_area_name="${STAGE_AREA_CONTAINER_NAME}"
+  mvn_repo_name=${MVN_REPO_CONTAINER_NAME}
 fi
 
 # Run packaging
@@ -27,19 +27,36 @@ for c in ${COMPONENTS}; do
     build_env="${build_env} -e ${line}"
   done < "$c/build-env"
 
-  if [ -n "${BUILD_NUMBER}" ]; then
-    build_env="${build_env} -e BUILD_NUMBER=${BUILD_NUMBER}"
+  if [ -n "${PKG_BUILD_NUMBER}" ]; then
+    build_env="${build_env} -e BUILD_NUMBER=${PKG_BUILD_NUMBER}"
   fi
 
-  volumes_conf="-v ${PACKAGES_DIR}:/packages:rw"
-
-  if [ -n "${PKG_REPO_DIR}" ]; then
-    volumes_conf="${volumes_conf} -v ${PKG_REPO_DIR}:/pkg-repo:ro"
-    build_env="${build_env} -e PKG_REPO=file:///pkg-repo"
+  if [ -n "${PKG_PACKAGES_DIR}" ]; then
+    build_env="${build_env} -e PKG_PACKAGES_DIR=${PKG_PACKAGES_DIR}"
   fi
 
-  docker run -ti --volumes-from ${stage_area_name} --volumes-from ${MVN_REPO_CONTAINER_NAME} \
+  if [ -n "${PKG_STAGE_DIR}" ]; then
+    build_env="${build_env} -e PKG_STAGE_DIR=${PKG_STAGE_DIR}"
+  fi
+
+  if [ -n "${PKG_REPO}" ]; then
+    build_env="${build_env} -e PKG_REPO=${PKG_REPO}"
+  fi
+
+  if [ -n "${DATA_CONTAINER_NAME}" ]; then
+    volumes_conf="${volumes_conf} --volumes-from ${DATA_CONTAINER_NAME}"
+  fi
+
+  if [ -n "${STAGE_ALL}" ]; then
+      build_env="${build_env} -e PKG_STAGE_RPMS=1"
+  fi
+
+  if [ -n "${PKG_TAG}" ]; then
+    build_env="${build_env} -e PKG_TAG=${PKG_TAG}"
+  fi
+
+  docker run -i --volumes-from ${mvn_repo_name} \
     ${volumes_conf} \
     ${build_env} \
-    italiangrid/pkg.storm-$c:${PLATFORM}
+    ${pkg_base_image_name}
 done
