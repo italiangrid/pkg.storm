@@ -4,3 +4,4 @@ BUILD_TAG=GDSI_1.2
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_TAG=master
 PKG_SPEC_FILE=storm-globus-gridftp-server/rpm/storm-gridftp-dsi/storm-gridftp-dsi.spec
+PKG_PREBUILD_SCRIPT=storm-globus-gridftp-server/rpm/storm-gridftp-dsi/pre-build.sh
