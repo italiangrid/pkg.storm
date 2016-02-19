@@ -3,6 +3,8 @@ set -ex
 
 # install addictional packages
 
+el_version=$(lsb_release -rs | cut -f1 -d.)
+
 if [ $el_version == "5" ]; then
 
   wget http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl5/x86_64/base/emi-release-3.0.0-2.el5.noarch.rpm
@@ -39,5 +41,3 @@ yum install -y pkgconfig \
   argus-pep-api-c-devel
 
 yum install -y redhat-lsb
-
-el_version=$(lsb_release -rs | cut -f1 -d.)
