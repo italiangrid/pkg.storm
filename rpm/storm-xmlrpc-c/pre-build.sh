@@ -2,10 +2,8 @@
 set -ex
 
 # install addictional packages
-yum install -y subversion \
+yum install -y pkgconfig \
   curl-devel \
   libxml2-devel \
   readline-devel \
-  ncurses-devel \
-  autoconf \
-  rpm-build
+  ncurses-devel
