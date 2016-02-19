@@ -20,7 +20,7 @@ BuildArch: x86_64
 BuildRoot: %{_builddir}/var/tmp/%{name}-%{version}
 AutoReqProv: yes
 
-Source: %name-%release.src.tar.gz
+Source: %name-%release.tar.gz
 
 BuildRequires: curl-devel
 BuildRequires: libxml2-devel
