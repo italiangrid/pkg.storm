@@ -2,19 +2,18 @@
 set -ex
 
 # install addictional packages
-rpm --import http://emisoft.web.cern.ch/emisoft/dist/EMI/3/RPM-GPG-KEY-emi
 
 if [ $el_version == "5" ]; then
 
   wget http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl5/x86_64/base/emi-release-3.0.0-2.el5.noarch.rpm
-  yum localinstall -y emi-release-3.0.0-2.el5.noarch.rpm
+  yum localinstall --nogpgcheck -y emi-release-3.0.0-2.el5.noarch.rpm
 
   yum install -y boost141-devel
 
 else
 
   wget --no-check-certificate http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl6/x86_64/base/emi-release-3.0.0-2.el6.noarch.rpm
-  yum localinstall -y emi-release-3.0.0-2.el6.noarch.rpm
+  yum localinstall --nogpgcheck -y emi-release-3.0.0-2.el6.noarch.rpm
 
   yum install -y libuuid-devel boost-devel
 
