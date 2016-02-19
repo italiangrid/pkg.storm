@@ -3,6 +3,7 @@ set -ex
 
 # install addictional packages
 
+yum install -y redhat-lsb
 el_version=$(lsb_release -rs | cut -f1 -d.)
 
 if [ $el_version == "5" ]; then
@@ -39,5 +40,3 @@ yum install -y pkgconfig \
   storm-xmlrpc-c-devel \
   argus-pep-api-c \
   argus-pep-api-c-devel
-
-yum install -y redhat-lsb
