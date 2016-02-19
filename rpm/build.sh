@@ -2,7 +2,7 @@
 set -ex
 
 PLATFORM=${PLATFORM:-centos6}
-COMPONENTS=${COMPONENTS:-"storm-backend-server storm-webdav storm-client storm-gridhttps-server yaim-storm storm-dynamic-info-provider storm-gridftp-dsi"}
+COMPONENTS=${COMPONENTS:-"storm-backend-server storm-webdav storm-client storm-gridhttps-server yaim-storm storm-dynamic-info-provider storm-gridftp-dsi storm-native-libs"}
 
 pkg_base_image_name="italiangrid/pkg.base:${PLATFORM}"
 
