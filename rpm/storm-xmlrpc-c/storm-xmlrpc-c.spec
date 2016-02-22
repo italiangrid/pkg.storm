@@ -20,7 +20,7 @@ BuildArch: x86_64
 BuildRoot: %{_builddir}/var/tmp/%{name}-%{version}
 AutoReqProv: yes
 
-Source: %name-%release.tar.gz
+Source: %name-%version.tar.gz
 
 BuildRequires: curl-devel
 BuildRequires: libxml2-devel
@@ -100,7 +100,7 @@ to a remote server using HTTP, and gets back the response as XML.
 This package contains some handy XML-RPC demo applications.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}
 rm doc/{INSTALL,configure_doc}
 
 %build
