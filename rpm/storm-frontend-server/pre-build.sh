@@ -39,4 +39,5 @@ yum install -y pkgconfig \
   gcc-c++ \
   storm-xmlrpc-c-devel \
   argus-pep-api-c \
-  argus-pep-api-c-devel
+  argus-pep-api-c-devel \
+  xmlrpc-c-apps
