@@ -4,10 +4,10 @@
 
 %define default_user root
 
-%define boostsuffix 141
-
-%if 0%{?el6}
 %define boostsuffix %{nil}
+
+%if 0%{?el5}
+%define boostsuffix 141
 %endif
 
 %global base_version 1.8.9
