@@ -1,5 +1,5 @@
 BUILD_NAME=storm-xmlrpc-c
-BUILD_REPO=https://github.com/mirror/xmlrpc-c.git
+BUILD_REPO=https://github.com/enricovianello/xmlrpc-c.git
 BUILD_TAG=master
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_TAG=master
