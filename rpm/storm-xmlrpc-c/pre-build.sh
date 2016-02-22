@@ -9,4 +9,5 @@ yum install -y pkgconfig \
   readline-devel \
   ncurses-devel \
   autoconf \
-  rpm-build
+  rpm-build \
+  xmlrpc-c-apps
