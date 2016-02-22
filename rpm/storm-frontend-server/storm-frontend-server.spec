@@ -84,10 +84,10 @@ GPFS from IBM and Lustre from SUN.
 %setup -q -n storm-frontend-server
 
 %build
-%if 0%{?el6}
-%configure
-%else
+%if 0%{?el5}
 %configure --with-boost=/usr/include/boost141 LDFLAGS=-L/usr/lib64/boost141
+%else
+%configure
 %endif
 make
 
