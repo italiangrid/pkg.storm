@@ -2,13 +2,15 @@
 set -ex
 
 PLATFORM=${PLATFORM:-centos6}
-COMPONENTS=${COMPONENTS:-"storm-backend-server storm-webdav storm-client storm-gridhttps-server yaim-storm storm-dynamic-info-provider storm-gridftp-dsi storm-native-libs"}
+COMPONENTS=${COMPONENTS:-"storm-backend-server storm-frontend-server storm-xmlrpc-c storm-webdav storm-client storm-gridhttps-server yaim-storm storm-dynamic-info-provider storm-gridftp-dsi storm-native-libs"}
 
 pkg_base_image_name="italiangrid/pkg.base:${PLATFORM}"
 
 if [ -n "${USE_DOCKER_REGISTRY}" ]; then
   pkg_base_image_name="${DOCKER_REGISTRY_HOST}/${pkg_base_image_name}"
 fi
+
+docker pull ${pkg_base_image_name}
 
 if [ -z ${MVN_REPO_CONTAINER_NAME+x} ]; then
   mvn_repo_name=$(basename $(mktemp -u -t mvn-repo-XXXXX))
@@ -59,4 +61,5 @@ for c in ${COMPONENTS}; do
     ${volumes_conf} \
     ${build_env} \
     ${pkg_base_image_name}
+
 done
