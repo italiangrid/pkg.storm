@@ -51,7 +51,8 @@ BuildRequires: storm-xmlrpc-c-devel
 BuildRequires: argus-pep-api-c
 BuildRequires: argus-pep-api-c-devel
 
-%if 0%{?el6}
+%if 0%{?el5}
+%else
 BuildRequires: libuuid-devel
 %endif
 
