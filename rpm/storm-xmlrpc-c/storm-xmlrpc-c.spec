@@ -56,7 +56,7 @@ Requires: %name-client++ = %version-%release
 Requires: libxml2-devel curl-devel
 Requires: pkgconfig
 
-%if 0%{?el5}
+%if 0%{!?el5}
 
 %package apps
 Summary:  Sample XML-RPC applications
@@ -97,7 +97,7 @@ clients.
 Static libraries and header files for writing XML-RPC applications in
 C and C++.
 
-%if 0%{?el5}
+%if 0%{!?el5}
 
 %description apps
 XML-RPC is a quick-and-easy way to make procedure calls over the
@@ -196,7 +196,7 @@ rm -rf $RPM_BUILD_ROOT
 %_includedir/storm/*.h
 %_libdir/storm/*.so
 
-%if 0%{?el5}
+%if 0%{!?el5}
 
 %files apps
 %defattr(-,root,root,-)
