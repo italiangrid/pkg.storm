@@ -56,8 +56,6 @@ Requires: %name-client++ = %version-%release
 Requires: libxml2-devel curl-devel
 Requires: pkgconfig
 
-%if 0%{!?el5}
-
 %package apps
 Summary:  Sample XML-RPC applications
 Group:    Applications/Internet
@@ -65,8 +63,6 @@ Requires: %name = %version-%release
 Requires: %name-c++ = %version-%release
 Requires: %name-client = %version-%release
 Requires: %name-client++ = %version-%release
-
-%endif
 
 %description
 XML-RPC is a quick-and-easy way to make procedure calls over the
@@ -97,15 +93,11 @@ clients.
 Static libraries and header files for writing XML-RPC applications in
 C and C++.
 
-%if 0%{!?el5}
-
 %description apps
 XML-RPC is a quick-and-easy way to make procedure calls over the
 Internet. It converts the procedure call into XML document, sends it
 to a remote server using HTTP, and gets back the response as XML.
 This package contains some handy XML-RPC demo applications.
-
-%endif
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -196,8 +188,6 @@ rm -rf $RPM_BUILD_ROOT
 %_includedir/storm/*.h
 %_libdir/storm/*.so
 
-%if 0%{!?el5}
-
 %files apps
 %defattr(-,root,root,-)
 %_bindir/storm/xmlrpc
@@ -207,8 +197,6 @@ rm -rf $RPM_BUILD_ROOT
 %_bindir/storm/xml-rpc-api2txt
 %_bindir/storm/xmlrpc_parsecall
 %_bindir/storm/xmlrpc_pstream
-
-%endif
 
 %exclude /usr/man/storm/man1/*
 
