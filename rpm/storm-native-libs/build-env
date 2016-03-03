@@ -1,6 +1,6 @@
 BUILD_NAME=storm-native-libs
 BUILD_REPO=git://github.com/italiangrid/storm-native-libs
-BUILD_TAG=develop
+BUILD_TAG=master
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_TAG=master
 PKG_SPEC_FILE=storm-native-libs/rpm/storm-native-libs/storm-native-libs.spec
