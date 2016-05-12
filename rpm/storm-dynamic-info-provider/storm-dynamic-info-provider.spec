@@ -50,9 +50,9 @@ Requires: bdii
 Requires: glite-info-provider-service
 
 # The following dependency is required on sl5
-#%if %{?python_json_package:1}%{!?python_json_package:0}
-#Requires: %{python_json_package}
-#%endif
+%if 0%{?el5}
+Requires: python-simplejson
+%endif
 
 %description
 This is the installation bundle for the StoRM info provider component.
