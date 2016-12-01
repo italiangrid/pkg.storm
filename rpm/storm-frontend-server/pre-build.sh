@@ -8,17 +8,19 @@ el_version=$(lsb_release -rs | cut -f1 -d.)
 
 if [ $el_version == "5" ]; then
 
-  wget http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl5/x86_64/base/emi-release-3.0.0-2.el5.noarch.rpm
-  yum localinstall --nogpgcheck -y emi-release-3.0.0-2.el5.noarch.rpm
+  yum install --disableplugin=priorities -y boost141-devel
 
-  yum install -y boost141-devel
+  wget http://repository.egi.eu/sw/production/umd/3/sl5/x86_64/updates/umd-release-3.0.1-1.el5.noarch.rpm
+  yum localinstall --nogpgcheck -y umd-release-3.0.1-1.el5.noarch.rpm
+
+  wget http://italiangrid.github.io/storm/repo/storm_sl5.repo -O /etc/yum.repos.d/storm_sl5.repo
 
 else
 
-  wget --no-check-certificate http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl6/x86_64/base/emi-release-3.0.0-2.el6.noarch.rpm
-  yum localinstall --nogpgcheck -y emi-release-3.0.0-2.el6.noarch.rpm
-
   yum install -y libuuid-devel boost-devel
+
+  wget http://repository.egi.eu/sw/production/umd/3/sl6/x86_64/updates/umd-release-3.14.3-1.el6.noarch.rpm
+  yum localinstall --nogpgcheck -y umd-release-3.14.3-1.el6.noarch.rpm
 
 fi
 
