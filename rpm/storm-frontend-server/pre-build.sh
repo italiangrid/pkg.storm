@@ -11,7 +11,8 @@ if [ $el_version == "5" ]; then
   yum install --disableplugin=priorities -y boost141-devel
 
   rpm --import http://repository.egi.eu/sw/production/umd/UMD-RPM-PGP-KEY
-  yum install -y http://repository.egi.eu/sw/production/umd/3/sl5/x86_64/updates/umd-release-3.0.1-1.el5.noarch.rpm
+  wget http://repository.egi.eu/sw/production/umd/3/sl5/x86_64/updates/umd-release-3.0.1-1.el5.noarch.rpm
+  yum localinstall -y umd-release-3.0.1-1.el5.noarch.rpm
 
   # storm-xmlrpc-c-devel is missing from UMD-3 repositories
   wget http://italiangrid.github.io/storm/repo/storm_sl5.repo -O /etc/yum.repos.d/storm_sl5.repo
