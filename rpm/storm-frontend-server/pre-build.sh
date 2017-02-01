@@ -26,8 +26,6 @@ if [ $el_version == "6" ]; then
   rpm --import http://repository.egi.eu/sw/production/umd/UMD-RPM-PGP-KEY
   yum install -y http://repository.egi.eu/sw/production/umd/3/sl6/x86_64/updates/umd-release-3.14.3-1.el6.noarch.rpm
 
-  # storm-xmlrpc-c-c++ is broken into UMD-3 repositories
-  wget http://italiangrid.github.io/storm/repo/storm_sl6.repo -O /etc/yum.repos.d/storm_sl6.repo
 fi
 
 if [ $el_version == "7" ]; then
