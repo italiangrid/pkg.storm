@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-%global base_version 1.0.4
+%global base_version 1.0.5
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -41,7 +41,7 @@ BuildRequires: swig
 BuildRequires: libacl-devel
 BuildRequires: lcmaps-without-gsi-devel
 BuildRequires: lcmaps-interface
-BuildRequires: java-1.6.0-openjdk-devel
+BuildRequires: java-1.8.0-openjdk-devel
 BuildRequires: gpfs.base >= 3.3
 
 %description
@@ -51,7 +51,7 @@ This package provides the StoRM backend interface to posix libraries.
 Summary: The StoRM backend server interface to native libraries (java part)
 Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
-Requires: java-1.6.0-openjdk
+Requires: java-1.8.0-openjdk
 
 %description java
 This package provides the StoRM backend interface to posix libraries.
@@ -146,6 +146,8 @@ rm -rf $RPM_BUILD_ROOT
 %postun lcmaps -p /sbin/ldconfig
 
 %changelog
+* Tue Jun 06 2017 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.5-1
+  Fix for https://issues.infn.it/jira/browse/STOR-945
 * Tue Apr 14 2015 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.4-1
   Fix for https://issues.infn.it/jira/browse/STOR-474
 * Wed Nov 12 2014 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.3-1

@@ -15,7 +15,7 @@
 ## Turn off meaningless jar repackaging
 %define __jar_repack 0
 
-%global base_version 1.0.4
+%global base_version 1.0.5
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -41,14 +41,14 @@ BuildArch: noarch
 
 BuildRequires: apache-maven
 BuildRequires: jpackage-utils
-BuildRequires: java-1.7.0-openjdk-devel
+BuildRequires: java-1.8.0-openjdk-devel
 
 Requires(post):   chkconfig
 Requires(preun):  chkconfig
 Requires(preun):  initscripts
 Requires(postun): initscripts
 
-Requires: java-1.7.0-openjdk
+Requires: java-1.8.0-openjdk
 Requires: jpackage-utils
 
 %description
