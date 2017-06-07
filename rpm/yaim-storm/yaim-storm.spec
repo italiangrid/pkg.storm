@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-%global base_version 4.3.8
+%global base_version 4.3.9
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -93,6 +93,9 @@ rm -rf $RPM_BUILD_ROOT
 %{default_prefix}/yaim/node-info.d
 
 %changelog
+* Wed Jun 7 2017 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 4.3.9-1
+- Fix for https://issues.infn.it/jira/browse/STOR-946
+
 * Thu Jan 16 2014 Andrea Ceccanti <andrea.ceccanti@cnaf.infn.it> - 4.3.5-1
 - Fix for https://issues.infn.it/jira/browse/STOR-560
 - Fix for https://issues.infn.it/jira/browse/STOR-506
