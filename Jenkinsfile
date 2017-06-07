@@ -31,7 +31,7 @@ pipeline {
         script {
           def c = """[storm-test-${params.PLATFORM}]
 name=storm-test-${params.PLATFORM}
-baseurl=https://ci.cloud.cnaf.infn.it/job/pkg.storm/job/fix%252FSTOR-945/lastSuccessfulBuild/artifact/repo/${params.PLATFORM}/
+baseurl=https://ci.cloud.cnaf.infn.it/job/pkg.storm/job/fix%252FSTOR-946/lastSuccessfulBuild/artifact/repo/${params.PLATFORM}/
 protect=1
 enabled=1
 priority=1
