@@ -42,23 +42,23 @@ BuildArch: noarch
 
 BuildRequires: apache-maven
 BuildRequires: jpackage-utils
-BuildRequires: java-1.6.0-openjdk-devel
+BuildRequires: java-1.8.0-openjdk-devel
 
 Requires(post):   chkconfig
 Requires(preun):  chkconfig
 Requires(preun):  initscripts
 Requires(postun): initscripts
 
-Requires: java-1.6.0-openjdk
+Requires: java-1.8.0-openjdk
 Requires: mysql
 Requires: mysql-server
 Requires: nc
 Requires: xml-commons-apis
 Requires: mysql-connector-java
 Requires: jpackage-utils
-Requires: storm-native-libs >= 1.0.2
-Requires: storm-native-libs-lcmaps >= 1.0.2
-Requires: storm-native-libs-java >= 1.0.2
+Requires: storm-native-libs >= 1.0.5
+Requires: storm-native-libs-lcmaps >= 1.0.5
+Requires: storm-native-libs-java >= 1.0.5
 
 %description
 StoRM provides an SRM interface to any POSIX filesystem with direct file
@@ -144,6 +144,9 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
+* Tue Jun 6 2017 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.12-0
+- Bumped packaging version for 1.11.12 release.
+
 * Wed Feb 3 2016 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.11.11-0
 - Bumped packaging version for 1.11.11 release.
 
