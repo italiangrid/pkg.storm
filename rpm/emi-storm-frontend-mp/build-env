@@ -1,0 +1,6 @@
+BUILD_NAME=emi-storm-frontend-mp
+BUILD_REPO=git://github.com/italiangrid/storm-mp
+BUILD_TAG=develop
+PKG_REPO=git://github.com/italiangrid/pkg.storm.git
+PKG_TAG=master
+PKG_SPEC_FILE=emi-storm-frontend-mp/rpm/emi-storm-frontend-mp/storm-frontend-mp.spec

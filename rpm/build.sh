@@ -1,7 +1,19 @@
 #!/bin/bash
 set -ex
 
-ALL_COMPONENTS="storm-backend-server storm-frontend-server storm-xmlrpc-c storm-webdav storm-client storm-gridhttps-server yaim-storm storm-dynamic-info-provider storm-gridftp-dsi storm-native-libs"
+ALL_COMPONENTS="storm-backend-server \
+                storm-frontend-server \
+                storm-xmlrpc-c \
+                storm-webdav \
+                storm-client \
+                storm-gridhttps-server \
+                yaim-storm \
+                storm-dynamic-info-provider \
+                storm-gridftp-dsi \
+                storm-native-libs \
+                emi-storm-backend-mp \
+                emi-storm-frontend-mp \
+                emi-storm-globus-gridftp-mp"
 PLATFORM=${PLATFORM:-centos6}
 COMPONENTS=${COMPONENTS:-${ALL_COMPONENTS}}
 
