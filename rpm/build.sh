@@ -10,6 +10,7 @@ ALL_COMPONENTS="storm-backend-server \
                 storm-dynamic-info-provider \
                 storm-gridftp-dsi \
                 storm-native-libs \
+                cdmi-storm \
                 emi-storm-backend-mp \
                 emi-storm-frontend-mp \
                 emi-storm-globus-gridftp-mp"
