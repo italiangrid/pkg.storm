@@ -6,7 +6,6 @@ ALL_COMPONENTS="storm-backend-server \
                 storm-xmlrpc-c \
                 storm-webdav \
                 storm-client \
-                storm-gridhttps-server \
                 yaim-storm \
                 storm-dynamic-info-provider \
                 storm-gridftp-dsi \
