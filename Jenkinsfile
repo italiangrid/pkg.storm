@@ -10,10 +10,11 @@ pipeline {
     string(name: 'PLATFORM', defaultValue: 'centos6', description: 'OS Platform')
   }
 
+  def branchName = env.BRANCH_NAME.replaceAll("[^a-zA-Z0-9 ]+","")
   stages{
     stage('package') {
       environment {
-        DATA_CONTAINER_NAME = "stage-area-pkg.storm-${env.BRANCH_NAME}-${env.BUILD_ID}"
+        DATA_CONTAINER_NAME = "stage-area-pkg.storm-${branchName}-${env.BUILD_ID}"
         PLATFORM = "${params.PLATFORM}"
       }
       steps {
