@@ -13,7 +13,7 @@ pipeline {
   stages{
     stage('package') {
       environment {
-        DATA_CONTAINER_NAME = "stage-area-pkg.storm-${env.BUILD_ID}"
+        DATA_CONTAINER_NAME = "stage-area-pkg.storm-${env.BRANCH_NAME}-${env.BUILD_ID}"
         PLATFORM = "${params.PLATFORM}"
       }
       steps {
