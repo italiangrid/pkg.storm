@@ -10,7 +10,9 @@ pipeline {
     string(name: 'PLATFORM', defaultValue: 'centos6', description: 'OS Platform')
   }
 
-  BRANCH_CLEAN_NAME = env.BRANCH_NAME.replaceAll(/[^A-z0-9 ]/, "")
+  environment {
+      BRANCH_CLEAN_NAME = env.BRANCH_NAME.replaceAll(/[^A-z0-9 ]/, "")
+  }
 
   stages{
     stage('package') {
