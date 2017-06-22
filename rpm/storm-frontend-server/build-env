@@ -1,6 +1,6 @@
 BUILD_NAME=storm-frontend-server
 BUILD_REPO=git://github.com/italiangrid/storm-frontend
-BUILD_TAG=fix/STOR-929
+BUILD_TAG=develop
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_TAG=master
 PKG_SPEC_FILE=storm-frontend-server/rpm/storm-frontend-server/storm-frontend-server.spec
