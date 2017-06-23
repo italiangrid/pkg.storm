@@ -77,12 +77,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 /usr/lib/cdmi-server/plugins/%{name}-%{base_version}-jar-with-dependencies.jar
-/etc/cdmi-server/plugins/storm-properties.json
-/etc/cdmi-server/plugins/capabilities/exports.json
-/etc/cdmi-server/plugins/capabilities/container/diskonly.json
-/etc/cdmi-server/plugins/capabilities/dataobject/diskonly.json
-/etc/cdmi-server/plugins/capabilities/dataobject/diskandtape.json
-/etc/cdmi-server/plugins/capabilities/dataobject/tapeonly.json
+%config(noreplace) /etc/cdmi-server/plugins/storm-properties.json
+%config(noreplace) /etc/cdmi-server/plugins/capabilities/exports.json
+%config(noreplace) /etc/cdmi-server/plugins/capabilities/container/diskonly.json
+%config(noreplace) /etc/cdmi-server/plugins/capabilities/dataobject/diskonly.json
+%config(noreplace) /etc/cdmi-server/plugins/capabilities/dataobject/diskandtape.json
+%config(noreplace) /etc/cdmi-server/plugins/capabilities/dataobject/tapeonly.json
 
 %pre
 
