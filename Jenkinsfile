@@ -21,7 +21,8 @@ pipeline {
         PLATFORM = "${params.PLATFORM}"
       }
       steps {
-        git(url: 'https://github.com/italiangrid/pkg.storm.git', branch: env.BRANCH_NAME)
+        cleanWs notFailBuild: true
+        checkout scm
         sh 'docker create -v /stage-area --name ${DATA_CONTAINER_NAME} italiangrid/pkg.base:centos6'
         sh '''
         pushd rpm
