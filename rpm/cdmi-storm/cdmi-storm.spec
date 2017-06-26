@@ -61,10 +61,10 @@ Requires: jpackage-utils
 mvn -DskipTests -U clean package
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/cdmi-server/plugins
+mkdir -p $RPM_BUILD_ROOT/usr/lib/cdmi-server/plugins
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugins/capabilities/container
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugins/capabilities/dataobject
-cp target/%{name}-%{base_version}-jar-with-dependencies.jar $RPM_BUILD_ROOT%{_libdir}/cdmi-server/plugins
+cp target/%{name}-%{base_version}-jar-with-dependencies.jar $RPM_BUILD_ROOT/usr/lib/cdmi-server/plugins
 cp config/capabilities/exports.json $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugins/capabilities/exports.json
 cp config/capabilities/container/diskonly.json $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugins/capabilities/container/diskonly.json
 cp config/capabilities/dataobject/diskonly.json $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugins/capabilities/dataobject/diskonly.json
@@ -76,7 +76,7 @@ cp config/storm-properties.json $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugin
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%{_libdir}/cdmi-server/plugins/%{name}-%{base_version}-jar-with-dependencies.jar
+/usr/lib/cdmi-server/plugins/%{name}-%{base_version}-jar-with-dependencies.jar
 %config(noreplace) %{_sysconfdir}/cdmi-server/plugins/storm-properties.json
 %config(noreplace) %{_sysconfdir}/cdmi-server/plugins/capabilities/exports.json
 %config(noreplace) %{_sysconfdir}/cdmi-server/plugins/capabilities/container/diskonly.json
