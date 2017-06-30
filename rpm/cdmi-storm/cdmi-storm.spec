@@ -16,7 +16,7 @@
 %define __jar_repack 0
 
 %global base_version 0.1.0
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
@@ -62,27 +62,27 @@ mvn -DskipTests -U clean package
 
 %install
 mkdir -p $RPM_BUILD_ROOT/usr/lib/cdmi-server/plugins
-mkdir -p $RPM_BUILD_ROOT/etc/cdmi-server/plugins/capabilities/container
-mkdir -p $RPM_BUILD_ROOT/etc/cdmi-server/plugins/capabilities/dataobject
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugins/capabilities/container
+mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugins/capabilities/dataobject
 cp target/%{name}-%{base_version}-jar-with-dependencies.jar $RPM_BUILD_ROOT/usr/lib/cdmi-server/plugins
-cp config/capabilities/exports.json $RPM_BUILD_ROOT/etc/cdmi-server/plugins/capabilities/exports.json
-cp config/capabilities/container/diskonly.json $RPM_BUILD_ROOT/etc/cdmi-server/plugins/capabilities/container/diskonly.json
-cp config/capabilities/dataobject/diskonly.json $RPM_BUILD_ROOT/etc/cdmi-server/plugins/capabilities/dataobject/diskonly.json
-cp config/capabilities/dataobject/diskandtape.json $RPM_BUILD_ROOT/etc/cdmi-server/plugins/capabilities/dataobject/diskandtape.json
-cp config/capabilities/dataobject/tapeonly.json $RPM_BUILD_ROOT/etc/cdmi-server/plugins/capabilities/dataobject/tapeonly.json
-cp config/storm-properties.json $RPM_BUILD_ROOT/etc/cdmi-server/plugins/storm-properties.json
+cp config/capabilities/exports.json $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugins/capabilities/exports.json
+cp config/capabilities/container/diskonly.json $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugins/capabilities/container/diskonly.json
+cp config/capabilities/dataobject/diskonly.json $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugins/capabilities/dataobject/diskonly.json
+cp config/capabilities/dataobject/diskandtape.json $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugins/capabilities/dataobject/diskandtape.json
+cp config/capabilities/dataobject/tapeonly.json $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugins/capabilities/dataobject/tapeonly.json
+cp config/storm-properties.json $RPM_BUILD_ROOT%{_sysconfdir}/cdmi-server/plugins/storm-properties.json
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 /usr/lib/cdmi-server/plugins/%{name}-%{base_version}-jar-with-dependencies.jar
-/etc/cdmi-server/plugins/storm-properties.json
-/etc/cdmi-server/plugins/capabilities/exports.json
-/etc/cdmi-server/plugins/capabilities/container/diskonly.json
-/etc/cdmi-server/plugins/capabilities/dataobject/diskonly.json
-/etc/cdmi-server/plugins/capabilities/dataobject/diskandtape.json
-/etc/cdmi-server/plugins/capabilities/dataobject/tapeonly.json
+%config(noreplace) %{_sysconfdir}/cdmi-server/plugins/storm-properties.json
+%config(noreplace) %{_sysconfdir}/cdmi-server/plugins/capabilities/exports.json
+%config(noreplace) %{_sysconfdir}/cdmi-server/plugins/capabilities/container/diskonly.json
+%config(noreplace) %{_sysconfdir}/cdmi-server/plugins/capabilities/dataobject/diskonly.json
+%config(noreplace) %{_sysconfdir}/cdmi-server/plugins/capabilities/dataobject/diskandtape.json
+%config(noreplace) %{_sysconfdir}/cdmi-server/plugins/capabilities/dataobject/tapeonly.json
 
 %pre
 

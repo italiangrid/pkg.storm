@@ -10,14 +10,19 @@ pipeline {
     string(name: 'PLATFORM', defaultValue: 'centos6', description: 'OS Platform')
   }
 
+  environment {
+      BRANCH_CLEAN_NAME = env.BRANCH_NAME.replaceAll(/[^A-z0-9 ]/, "")
+  }
+
   stages{
     stage('package') {
       environment {
-        DATA_CONTAINER_NAME = "stage-area-pkg.storm-${env.BUILD_ID}"
+        DATA_CONTAINER_NAME = "stage-area-pkg.storm-${BRANCH_CLEAN_NAME}-${env.BUILD_ID}"
         PLATFORM = "${params.PLATFORM}"
       }
       steps {
-        git(url: 'https://github.com/italiangrid/pkg.storm.git', branch: env.BRANCH_NAME)
+        cleanWs notFailBuild: true
+        checkout scm
         sh 'docker create -v /stage-area --name ${DATA_CONTAINER_NAME} italiangrid/pkg.base:centos6'
         sh '''
         pushd rpm
@@ -31,7 +36,7 @@ pipeline {
         script {
           def c = """[storm-test-${params.PLATFORM}]
 name=storm-test-${params.PLATFORM}
-baseurl=https://ci.cloud.cnaf.infn.it/job/pkg.storm/job/develop/lastSuccessfulBuild/artifact/repo/${params.PLATFORM}/
+baseurl=https://ci.cloud.cnaf.infn.it/job/pkg.storm/job/release%252Fv1.11.12/lastSuccessfulBuild/artifact/repo/${params.PLATFORM}/
 protect=1
 enabled=1
 priority=1
