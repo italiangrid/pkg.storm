@@ -5,4 +5,5 @@ PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_TAG=master
 PKG_SPEC_FILE=storm-xmlrpc-c/rpm/storm-xmlrpc-c/storm-xmlrpc-c.spec
 PKG_PREBUILD_SCRIPT=storm-xmlrpc-c/rpm/storm-xmlrpc-c/pre-build.sh
+PKG_STAGE_RPMS=1
 TARBALL_VERSION=1.33.0

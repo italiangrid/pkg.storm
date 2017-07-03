@@ -1,28 +1,18 @@
 #!/bin/bash
 set -ex
 
-# install addictional packages
+# We need UMD repos for Argus pep-c deps
+UMD_REPO_PACKAGE_EL6="http://repository.egi.eu/sw/production/umd/3/sl6/x86_64/updates/umd-release-3.14.3-1.el6.noarch.rpm"
 
-yum install -y redhat-lsb
-el_version=$(lsb_release -rs | cut -f1 -d.)
+rpm --import http://repository.egi.eu/sw/production/umd/UMD-RPM-PGP-KEY
 
-if [ $el_version == "5" ]; then
+yum localinstall -y ${UMD_REPO_PACKAGE_EL6} && yum -y update
 
-  wget http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl5/x86_64/base/emi-release-3.0.0-2.el5.noarch.rpm
-  yum localinstall --nogpgcheck -y emi-release-3.0.0-2.el5.noarch.rpm
-
-  yum install -y boost141-devel
-
-else
-
-  wget --no-check-certificate http://emisoft.web.cern.ch/emisoft/dist/EMI/3/sl6/x86_64/base/emi-release-3.0.0-2.el6.noarch.rpm
-  yum localinstall --nogpgcheck -y emi-release-3.0.0-2.el6.noarch.rpm
-
-  yum install -y libuuid-devel boost-devel
-
-fi
+# We want to give more priority to the stage area repo than UMD
+sed -i "s/priority=1/priority=2/" /etc/yum.repos.d/UMD-3-base.repo /etc/yum.repos.d/UMD-3-updates.repo 
 
 yum install -y pkgconfig \
+  boost-devel \
   curl-devel \
   mysql-devel \
   globus-gssapi-gsi-devel \
