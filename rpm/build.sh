@@ -17,7 +17,7 @@ if [ -n "${USE_DOCKER_REGISTRY}" ]; then
   pkg_base_image_name="${DOCKER_REGISTRY_HOST}/${pkg_base_image_name}"
 fi
 
-docker pull ${pkg_base_image_name}
+#docker pull ${pkg_base_image_name}
 
 if [ -z ${MVN_REPO_CONTAINER_NAME+x} ]; then
   mvn_repo_name=$(basename $(mktemp -u -t mvn-repo-XXXXX))
@@ -34,7 +34,7 @@ for c in ${COMPONENTS}; do
 
   comp_name=$(echo ${c} | tr '[:lower:]' '[:upper:]' | tr '-' '_')
 
-  var_names="BUILD_REPO PKG_PACKAGES_DIR PKG_STAGE_DIR PKG_TAG PKG_REPO PKG_STAGE_RPMS"
+  var_names="BUILD_REPO PKG_PACKAGES_DIR PKG_STAGE_DIR PKG_STAGE_SOURCE_DIR PKG_TAG PKG_REPO PKG_STAGE_RPMS PKG_STAGE_SRPMS"
 
   for v in ${var_names}; do
     c_var_name="${v}_${comp_name}"

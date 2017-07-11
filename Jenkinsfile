@@ -10,14 +10,10 @@ pipeline {
     string(name: 'PLATFORM', defaultValue: 'centos6', description: 'OS Platform')
   }
 
-  environment {
-      BRANCH_CLEAN_NAME = env.BRANCH_NAME.replaceAll(/[^A-z0-9 ]/, "")
-  }
-
   stages{
     stage('package') {
       environment {
-        DATA_CONTAINER_NAME = "stage-area-pkg.storm-${BRANCH_CLEAN_NAME}-${env.BUILD_ID}"
+        DATA_CONTAINER_NAME = "stage-area-pkg.storm-${env.JOB_BASE_NAME}-${env.BUILD_NUMBER}"
         PLATFORM = "${params.PLATFORM}"
       }
       steps {
@@ -30,22 +26,37 @@ pipeline {
         sh build.sh
         popd
         '''
-        sh 'docker cp ${DATA_CONTAINER_NAME}:/stage-area repo'
-        sh 'docker rm -f ${DATA_CONTAINER_NAME}'
+        sh 'docker cp ${DATA_CONTAINER_NAME}:/stage-area rpms'
 
         script {
           def repoStr = """[storm-test-${params.PLATFORM}]
 name=storm-test-${params.PLATFORM}
-baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/repo/${params.PLATFORM}/
+baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/rpms/${params.PLATFORM}/
 protect=1
 enabled=1
 priority=1
 gpgcheck=0
 """
-          writeFile file: "repo/storm-test-${params.PLATFORM}.repo", text: "${repoStr}"
+          writeFile file: "rpms/storm-test-${params.PLATFORM}.repo", text: "${repoStr}"
         }
 
-        archiveArtifacts 'repo/**'
+        sh 'docker cp ${DATA_CONTAINER_NAME}:/stage-area-source srpms'
+
+        script {
+          def sourceRepoStr = """[storm-test-source-${params.PLATFORM}]
+name=storm-test-source-${params.PLATFORM}
+baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/srpms/${params.PLATFORM}/
+protect=1
+enabled=1
+priority=1
+gpgcheck=0
+"""
+          writeFile file: "srpms/storm-test-source-${params.PLATFORM}.repo", text: "${sourceRepoStr}"
+        }
+
+        sh 'docker rm -f ${DATA_CONTAINER_NAME}'
+
+        archiveArtifacts 'rpms/**, srpms/**'
       }
     }
   }
