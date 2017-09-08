@@ -1,6 +1,10 @@
 #!/bin/bash
 set -ex
 
+set -a 
+source ./build.env
+set +a
+
 ALL_COMPONENTS="storm-backend-server \
                 storm-frontend-server \
                 storm-xmlrpc-c \
@@ -18,10 +22,6 @@ PLATFORM=${PLATFORM:-centos6}
 COMPONENTS=${COMPONENTS:-${ALL_COMPONENTS}}
 
 UMD_REPO_RPM=${UMD_REPO_RPM:-"http://repository.egi.eu/sw/production/umd/3/sl6/x86_64/updates/umd-release-3.14.4-1.el6.noarch.rpm"}
-
-set -a 
-source ./build.env
-set +a
 
 pkg_base_image_name="italiangrid/pkg.base:${PLATFORM}"
 
