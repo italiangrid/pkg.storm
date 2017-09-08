@@ -6,48 +6,15 @@ set -ex
 yum install -y redhat-lsb
 el_version=$(lsb_release -rs | cut -f1 -d.)
 
-if [ $el_version == "5" ]; then
-
-  yum install --disableplugin=priorities -y boost141-devel
-
-  rpm --import http://repository.egi.eu/sw/production/umd/UMD-RPM-PGP-KEY
-  wget http://repository.egi.eu/sw/production/umd/3/sl5/x86_64/updates/umd-release-3.0.1-1.el5.noarch.rpm
-  yum localinstall -y umd-release-3.0.1-1.el5.noarch.rpm
-
-  # storm-xmlrpc-c-devel is missing from UMD-3 repositories
-  wget http://italiangrid.github.io/storm/repo/storm_sl5.repo -O /etc/yum.repos.d/storm_sl5.repo
-
-fi
-
-if [ $el_version == "6" ]; then
-
-  yum install -y libuuid-devel boost-devel
-
-  rpm --import http://repository.egi.eu/sw/production/umd/UMD-RPM-PGP-KEY
-  yum install -y http://repository.egi.eu/sw/production/umd/3/sl6/x86_64/updates/umd-release-3.14.3-1.el6.noarch.rpm
-
-fi
+yum install -y libuuid-devel boost-devel
+rpm --import http://repository.egi.eu/sw/production/umd/UMD-RPM-PGP-KEY
+yum install -y ${UMD_REPO_RPM}
 
 if [ $el_version == "7" ]; then
 
-  yum install -y libuuid-devel boost-devel
-
-  rpm --import http://repository.egi.eu/sw/production/umd/UMD-RPM-PGP-KEY
-  yum install -y http://repository.egi.eu/sw/production/umd/4/centos7/x86_64/updates/umd-release-4.1.2-1.el7.centos.noarch.rpm
-
-  # storm is not currently included into UMD-4 repositories
+  # storm is not currently included into UMD-4 RHEL7 repository
   wget http://italiangrid.github.io/storm/repo/storm_sl6.repo -O /etc/yum.repos.d/storm_sl6.repo
 fi
-
-# Fix gsoap dependency error:
-#
-# Error: Package: gsoap-devel-2.7.16-5.el6.x86_64 (epel)
-#           Requires: gsoap = 2.7.16-5.el6
-#           Available: gsoap-2.7.16-3.el6.x86_64 (UMD-3-updates)
-#               gsoap = 2.7.16-3.el6
-#           Available: gsoap-2.7.16-4.el6.i686 (UMD-3-updates)
-#               gsoap = 2.7.16-4.el6
-yum --disablerepo=*UMD* install -y gsoap-devel
 
 yum install -y pkgconfig \
   curl-devel \
