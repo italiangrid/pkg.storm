@@ -1,23 +1,35 @@
 #!/bin/bash
 set -ex
 
-PLATFORM=${PLATFORM:-centos6}
-
-ALL_COMPONENTS="storm-xmlrpc-c storm-frontend-server storm-backend-server storm-webdav storm-client storm-gridhttps-server yaim-storm storm-dynamic-info-provider storm-gridftp-dsi storm-native-libs"
-
-COMPONENTS=${COMPONENTS:-${ALL_COMPONENTS}}
-
 set -a 
 source ./build.env
 set +a
 
+ALL_COMPONENTS="storm-backend-server \
+                storm-frontend-server \
+                storm-xmlrpc-c \
+                storm-webdav \
+                storm-client \
+                yaim-storm \
+                storm-dynamic-info-provider \
+                storm-gridftp-dsi \
+                storm-native-libs \
+                cdmi-storm \
+                emi-storm-backend-mp \
+                emi-storm-frontend-mp \
+                emi-storm-globus-gridftp-mp"
+PLATFORM=${PLATFORM:-centos6}
+COMPONENTS=${COMPONENTS:-${ALL_COMPONENTS}}
+
+UMD_REPO_RPM=${UMD_REPO_RPM:-"http://repository.egi.eu/sw/production/umd/3/sl6/x86_64/updates/umd-release-3.14.4-1.el6.noarch.rpm"}
+
 pkg_base_image_name="italiangrid/pkg.base:${PLATFORM}"
+
+docker pull ${pkg_base_image_name}
 
 if [ -n "${USE_DOCKER_REGISTRY}" ]; then
   pkg_base_image_name="${DOCKER_REGISTRY_HOST}/${pkg_base_image_name}"
 fi
-
-#docker pull ${pkg_base_image_name}
 
 if [ -z ${MVN_REPO_CONTAINER_NAME+x} ]; then
   mvn_repo_name=$(basename $(mktemp -u -t mvn-repo-XXXXX))
@@ -30,6 +42,7 @@ fi
 # Run packaging
 for c in ${COMPONENTS}; do
   build_env_file="$c/build-env"
+
   build_env=""
 
   comp_name=$(echo ${c} | tr '[:lower:]' '[:upper:]' | tr '-' '_')

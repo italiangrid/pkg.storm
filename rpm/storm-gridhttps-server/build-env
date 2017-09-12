@@ -1,6 +1,0 @@
-BUILD_NAME=storm-gridhttps-server
-BUILD_REPO=git://github.com/italiangrid/storm-gridhttps-server
-BUILD_TAG=master
-PKG_REPO=git://github.com/italiangrid/pkg.storm.git
-PKG_TAG=master
-PKG_SPEC_FILE=storm-gridhttps-server/rpm/storm-gridhttps-server/storm-gridhttps-server.spec
