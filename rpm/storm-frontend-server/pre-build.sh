@@ -9,11 +9,11 @@ yum install -y ${UMD_REPO_RPM}
 # We want to give more priority to the stage area repo than UMD
 sed -i "s/priority=1/priority=2/" /etc/yum.repos.d/UMD-*-base.repo /etc/yum.repos.d/UMD-*-updates.repo 
 
-if [ $el_version == "7" ]; then
-
-  # storm is not currently included into UMD-4 RHEL7 repository
-  wget http://italiangrid.github.io/storm/repo/storm_sl6.repo -O /etc/yum.repos.d/storm_sl6.repo
-fi
+#if [ ${PLATFORM} == "centos7" ]; then
+#
+#  # storm is not currently included into UMD-4 RHEL7 repository
+#  wget http://italiangrid.github.io/storm/repo/storm_sl6.repo -O /etc/yum.repos.d/storm_sl6.repo
+#fi
 
 yum install -y pkgconfig \
   boost-devel \
