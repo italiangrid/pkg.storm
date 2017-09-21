@@ -1,6 +1,6 @@
 BUILD_NAME=yaim-storm
 BUILD_REPO=git://github.com/italiangrid/yaim-storm
-BUILD_TAG=develop
+BUILD_TAG=fix/STOR-951
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_TAG=master
 PKG_SPEC_FILE=yaim-storm/rpm/yaim-storm/yaim-storm.spec
