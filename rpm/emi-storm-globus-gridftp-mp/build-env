@@ -2,5 +2,4 @@ BUILD_NAME=emi-storm-globus-gridftp-mp
 BUILD_REPO=git://github.com/italiangrid/storm-mp
 BUILD_TAG=master
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
-PKG_TAG=master
 PKG_SPEC_FILE=emi-storm-globus-gridftp-mp/rpm/emi-storm-globus-gridftp-mp/storm-globus-gridftp-mp.spec
