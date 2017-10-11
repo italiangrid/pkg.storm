@@ -16,7 +16,7 @@
 %define __jar_repack 0
 
 %global base_version 1.11.13
-%global base_release 1
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
@@ -144,6 +144,9 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
+* Wed Oct 11 2017 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.13-0
+- Bumped packaging version to 1.11.13-0.
+
 * Tue Jun 6 2017 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.12-0
 - Bumped packaging version for 1.11.12 release.
 
