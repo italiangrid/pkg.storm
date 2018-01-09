@@ -19,7 +19,7 @@
 %define _confdir /etc/storm/info-provider
 %define _bdiidir /var/lib/bdii/gip
 
-%global base_version 1.7.9
+%global base_version 1.8.0
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -49,11 +49,6 @@ Requires: python-argparse
 Requires: bdii
 Requires: glite-info-provider-service
 
-# The following dependency is required on sl5
-%if 0%{?el5}
-Requires: python-simplejson
-%endif
-
 %description
 This is the installation bundle for the StoRM info provider component.
 
@@ -69,7 +64,11 @@ install -pm 0755 src/storm-info-provider $RPM_BUILD_ROOT%{_libexecdir}
 
 install -d $RPM_BUILD_ROOT%{python2_sitelib}/info_provider
 install -d $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/glue
+install -d $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/model
+install -d $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/utils
 install -pm 0644 src/info_provider/glue/* $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/glue
+install -pm 0644 src/info_provider/model/* $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/model
+install -pm 0644 src/info_provider/utils/* $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/utils
 install -pm 0644 src/info_provider/*.py $RPM_BUILD_ROOT%{python2_sitelib}/info_provider
 
 install -d $RPM_BUILD_ROOT%{_confdir}
@@ -98,6 +97,9 @@ rm -rf %{_bdiidir}/provider/storm-glue2-provider
 rm -rf %{_bdiidir}/plugin/storm-glue2-plugin
 
 %changelog
+* Tue Jan 9 2018 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.0-1
+  Bumped version to 1.8.0 and added command get-report-json
+
 * Mon Jan 18 2016 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.7.9-1
   Bumped version to 1.7.9-1
 
