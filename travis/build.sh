@@ -39,7 +39,7 @@ bash -c "while true; do echo \$(date) - building ...; sleep $PING_SLEEP; done" &
 PING_LOOP_PID=$!
 
 pushd rpm
-export PKG_NEXUS_REPONAME="travis/${TRAVIS_REPO_SLUG}/${TRAVIS_JOB_ID}"
+export PKG_NEXUS_REPONAME="travis/${TRAVIS_REPO_SLUG}/$(date -I)/${TRAVIS_JOB_ID}"
 bash build.sh >> ${BUILD_OUTPUT} 2>&1
 popd
 echo "pkg.storm build completed succesfully!"
