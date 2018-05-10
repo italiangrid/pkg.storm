@@ -27,8 +27,7 @@ UMD_REPO_RPM=${UMD_REPO_RPM:-"http://repository.egi.eu/sw/production/umd/3/sl6/x
 pkg_base_image_name="italiangrid/pkg.base:${PLATFORM}"
 
 if [ -z "${SKIP_PKG_BASE_PULL_IMAGE}" ]; then
- #docker pull ${pkg_base_image_name}
-  echo "Pulling..."
+ docker pull ${pkg_base_image_name}
 fi 
 
 if [ -n "${USE_DOCKER_REGISTRY}" ]; then
