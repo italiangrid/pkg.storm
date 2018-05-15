@@ -19,46 +19,48 @@ pipeline {
         PLATFORM = "${params.PLATFORM}"
       }
       steps {
-        cleanWs notFailBuild: true
-        checkout scm
-        sh 'docker create -v /stage-area --name ${DATA_CONTAINER_NAME} italiangrid/pkg.base:centos6'
-        sh '''
-        pushd rpm
-        ls -al
-        sh build.sh
-        popd
-        '''
-        sh 'docker cp ${DATA_CONTAINER_NAME}:/stage-area rpms'
+        container('docker-runner') {
+          cleanWs notFailBuild: true
+          checkout scm
+          sh 'docker create -v /stage-area --name ${DATA_CONTAINER_NAME} italiangrid/pkg.base:centos6'
+          sh '''
+          pushd rpm
+          ls -al
+          sh build.sh
+          popd
+          '''
+          sh 'docker cp ${DATA_CONTAINER_NAME}:/stage-area rpms'
 
-        script {
-          def repoStr = """[storm-test-${params.PLATFORM}]
-name=storm-test-${params.PLATFORM}
-baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/rpms/${params.PLATFORM}/
-protect=1
-enabled=1
-priority=1
-gpgcheck=0
-"""
-          writeFile file: "rpms/storm-test-${params.PLATFORM}.repo", text: "${repoStr}"
+          script {
+            def repoStr = """[storm-test-${params.PLATFORM}]
+  name=storm-test-${params.PLATFORM}
+  baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/rpms/${params.PLATFORM}/
+  protect=1
+  enabled=1
+  priority=1
+  gpgcheck=0
+  """
+            writeFile file: "rpms/storm-test-${params.PLATFORM}.repo", text: "${repoStr}"
+          }
+
+          sh 'docker cp ${DATA_CONTAINER_NAME}:/stage-area-source srpms'
+
+          script {
+            def sourceRepoStr = """[storm-test-source-${params.PLATFORM}]
+  name=storm-test-source-${params.PLATFORM}
+  baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/srpms/${params.PLATFORM}/
+  protect=1
+  enabled=1
+  priority=1
+  gpgcheck=0
+  """
+            writeFile file: "srpms/storm-test-source-${params.PLATFORM}.repo", text: "${sourceRepoStr}"
+          }
+
+          sh 'docker rm -f ${DATA_CONTAINER_NAME}'
+
+          archiveArtifacts 'rpms/**, srpms/**'
         }
-
-        sh 'docker cp ${DATA_CONTAINER_NAME}:/stage-area-source srpms'
-
-        script {
-          def sourceRepoStr = """[storm-test-source-${params.PLATFORM}]
-name=storm-test-source-${params.PLATFORM}
-baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/srpms/${params.PLATFORM}/
-protect=1
-enabled=1
-priority=1
-gpgcheck=0
-"""
-          writeFile file: "srpms/storm-test-source-${params.PLATFORM}.repo", text: "${sourceRepoStr}"
-        }
-
-        sh 'docker rm -f ${DATA_CONTAINER_NAME}'
-
-        archiveArtifacts 'rpms/**, srpms/**'
       }
     }
   }
