@@ -8,6 +8,6 @@ wget -P /etc/yum.repos.d https://ci.cloud.cnaf.infn.it/job/repo_gpfs/lastSuccess
 yum -y install pkgconfig \
   swig \
   libacl-devel \
-  gpfs.base-3.4.0 \ # Force use of 3.4.0
+  gpfs.base-3.4.0 \
   lcmaps-without-gsi-devel \
   lcmaps-interface
