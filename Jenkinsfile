@@ -33,13 +33,13 @@ pipeline {
 
           script {
             def repoStr = """[storm-test-${params.PLATFORM}]
-  name=storm-test-${params.PLATFORM}
-  baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/rpms/${params.PLATFORM}/
-  protect=1
-  enabled=1
-  priority=1
-  gpgcheck=0
-  """
+name=storm-test-${params.PLATFORM}
+baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/rpms/${params.PLATFORM}/
+protect=1
+enabled=1
+priority=1
+gpgcheck=0
+"""
             writeFile file: "rpms/storm-test-${params.PLATFORM}.repo", text: "${repoStr}"
           }
 
@@ -47,13 +47,13 @@ pipeline {
 
           script {
             def sourceRepoStr = """[storm-test-source-${params.PLATFORM}]
-  name=storm-test-source-${params.PLATFORM}
-  baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/srpms/${params.PLATFORM}/
-  protect=1
-  enabled=1
-  priority=1
-  gpgcheck=0
-  """
+name=storm-test-source-${params.PLATFORM}
+baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/srpms/${params.PLATFORM}/
+protect=1
+enabled=1
+priority=1
+gpgcheck=0
+"""
             writeFile file: "srpms/storm-test-source-${params.PLATFORM}.repo", text: "${sourceRepoStr}"
           }
 
