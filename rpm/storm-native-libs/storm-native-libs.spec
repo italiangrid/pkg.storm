@@ -14,7 +14,7 @@
 
 
 %global base_version 1.0.5
-%global base_release 1
+%global base_release 2
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
@@ -42,7 +42,7 @@ BuildRequires: libacl-devel
 BuildRequires: lcmaps-without-gsi-devel
 BuildRequires: lcmaps-interface
 BuildRequires: java-1.8.0-openjdk-devel
-BuildRequires: gpfs.base >= 3.3
+BuildRequires: gpfs.base = 3.4.0
 
 %description
 This package provides the StoRM backend interface to posix libraries.
@@ -146,6 +146,8 @@ rm -rf $RPM_BUILD_ROOT
 %postun lcmaps -p /sbin/ldconfig
 
 %changelog
+* Tue May 15 2018 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.5-2
+- Require GPFS-3.4.0 at build time 
 * Tue Jun 06 2017 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.5-1
   Fix for https://issues.infn.it/jira/browse/STOR-945
 * Tue Apr 14 2015 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.4-1
