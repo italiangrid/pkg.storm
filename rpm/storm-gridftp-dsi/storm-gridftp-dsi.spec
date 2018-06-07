@@ -18,8 +18,8 @@
 %define shortname    globus-frontend-server
 %define longname     storm-globus-gridftp-server
 
-%global base_version 1.2.0
-%global base_release 5
+%global base_version 1.2.1
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
@@ -152,6 +152,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_localstatedir}/log/%{prefixname}
 
 %changelog
+
 * Mon May 02 2011 Elisabetta Roncheiri <elisabetta.ronchieri@cnaf.infn.it> - 1.1.0-5.sl5
 - Added BuildRequires in spec file
 - Added src in the src tar file
