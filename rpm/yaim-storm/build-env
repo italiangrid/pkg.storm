@@ -1,6 +1,6 @@
 BUILD_NAME=yaim-storm
 BUILD_REPO=git://github.com/italiangrid/yaim-storm
-BUILD_TAG=fix/STOR-1017
+BUILD_TAG=v4.3.11
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_SPEC_FILE=yaim-storm/rpm/yaim-storm/yaim-storm.spec
 PKG_PREBUILD_SCRIPT=yaim-storm/rpm/yaim-storm/pre-build.sh
