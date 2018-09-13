@@ -1,8 +1,8 @@
 %global base_version 1.39.12
-%global base_release 1
+%global base_release 2
 
 %if %{?build_number:1}%{!?build_number:0}
-%define release_version 0.build.%{build_number}
+%define release_version %{base_release}.build.%{build_number}
 %else
 %define release_version %{base_release}
 %endif
