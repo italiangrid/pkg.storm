@@ -4,5 +4,10 @@ BUILD_TAG=fix/STOR-1023
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_SPEC_FILE=storm-frontend-server/rpm/storm-frontend-server/storm-frontend-server.spec
 PKG_PREBUILD_SCRIPT=storm-frontend-server/rpm/storm-frontend-server/pre-build.sh
-CFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic
-CXXFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic
+CFLAGS=-fsanitize=address -fno-omit-frame-pointer -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic 
+CXXFLAGS=-fsanitize=address -fno-omit-frame-pointer -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic 
+CC=/opt/rh/devtoolset-7/root/usr/bin/cc
+CXX=/opt/rh/devtoolset-7/root/usr/bin/c++
+LD=/opt/rh/devtoolset-7/root/usr/bin/ld
+LDFLAGS=-lasan
+SUDO_BUILD=1

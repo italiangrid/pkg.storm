@@ -50,7 +50,7 @@ for c in ${COMPONENTS}; do
 
   comp_name=$(echo ${c} | tr '[:lower:]' '[:upper:]' | tr '-' '_')
 
-  var_names="BUILD_REPO PKG_PACKAGES_DIR PKG_STAGE_DIR PKG_STAGE_SOURCE_DIR PKG_TAG PKG_REPO PKG_STAGE_RPMS PKG_STAGE_SRPMS UMD_REPO_RPM"
+  var_names="SUDO_BUILD BUILD_REPO PKG_PACKAGES_DIR PKG_STAGE_DIR PKG_STAGE_SOURCE_DIR PKG_TAG PKG_REPO PKG_STAGE_RPMS PKG_STAGE_SRPMS UMD_REPO_RPM"
 
   for v in ${var_names}; do
     c_var_name="${v}_${comp_name}"
