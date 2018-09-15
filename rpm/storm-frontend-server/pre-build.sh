@@ -1,8 +1,6 @@
 #!/bin/bash
 set -ex
 
-yum install -y libuuid-devel boost-devel
-
 rpm --import http://repository.egi.eu/sw/production/umd/UMD-RPM-PGP-KEY
 yum install -y ${UMD_REPO_RPM}
 
@@ -16,8 +14,8 @@ sed -i "s/priority=1/priority=2/" /etc/yum.repos.d/UMD-*-base.repo /etc/yum.repo
 #fi
 
 yum install -y pkgconfig \
-  boost-devel \
   curl-devel \
+  boost148-devel \
   mysql-devel \
   globus-gssapi-gsi-devel \
   globus-gss-assist-devel \

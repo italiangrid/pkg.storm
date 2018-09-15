@@ -4,11 +4,7 @@
 
 %define default_user root
 
-%define boostsuffix %{nil}
-
-%if 0%{?el5}
-%define boostsuffix 141
-%endif
+%define boostsuffix 148
 
 %global base_version 1.8.12
 %global base_release 0
@@ -85,11 +81,7 @@ GPFS from IBM and Lustre from SUN.
 %setup -q -n storm-frontend-server
 
 %build
-%if 0%{?el5}
-%configure --with-boost=/usr/include/boost141 LDFLAGS=-L/usr/lib64/boost141
-%else
-%configure
-%endif
+%configure --with-boost=/usr/include/boost%{boostsuffix} LDFLAGS="$LDFLAGS -L/usr/lib64/boost%{boostsuffix}"
 make
 
 %pre
