@@ -15,7 +15,7 @@ sed -i "s/priority=1/priority=2/" /etc/yum.repos.d/UMD-*-base.repo /etc/yum.repo
 
 yum install -y pkgconfig \
   curl-devel \
-  boost148-devel \
+  boost-devel \
   mysql-devel \
   globus-gssapi-gsi-devel \
   globus-gss-assist-devel \

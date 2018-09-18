@@ -4,8 +4,6 @@
 
 %define default_user root
 
-%define boostsuffix 148
-
 %global base_version 1.8.12
 %global base_release 0
 
@@ -31,7 +29,7 @@ Group:          Applications/System
 AutoReqProv:    yes
 Summary:        The StoRM FrontEnd component
 
-BuildRequires: boost%{boostsuffix}-devel
+BuildRequires: boost-devel
 BuildRequires: curl-devel
 BuildRequires: mysql-devel
 BuildRequires: globus-gssapi-gsi-devel
@@ -47,11 +45,6 @@ BuildRequires: storm-xmlrpc-c-devel
 BuildRequires: argus-pep-api-c
 BuildRequires: argus-pep-api-c-devel
 
-%if 0%{?el5}
-%else
-BuildRequires: libuuid-devel
-%endif
-
 Requires(post):   chkconfig
 Requires(preun):  chkconfig
 Requires(preun):  initscripts
@@ -65,8 +58,8 @@ Requires: storm-xmlrpc-c
 Requires: storm-xmlrpc-c-client
 Requires: voms
 Requires: CGSI-gSOAP
-Requires: boost%{boostsuffix}-program-options
-Requires: boost%{boostsuffix}-thread
+Requires: boost-program-options
+Requires: boost-thread
 Requires: gsoap
 
 %description
@@ -81,7 +74,8 @@ GPFS from IBM and Lustre from SUN.
 %setup -q -n storm-frontend-server
 
 %build
-%configure --with-boost=/usr/include/boost%{boostsuffix} LDFLAGS="$LDFLAGS -L/usr/lib64/boost%{boostsuffix}"
+sh bootstrap
+%configure 
 make
 
 %pre
