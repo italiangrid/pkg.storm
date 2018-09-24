@@ -41,8 +41,15 @@ PING_LOOP_PID=$!
 pushd rpm
 export PKG_NEXUS_REPONAME="travis/${TRAVIS_REPO_SLUG}/$(date -I)/${TRAVIS_JOB_ID}"
 bash build.sh 2>&1 | tee ${BUILD_OUTPUT}
+rc=$?
 popd
-echo "pkg.storm build completed succesfully!"
+if [[ $rc != 0 ]]; then
+  echo "pkg.storm build completed with error(s)"
+else
+  echo "pkg.storm build completed succesfully!"
+fi
 kill ${PING_LOOP_PID}
 
 upload_report
+
+exit $rc
