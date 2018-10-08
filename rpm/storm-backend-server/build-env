@@ -1,5 +1,5 @@
 BUILD_NAME=storm-backend-server
 BUILD_REPO=git://github.com/italiangrid/storm
-BUILD_TAG=v1.11.13
+BUILD_TAG=v1.11.14
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_SPEC_FILE=storm-backend-server/rpm/storm-backend-server/storm-backend-server.spec

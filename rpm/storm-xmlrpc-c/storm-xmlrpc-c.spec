@@ -1,4 +1,4 @@
-%global base_version 1.33.0
+%global base_version 1.39.12
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -201,6 +201,12 @@ rm -rf $RPM_BUILD_ROOT
 %exclude /usr/man/storm/man1/*
 
 %changelog
+* Tue Jun 5 2018 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.39.12-1
+- Bumped version to 1.39.12-1
+
+* Thu May 10 2018 Andrea Ceccanti <andrea.ceccanti@cnaf.infn.it> - 1.39.12-0
+- Repackaged latest super-stable release
+
 * Mon Jun 22 2015 Andrea Ceccanti <andrea.ceccanti@cnaf.infn.it> - 1.33.0-1
 - Repackaged latest super-stable release
 

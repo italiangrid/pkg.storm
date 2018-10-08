@@ -5,9 +5,9 @@ set -a
 source ./build.env
 set +a
 
-ALL_COMPONENTS="storm-backend-server \
+ALL_COMPONENTS="storm-xmlrpc \
+                storm-backend-server \
                 storm-frontend-server \
-                storm-xmlrpc-c \
                 storm-webdav \
                 storm-client \
                 yaim-storm \
@@ -18,6 +18,7 @@ ALL_COMPONENTS="storm-backend-server \
                 emi-storm-backend-mp \
                 emi-storm-frontend-mp \
                 emi-storm-globus-gridftp-mp"
+
 PLATFORM=${PLATFORM:-centos6}
 COMPONENTS=${COMPONENTS:-${ALL_COMPONENTS}}
 

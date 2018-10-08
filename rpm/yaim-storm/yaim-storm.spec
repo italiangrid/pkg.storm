@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-%global base_version 4.3.10
+%global base_version 4.3.11
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}

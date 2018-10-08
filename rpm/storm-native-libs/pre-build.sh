@@ -1,10 +1,9 @@
 #!/bin/bash
 set -ex
 
-# install addictional packages
 yum -y install pkgconfig \
   swig \
   libacl-devel \
-  gpfs.base \
+  gpfs.base-3.4.0 \
   lcmaps-without-gsi-devel \
   lcmaps-interface

@@ -10,7 +10,7 @@
 %define boostsuffix 141
 %endif
 
-%global base_version 1.8.10
+%global base_version 1.8.11
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -234,6 +234,12 @@ fi;
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Tue Jun 5 2018 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.8.11-1
+- Bumped packaging version to 1.8.11-1
+
+* Sun Mar 18 2018 Andrea Ceccanti <andrea.ceccanti@cnaf.infn.it> - 1.8.11-0
+- Bumped packaging version to 1.8.11-0
+
 * Mon Apr 11 2016 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.8.10-0
 - Bumped packaging version to 1.8.10-0
 
