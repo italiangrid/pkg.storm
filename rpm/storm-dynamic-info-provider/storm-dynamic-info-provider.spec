@@ -97,6 +97,9 @@ rm -rf %{_bdiidir}/provider/storm-glue2-provider
 rm -rf %{_bdiidir}/plugin/storm-glue2-plugin
 
 %changelog
+* Tue Oct 9 2018 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.1-0
+  Bumped version to 1.8.1-0
+
 * Tue Jan 9 2018 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.0-1
   Bumped version to 1.8.0 and added command get-report-json
 
