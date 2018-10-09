@@ -19,8 +19,8 @@
 %define _confdir /etc/storm/info-provider
 %define _bdiidir /var/lib/bdii/gip
 
-%global base_version 1.8.0
-%global base_release 1
+%global base_version 1.8.1
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
