@@ -110,16 +110,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_localstatedir}/log/%{prefixname}
 
-
 %post
 # when installing
-if [ "$1" = "1" ] ; then
+if [ "$1" = 1 ] ; then
   # add the service to chk
   /sbin/chkconfig --add %{name}
   # create mysql-connector-java jar link
   /bin/ln -sf /usr/share/java/mysql-connector-java.jar %{_javadir}/%{name}/mysql-connector-java.jar
 # when upgrading
-elif [ $1 -gt 1 ] ; then
+elif [ "$1" -gt 1 ] ; then
   # create mysql-connector-java jar link if it does not exist
   if [ ! -L %{_javadir}/%{name}/mysql-connector-java.jar ] ; then
     /bin/ln -sf /usr/share/java/mysql-connector-java.jar %{_javadir}/%{name}/mysql-connector-java.jar
@@ -128,8 +127,11 @@ elif [ $1 -gt 1 ] ; then
   if [ -L %{_javadir}/%{name}/mysql-connector-java-5.1.12.jar ] ; then
     /bin/unlink %{_javadir}/%{name}/mysql-connector-java-5.1.12.jar
   fi
+  # kill processes
+  pslist=$( ps -ef | grep java | grep storm-backend-server | awk '{print $2}' | tr '\n' ' ' | sed -e s/\ $// )
+  [ -z "$pslist" ] && echo "no running processes found" || kill -9 $pslist
   # start the service
-  /sbin/service %{name} restart >/dev/null 2>&1 || :
+  /sbin/service %{name} restart
 fi;
 
 %preun
