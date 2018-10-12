@@ -15,11 +15,11 @@
 ## Turn off meaningless jar repackaging
 %define __jar_repack 0
 
-%global base_version 1.0.5
-%global base_release 1
+%global base_version 1.1.0
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
-%define release_version 0.build.%{build_number}
+%define release_version %{base_release}.build.%{build_number}
 %else
 %define release_version %{base_release}
 %endif
@@ -60,17 +60,25 @@ IBM and Lustre from SUN.
 This package provides the StoRM WebDAV server.
 
 %prep
-%setup -q -n %{name}
+# %setup -q -n %{name}
 
 %build
+
+## This is needed since the storm-webdav git-commit-id maven plugin
+## requires the .git folder to extract info, and such folder is not
+## available in the source archive produced by pkg.base.
+## As a 'temporary' workaround we build directly from the sources folder
+cd $HOME/sources/%{name}
 mvn -DskipTests -U clean package
 
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
-tar -C $RPM_BUILD_ROOT -xvzf target/%{name}-server.tar.gz
+tar -C $RPM_BUILD_ROOT -xvzf $HOME/sources/%{name}/target/%{name}-server.tar.gz
 
 %clean
+cd $HOME/sources/%{name}
+mvn clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
@@ -82,7 +90,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %config(noreplace) %{_sysconfdir}/%{slash_name}/logback.xml
-%config(noreplace) %{_sysconfdir}/%{slash_name}/logback-access.xml
 %{_sysconfdir}/%{slash_name}/README.md
 
 %dir %{_sysconfdir}/%{slash_name}/sa.d
@@ -122,6 +129,9 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
+
+* Fri Oct 12 2018 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.1.0-0
+- Packaging for version 1.1.0
 
 * Mon Sep 1 2014 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.0-0
 - Initial packaging
