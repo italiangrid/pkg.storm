@@ -1,38 +1,58 @@
-pipeline {
-  agent { label 'docker' }
+def label = "worker-${UUID.randomUUID().toString()}"
+def dataContainerName = "stage-area-pkg.storm-${env.JOB_BASE_NAME}-${env.BUILD_NUMBER}"
 
-  options {
-    timeout(time: 1, unit: 'HOURS')
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-  }
+podTemplate(
+    label: label,
+    cloud: 'Kube mwdevel',
+    nodeSelector: 'zone=ci-test',
+    containers: [
+        containerTemplate(
+          name: 'pkg-storm-runner',
+          image: 'italiangrid/kube-docker-runner:latest',
+          command: 'cat',
+          ttyEnabled: true,
+          resourceRequestCpu: '1',
+          resourceLimitCpu: '1.5',
+          resourceRequestMemory: '1Gi',
+          resourceLimitMemory: '1.5Gi'
+        )
+    ],
+    volumes: [
+        hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
+        secretVolume(mountPath: '/home/jenkins/.docker', secretName: 'registry-auth-basic'),
+        secretVolume(mountPath: '/home/jenkins/.ssh', secretName: 'jenkins-ssh-keys'),
+        persistentVolumeClaim(mountPath: '/srv/scratch', claimName: 'scratch-area-claim', readOnly: false)
+    ],
+    imagePullSecrets: ['jenkins-docker-registry'],
+    envVars: [
+        envVar(key: 'DATA_CONTAINER_NAME', value: dataContainerName)
+    ]
+) {
 
-  triggers { cron('@daily') }
+    parameters {
+      string(name: 'PLATFORM', defaultValue: 'centos6', description: 'OS Platform')
+    }
 
-  parameters {
-    string(name: 'PLATFORM', defaultValue: 'centos6', description: 'OS Platform')
-  }
+    node(label) {
 
-  stages{
-    stage('package') {
-      environment {
-        DATA_CONTAINER_NAME = "stage-area-pkg.storm-${env.JOB_BASE_NAME}-${env.BUILD_NUMBER}"
-        PLATFORM = "${params.PLATFORM}"
-      }
-      steps {
-        container('docker-runner') {
-          cleanWs notFailBuild: true
-          checkout scm
-          sh 'docker create -v /stage-area --name ${DATA_CONTAINER_NAME} italiangrid/pkg.base:centos6'
-          sh '''
-          pushd rpm
-          ls -al
-          sh build.sh
-          popd
-          '''
-          sh 'docker cp ${DATA_CONTAINER_NAME}:/stage-area rpms'
+        try {
+            stage('package') {
+                container('pkg-storm-runner') {
 
-          script {
-            def repoStr = """[storm-test-${params.PLATFORM}]
+                    script {
+                        cleanWs notFailBuild: true
+                        checkout scm
+                        sh "docker create -v /stage-area --name ${DATA_CONTAINER_NAME} italiangrid/pkg.base:centos6"
+                        sh '''
+                        pushd rpm
+                        ls -al
+                        sh build.sh
+                        popd
+                        '''
+                        sh "docker cp ${DATA_CONTAINER_NAME}:/stage-area rpms"
+
+                        script {
+                          def repoStr = """[storm-test-${params.PLATFORM}]
 name=storm-test-${params.PLATFORM}
 baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/rpms/${params.PLATFORM}/
 protect=1
@@ -40,13 +60,12 @@ enabled=1
 priority=1
 gpgcheck=0
 """
-            writeFile file: "rpms/storm-test-${params.PLATFORM}.repo", text: "${repoStr}"
-          }
+                          writeFile file: "rpms/storm-test-${params.PLATFORM}.repo", text: "${repoStr}"
+                        }
 
-          sh 'docker cp ${DATA_CONTAINER_NAME}:/stage-area-source srpms'
+                        sh "docker cp ${DATA_CONTAINER_NAME}:/stage-area-source srpms"
 
-          script {
-            def sourceRepoStr = """[storm-test-source-${params.PLATFORM}]
+                        def sourceRepoStr = """[storm-test-source-${params.PLATFORM}]
 name=storm-test-source-${params.PLATFORM}
 baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/srpms/${params.PLATFORM}/
 protect=1
@@ -54,27 +73,26 @@ enabled=1
 priority=1
 gpgcheck=0
 """
-            writeFile file: "srpms/storm-test-source-${params.PLATFORM}.repo", text: "${sourceRepoStr}"
-          }
+                        writeFile file: "srpms/storm-test-source-${params.PLATFORM}.repo", text: "${sourceRepoStr}"
 
-          sh 'docker rm -f ${DATA_CONTAINER_NAME}'
+                        sh "docker rm -f ${DATA_CONTAINER_NAME}"
+                    }
 
-          archiveArtifacts 'rpms/**, srpms/**'
+                    archiveArtifacts 'rpms/**, srpms/**'
+                }
+            }
+
+        } catch (error) {
+
+            slackSend color: 'danger', message: "${env.JOB_NAME} - #${env.BUILD_ID} Failure (<${env.BUILD_URL}|Open>)"
+
+        } finally {
+
+            script {
+                if('SUCCESS'.equals(currentBuild.result)) {
+                    slackSend color: 'good', message: "${env.JOB_NAME} - #${env.BUILD_ID} Back to normal (<${env.BUILD_URL}|Open>)"
+                }
+            }
         }
-      }
     }
-  }
-
-  post {
-    failure {
-      slackSend color: 'danger', message: "${env.JOB_NAME} - #${env.BUILD_ID} Failure (<${env.BUILD_URL}|Open>)"
-    }
-    changed {
-      script{
-        if('SUCCESS'.equals(currentBuild.result)) {
-          slackSend color: 'good', message: "${env.JOB_NAME} - #${env.BUILD_ID} Back to normal (<${env.BUILD_URL}|Open>)"
-        }
-      }
-    }
-  }
 }
