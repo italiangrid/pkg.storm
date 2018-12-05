@@ -1,43 +1,37 @@
-def label = "worker-${UUID.randomUUID().toString()}"
-def dataContainerName = "stage-area-pkg.storm-${env.JOB_BASE_NAME}-${env.BUILD_NUMBER}"
+def dataContainerName = "stage-area-${env.JOB_BASE_NAME}-${env.BUILD_NUMBER}"
 
-podTemplate(
-    label: label,
-    cloud: 'Kube mwdevel',
-    nodeSelector: 'zone=ci-test',
-    containers: [
-        containerTemplate(
-          name: 'pkg-storm-runner',
-          image: 'italiangrid/kube-docker-runner:latest',
-          command: 'cat',
-          ttyEnabled: true,
-          resourceRequestCpu: '1',
-          resourceLimitCpu: '1.5',
-          resourceRequestMemory: '1Gi',
-          resourceLimitMemory: '1.5Gi'
-        )
-    ],
-    volumes: [
-        hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
-        secretVolume(mountPath: '/home/jenkins/.docker', secretName: 'registry-auth-basic'),
-        secretVolume(mountPath: '/home/jenkins/.ssh', secretName: 'jenkins-ssh-keys'),
-        persistentVolumeClaim(mountPath: '/srv/scratch', claimName: 'scratch-area-claim', readOnly: false)
-    ],
-    imagePullSecrets: ['jenkins-docker-registry'],
-    envVars: [
-        envVar(key: 'DATA_CONTAINER_NAME', value: dataContainerName)
-    ]
-) {
-
-    parameters {
-      string(name: 'PLATFORM', defaultValue: 'centos6', description: 'OS Platform')
+pipeline {
+    agent {
+        kubernetes {
+            label "pkg-storm-${env.JOB_BASE_NAME}-${env.BUILD_NUMBER}"
+            cloud 'Kube mwdevel'
+            defaultContainer 'jnlp'
+            yamlFile 'jenkins/pod.yaml'
+        }
     }
 
-    node(label) {
+    options {
+        timeout(time: 1, unit: 'HOURS')
+        buildDiscarder(logRotator(numToKeepStr: '5'))
+    }
 
-        try {
-            stage('package') {
-                container('pkg-storm-runner') {
+    triggers { cron('@daily') }
+
+    parameters {
+        string(name: 'PLATFORM', defaultValue: 'centos6', description: 'OS Platform')
+    }
+
+    environment {
+        DATA_CONTAINER_NAME = "${dataContainerName}"
+        PLATFORM = "${params.PLATFORM}"
+    }
+
+    stages {
+        stage('Run') {
+            steps {
+                container('kube-docker-runner') {
+                    sh 'env | grep DATA_CONTAINER_NAME'
+                    sh 'env | grep PLATFORM'
 
                     script {
                         cleanWs notFailBuild: true
@@ -52,7 +46,7 @@ podTemplate(
                         sh "docker cp ${DATA_CONTAINER_NAME}:/stage-area rpms"
 
                         script {
-                          def repoStr = """[storm-test-${params.PLATFORM}]
+                            def repoStr = """[storm-test-${params.PLATFORM}]
 name=storm-test-${params.PLATFORM}
 baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/rpms/${params.PLATFORM}/
 protect=1
@@ -60,7 +54,7 @@ enabled=1
 priority=1
 gpgcheck=0
 """
-                          writeFile file: "rpms/storm-test-${params.PLATFORM}.repo", text: "${repoStr}"
+                            writeFile file: "rpms/storm-test-${params.PLATFORM}.repo", text: "${repoStr}"
                         }
 
                         sh "docker cp ${DATA_CONTAINER_NAME}:/stage-area-source srpms"
@@ -81,13 +75,13 @@ gpgcheck=0
                     archiveArtifacts 'rpms/**, srpms/**'
                 }
             }
-
-        } catch (error) {
-
+        }
+    }
+    post {
+        failure {
             slackSend color: 'danger', message: "${env.JOB_NAME} - #${env.BUILD_ID} Failure (<${env.BUILD_URL}|Open>)"
-
-        } finally {
-
+        }
+        changed {
             script {
                 if('SUCCESS'.equals(currentBuild.result)) {
                     slackSend color: 'good', message: "${env.JOB_NAME} - #${env.BUILD_ID} Back to normal (<${env.BUILD_URL}|Open>)"
