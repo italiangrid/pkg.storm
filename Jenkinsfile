@@ -15,8 +15,6 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
 
-    triggers { cron('@daily') }
-
     parameters {
         string(name: 'PLATFORM', defaultValue: 'centos6', description: 'OS Platform')
     }
