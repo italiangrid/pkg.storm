@@ -18,9 +18,14 @@ pipeline {
 
     triggers { cron('@daily') }
 
+    parameters {
+        string(name: 'INCLUDE_BUILD_NUMBER', defaultValue: '1', description: 'OS Platform')
+    }
+
     environment {
         DATA_CONTAINER_NAME = "${dataContainerName}"
         PLATFORM = "centos7"
+        INCLUDE_BUILD_NUMBER = "{params.INCLUDE_BUILD_NUMBER}"
     }
 
     stages {
