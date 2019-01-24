@@ -1,9 +1,11 @@
-def dataContainerName = "stage-area-${env.JOB_BASE_NAME}-${env.BUILD_NUMBER}"
+def jobBaseName = "${env.JOB_BASE_NAME}".replaceAll("[^a-zA-Z0-9]+","")
+def dataContainerName = "stage-area-${jobBaseName}-${env.BUILD_NUMBER}"
+def podLabel = "pkg-storm-${jobBaseName}-${env.BUILD_NUMBER}"
 
 pipeline {
     agent {
         kubernetes {
-            label "pkg-storm-${env.JOB_BASE_NAME}-${env.BUILD_NUMBER}"
+            label "${podLabel}"
             cloud 'Kube mwdevel'
             defaultContainer 'jnlp'
             yamlFile 'jenkins/pod.yaml'
