@@ -17,9 +17,14 @@ pipeline {
 
     triggers { cron('@daily') }
 
+    parameters {
+        string(name: 'INCLUDE_BUILD_NUMBER', defaultValue: '1', description: 'OS Platform')
+    }
+
     environment {
         DATA_CONTAINER_NAME = "${dataContainerName}"
-        PLATFORM = "centos7"
+        PLATFORM = "centos6"
+        INCLUDE_BUILD_NUMBER = "{params.INCLUDE_BUILD_NUMBER}"
     }
 
     stages {
@@ -32,7 +37,7 @@ pipeline {
                     script {
                         cleanWs notFailBuild: true
                         checkout scm
-                        sh "docker create -v /stage-area --name ${DATA_CONTAINER_NAME} italiangrid/pkg.base:centos6"
+                        sh "docker create -v /stage-area --name ${DATA_CONTAINER_NAME} italiangrid/pkg.base:${PLATFORM}"
                         sh '''
                         pushd rpm
                         ls -al
