@@ -25,7 +25,7 @@ pipeline {
     environment {
         DATA_CONTAINER_NAME = "${dataContainerName}"
         PLATFORM = "centos7"
-        INCLUDE_BUILD_NUMBER = "{params.INCLUDE_BUILD_NUMBER}"
+        INCLUDE_BUILD_NUMBER = "${params.INCLUDE_BUILD_NUMBER}"
     }
 
     stages {
