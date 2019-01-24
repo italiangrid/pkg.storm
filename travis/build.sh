@@ -32,7 +32,7 @@ trap 'error_handler' ERR
 
 # Setup stage area container
 docker create -v /stage-area --name ${DATA_CONTAINER_NAME} \
-  italiangrid/pkg.base:centos6
+  italiangrid/pkg.base:centos7
 
 bash -c "while true; do echo \$(date) - building ...; sleep $PING_SLEEP; done" &
 
