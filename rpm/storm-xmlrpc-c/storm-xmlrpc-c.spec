@@ -209,6 +209,3 @@ rm -rf $RPM_BUILD_ROOT
 
 * Mon Jun 22 2015 Andrea Ceccanti <andrea.ceccanti@cnaf.infn.it> - 1.33.0-1
 - Repackaged latest super-stable release
-
-* Mon Sep 27 2011 Elisabetta Ronchieri <elisabetta.ronchieri@cnaf.infn.it> - %version-%release
-- Add spec to create package
