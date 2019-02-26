@@ -5,7 +5,7 @@ set -a
 source ./build.env
 set +a
 
-ALL_COMPONENTS="storm-xmlrpc \
+ALL_COMPONENTS="storm-xmlrpc-c \
                 storm-backend-server \
                 storm-frontend-server \
                 storm-webdav \
