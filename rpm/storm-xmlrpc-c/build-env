@@ -7,10 +7,10 @@ PKG_SKIP_SOURCE_TARBALL_CREATION=y
 TARBALL_VERSION=1.39.12
 PKG_PREBUILD_SCRIPT=${BUILD_NAME}/rpm/${BUILD_NAME}/pre-build.sh
 PKG_SPEC_FILE=${BUILD_NAME}/rpm/${BUILD_NAME}/${BUILD_NAME}.spec
-CFLAGS=-fsanitize=address -fno-omit-frame-pointer -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic 
-CXXFLAGS=-fsanitize=address -fno-omit-frame-pointer -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic 
-CC=/opt/rh/devtoolset-7/root/usr/bin/cc
-CXX=/opt/rh/devtoolset-7/root/usr/bin/c++
-LD=/opt/rh/devtoolset-7/root/usr/bin/ld
-LDFLAGS=-lasan
-SUDO_BUILD=1
+#CFLAGS=-fsanitize=address -fno-omit-frame-pointer -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic 
+#CXXFLAGS=-fsanitize=address -fno-omit-frame-pointer -O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -m64 -mtune=generic 
+#CC=/opt/rh/devtoolset-7/root/usr/bin/cc
+#CXX=/opt/rh/devtoolset-7/root/usr/bin/c++
+#LD=/opt/rh/devtoolset-7/root/usr/bin/ld
+#LDFLAGS=-lasan
+#SUDO_BUILD=1
