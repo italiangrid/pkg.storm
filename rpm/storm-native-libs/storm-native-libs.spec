@@ -17,7 +17,7 @@
 %global base_release 2
 
 %if %{?build_number:1}%{!?build_number:0}
-%define release_version 0.build.%{build_number}
+%define release_version %{base_release}.build.%{build_number}
 %else
 %define release_version %{base_release}
 %endif
@@ -147,7 +147,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %changelog
 * Tue May 15 2018 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.5-2
-- Require GPFS-3.4.0 at build time 
+- Require GPFS-3.4.0 at build time
 * Tue Jun 06 2017 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.5-1
   Fix for https://issues.infn.it/jira/browse/STOR-945
 * Tue Apr 14 2015 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.4-1

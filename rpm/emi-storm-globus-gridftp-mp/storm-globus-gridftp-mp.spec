@@ -2,7 +2,7 @@
 %global base_release 2
 
 %if %{?build_number:1}%{!?build_number:0}
-%define release_version 2.build.%{build_number}
+%define release_version %{base_release}.build.%{build_number}
 %else
 %define release_version %{base_release}
 %endif

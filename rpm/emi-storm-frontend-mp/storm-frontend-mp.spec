@@ -2,7 +2,7 @@
 %global base_release 2
 
 %if %{?build_number:1}%{!?build_number:0}
-%define release_version 2.build.%{build_number}
+%define release_version %{base_release}.build.%{build_number}
 %else
 %define release_version %{base_release}
 %endif
@@ -36,6 +36,6 @@ StoRM Frontend metapackage
 %files
 
 %changelog
- 
+
 * Thu Jun 05 2017 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.1.0-2
 - Moved to pkg.storm
