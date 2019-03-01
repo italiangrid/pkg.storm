@@ -152,7 +152,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_localstatedir}/log/%{prefixname}
 
 %changelog
-* Fri Mar 1 2018 Andrea Ceccanti <andrea.ceccanti@cnaf.infn.it> - 1.2.2-0
+* Fri Mar 1 2019 Andrea Ceccanti <andrea.ceccanti@cnaf.infn.it> - 1.2.2-0
 - Bumped version to 1.2.2-0
 
 * Tue Jul 24 2018 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.2.1-1
