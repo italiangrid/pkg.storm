@@ -82,7 +82,7 @@ mvn clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%attr(755,root,root) %{_sysconfdir}/init.d/%{name}
+%attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service
 
 %defattr(644,root,root,755)
 %dir %{_javadir}/%{name}
