@@ -15,8 +15,8 @@
 ## Turn off meaningless jar repackaging
 %define __jar_repack 0
 
-%global base_version 1.1.0
-%global base_release 1
+%global base_version 1.1.1
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -91,7 +91,10 @@ rm -rf $RPM_BUILD_ROOT
 %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %config(noreplace) %{_sysconfdir}/%{slash_name}/logback.xml
 %config(noreplace) %{_sysconfdir}/%{slash_name}/logback-access.xml
+%config(noreplace) %{_sysconfdir}/%{slash_name}/config/application.yml
+
 %{_sysconfdir}/%{slash_name}/README.md
+%{_sysconfdir}/%{slash_name}/config/README.md
 
 %dir %{_sysconfdir}/%{slash_name}/sa.d
 %{_sysconfdir}/%{slash_name}/sa.d/README.md
@@ -130,6 +133,8 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
+* Thu Mar 28 2019 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.1.1-0
+- Packaging for version 1.1.1
 
 * Fri Oct 12 2018 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.1.0-0
 - Packaging for version 1.1.0
