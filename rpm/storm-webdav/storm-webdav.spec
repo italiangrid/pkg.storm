@@ -97,6 +97,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/%{slash_name}/sa.d/README.md
 %{_sysconfdir}/%{slash_name}/sa.d/*.template
 
+%dir %{_sysconfdir}/%{slash_name}/config
+%{_sysconfdir}/%{slash_name}/config/README.md
+%{_sysconfdir}/%{slash_name}/config/application.yml
+
 %dir %{_sysconfdir}/%{slash_name}/vo-mapfiles.d
 %{_sysconfdir}/%{slash_name}/vo-mapfiles.d/README.md
 
