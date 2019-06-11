@@ -15,8 +15,8 @@
 ## Turn off meaningless jar repackaging
 %define __jar_repack 0
 
-%global base_version 1.1.0
-%global base_release 1
+%global base_version 1.2.0
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
@@ -75,6 +75,11 @@ mvn -DskipTests -U clean package
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 tar -C $RPM_BUILD_ROOT -xvzf $HOME/sources/%{name}/target/%{name}-server.tar.gz
+%if %{el7}
+  rm -f $RPM_BUILD_ROOT%{_sysconfdir}/init.d/%{name}
+%else
+  rm -f $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service
+%endif
 
 %clean
 cd $HOME/sources/%{name}
@@ -82,7 +87,12 @@ mvn clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service
+
+%if %{el7}
+  %attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service
+%else
+  %attr(755,root,root) %{_sysconfdir}/init.d/%{name}
+%endif
 
 %defattr(644,root,root,755)
 %dir %{_javadir}/%{name}
@@ -134,6 +144,9 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
+
+* Tue Jun 11 2019 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.2.0-0
+- Packaging for version 1.2.0
 
 * Fri Oct 12 2018 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.1.0-0
 - Packaging for version 1.1.0
