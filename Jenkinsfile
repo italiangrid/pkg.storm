@@ -30,7 +30,7 @@ pipeline {
     stages {
         stage('Run') {
             steps {
-                container('kube-docker-runner') {
+                container('runner') {
                     sh 'env | grep DATA_CONTAINER_NAME'
                     sh 'env | grep PLATFORM'
 

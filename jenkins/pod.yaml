@@ -22,7 +22,7 @@ spec:
         persistentVolumeClaim:
             claimName: scratch-area-claim
     containers:
-      - name: kube-docker-runner
+      - name: runner
         image: cloud-vm114.cloud.cnaf.infn.it/italiangrid/kube-docker-runner:latest
         command:
           - cat
