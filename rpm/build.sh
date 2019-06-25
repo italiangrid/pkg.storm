@@ -1,11 +1,11 @@
 #!/bin/bash
 set -ex
 
-set -a 
+set -a
 source ./build.env
 set +a
 
-ALL_COMPONENTS="storm-xmlrpc \
+ALL_COMPONENTS="storm-xmlrpc-c \
                 storm-backend-server \
                 storm-frontend-server \
                 storm-webdav \
@@ -22,25 +22,44 @@ ALL_COMPONENTS="storm-xmlrpc \
 PLATFORM=${PLATFORM:-centos6}
 COMPONENTS=${COMPONENTS:-${ALL_COMPONENTS}}
 
-UMD_REPO_RPM=${UMD_REPO_RPM:-"http://repository.egi.eu/sw/production/umd/3/sl6/x86_64/updates/umd-release-3.14.4-1.el6.noarch.rpm"}
+UMD_REPO_RPM=${UMD_REPO_RPM:-"http://repository.egi.eu/sw/production/umd/4/sl6/x86_64/updates/umd-release-4.1.3-1.el6.noarch.rpm"}
 
 pkg_base_image_name="italiangrid/pkg.base:${PLATFORM}"
 
 if [ -z "${SKIP_PKG_BASE_PULL_IMAGE}" ]; then
  docker pull ${pkg_base_image_name}
-fi 
+fi
 
 if [ -n "${USE_DOCKER_REGISTRY}" ]; then
   pkg_base_image_name="${DOCKER_REGISTRY_HOST}/${pkg_base_image_name}"
 fi
 
-if [ -z ${MVN_REPO_CONTAINER_NAME+x} ]; then
-  mvn_repo_name=$(basename $(mktemp -u -t mvn-repo-XXXXX))
-  # Create mvn repo container
-  docker create -v /m2-repository --name ${mvn_repo_name} ${pkg_base_image_name}
+if [ -z ${MVN_REPO_VOLUME_NAME+x} ]; then
+  mvn_volume_name=$(basename $(mktemp -u -t mvn-repo.XXXXX))
+  # Create mvn repo volume
+  docker volume create ${mvn_volume_name}
 else
-  mvn_repo_name=${MVN_REPO_CONTAINER_NAME}
+  mvn_volume_name=${MVN_REPO_VOLUME_NAME}
 fi
+
+if [ -z ${DATA_VOLUME_NAME+x} ]; then
+  data_volume_name=$(basename $(mktemp -u -t data-container.XXXXX))
+  # Create data container volume
+  docker volume create ${data_volume_name}
+else
+  data_volume_name=${DATA_VOLUME_NAME}
+fi
+
+if [ -z ${SOURCE_DATA_VOLUME_NAME+x} ]; then
+  source_data_volume_name=$(basename $(mktemp -u -t source-data-container.XXXXX))
+  # Create data container volume
+  docker volume create ${source_data_volume_name}
+else
+  source_data_volume_name=${SOURCE_DATA_VOLUME_NAME}
+fi
+
+# Container label
+label=$(basename $(mktemp -u -t pkg-storm.XXXXX))
 
 # Run packaging
 for c in ${COMPONENTS}; do
@@ -66,14 +85,31 @@ for c in ${COMPONENTS}; do
     build_env="${build_env} -e BUILD_NUMBER=${BUILD_NUMBER:-test}"
   fi
 
-  if [ -n "${DATA_CONTAINER_NAME}" ]; then
-    volumes_conf="${volumes_conf} --volumes-from ${DATA_CONTAINER_NAME}"
-  fi
-
-  docker run -i --volumes-from ${mvn_repo_name} \
-    ${volumes_conf} \
+  docker run -i -v ${mvn_volume_name}:/m2-repository \
+    -v ${data_volume_name}:/stage-area \
+    -v ${source_data_volume_name}:/stage-area-source \
     ${DOCKER_ARGS} \
     --env-file ${build_env_file} \
     ${build_env} \
+    --label ${label} \
     ${pkg_base_image_name}
 done
+
+docker container prune -f --filter label=${label}
+
+CID=`docker run -d -v ${data_volume_name}:/stage-area -v ${source_data_volume_name}:/stage-area-source busybox true`
+docker cp ${CID}:/stage-area rpms
+docker cp ${CID}:/stage-area-source srpms
+docker rm -f ${CID}
+
+if [ -z "${MVN_REPO_VOLUME_NAME+x}" ]; then
+  docker volume rm -f ${mvn_volume_name}
+fi
+
+if [ -z "${DATA_VOLUME_NAME+x}" ]; then
+  docker volume rm -f ${data_volume_name}
+fi
+
+if [ -z "${SOURCE_DATA_VOLUME_NAME+x}" ]; then
+  docker volume rm -f ${source_data_volume_name}
+fi
