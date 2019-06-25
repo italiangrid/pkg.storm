@@ -103,13 +103,13 @@ docker cp ${CID}:/stage-area-source srpms
 docker rm -f ${CID}
 
 if [ -z "${MVN_REPO_VOLUME_NAME+x}" ]; then
-  docker volume rm -f ${MVN_REPO_VOLUME_NAME}
+  docker volume rm -f ${mvn_volume_name}
 fi
 
 if [ -z "${DATA_VOLUME_NAME+x}" ]; then
-  docker volume rm -f ${DATA_VOLUME_NAME}
+  docker volume rm -f ${data_volume_name}
 fi
 
 if [ -z "${SOURCE_DATA_VOLUME_NAME+x}" ]; then
-  docker volume rm -f ${SOURCE_DATA_VOLUME_NAME}
+  docker volume rm -f ${source_data_volume_name}
 fi
