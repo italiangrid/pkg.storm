@@ -85,6 +85,8 @@ for c in ${COMPONENTS}; do
     build_env="${build_env} -e BUILD_NUMBER=${BUILD_NUMBER:-test}"
   fi
 
+  c_name="${label}_${c}"
+
   docker run -i -v ${mvn_volume_name}:/m2-repository \
     -v ${data_volume_name}:/stage-area \
     -v ${source_data_volume_name}:/stage-area-source \
@@ -92,10 +94,12 @@ for c in ${COMPONENTS}; do
     --env-file ${build_env_file} \
     ${build_env} \
     --label ${label} \
+    --name ${c_name} \
     ${pkg_base_image_name}
-done
 
-docker container prune -f --filter label=${label}
+  docker rm -f ${c_name}
+
+done
 
 CID=`docker run -d -v ${data_volume_name}:/stage-area -v ${source_data_volume_name}:/stage-area-source busybox true`
 docker cp ${CID}:/stage-area rpms
