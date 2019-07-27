@@ -16,7 +16,7 @@
 %define __jar_repack 0
 
 %global base_version 1.2.0
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -133,6 +133,9 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
+* Fri Jul 26 2019 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.2.0-1
+- Bumped version to 1.2.0-1
+
 * Fri Mar 29 2019 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.2.0-0
 - Packaging for version 1.2.0
 
