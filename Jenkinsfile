@@ -1,13 +1,9 @@
 def dataContainerName = "stage-area-${env.JOB_BASE_NAME}-${env.BUILD_NUMBER}"
 
 pipeline {
+
     agent {
-        kubernetes {
-            label "pkg-storm-${env.JOB_BASE_NAME}-${env.BUILD_NUMBER}"
-            cloud 'Kube mwdevel'
-            defaultContainer 'jnlp'
-            yamlFile 'jenkins/pod.yaml'
-        }
+        label 'deployment-test'
     }
 
     options {
