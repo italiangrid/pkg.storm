@@ -18,11 +18,11 @@
 %define shortname    globus-frontend-server
 %define longname     storm-globus-gridftp-server
 
-%global base_version 1.2.1
+%global base_version 1.2.2
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
-%define release_version %{base_release}.build.%{build_number}
+%define release_version 0.build.%{build_number}
 %else
 %define release_version %{base_release}
 %endif
@@ -83,6 +83,13 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm -f $RPM_BUILD_ROOT/%{libtype}/libglobus_gridftp_server_StoRM.la
 rm -f $RPM_BUILD_ROOT/%{libtype}/libglobus_gridftp_server_StoRM.a
 mkdir -p $RPM_BUILD_ROOT/%{_localstatedir}/log/%{prefixname}
+%if %{el7}
+  mkdir -p $RPM_BUILD_ROOT/etc/systemd/system
+  cp etc/systemd/storm-globus-gridftp.service $RPM_BUILD_ROOT/etc/systemd/system/storm-globus-gridftp.service
+  rm -rf $RPM_BUILD_ROOT/etc/init.d/storm-globus-gridftp
+%endif
+
+
 
 %post
 #during an install, the value of the argument passed in is 1
@@ -136,7 +143,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-%{_sysconfdir}/init.d/storm-globus-gridftp
+%if %{el7}
+  %attr(644,root,root) %{_sysconfdir}/systemd/system/storm-globus-gridftp.service
+%else
+  %{_sysconfdir}/init.d/storm-globus-gridftp
+%endif
+
 %config(noreplace) %attr(644,root,root) %{_sysconfdir}/logrotate.d/storm-globus-gridftp
 
 %{libtype}/libglobus_gridftp_server_StoRM.so
@@ -152,6 +164,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_localstatedir}/log/%{prefixname}
 
 %changelog
+* Fri Jul 26 2019 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.2.2-1
+- Bumped version to 1.2.2-1
+
+* Fri Mar 1 2019 Andrea Ceccanti <andrea.ceccanti@cnaf.infn.it> - 1.2.2-0
+- Bumped version to 1.2.2-0
 
 * Tue Jul 24 2018 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.2.1-1
 - Bumped version to 1.2.1-1
