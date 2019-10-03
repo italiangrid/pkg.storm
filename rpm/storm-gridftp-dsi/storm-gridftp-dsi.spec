@@ -63,6 +63,18 @@ Requires: openssl
 Requires: zlib
 Requires: globus-gridftp-server-progs
 
+Requires: cleanup-grid-accounts
+Requires: lcas
+Requires: lcas-lcmaps-gt4-interface
+Requires: lcas-plugins-basic
+Requires: lcas-plugins-voms
+Requires: lcg-expiregridmapdir
+Requires: lcmaps
+Requires: lcmaps-plugins-basic
+Requires: lcmaps-plugins-voms
+Requires: lcmaps-without-gsi
+Requires: edg-mkgridmap
+
 %define debug_package %{nil}
 
 %description
