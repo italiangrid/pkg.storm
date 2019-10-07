@@ -1,4 +1,4 @@
-BUILD_NAME=emi-storm-backend-mp
+BUILD_NAME=storm-backend-mp
 BUILD_REPO=git://github.com/italiangrid/storm-mp
 BUILD_TAG=develop
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
