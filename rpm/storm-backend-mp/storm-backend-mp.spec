@@ -1,4 +1,4 @@
-%global base_version 1.2.1
+%global base_version 1.0.0
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -7,7 +7,7 @@
 %define release_version %{base_release}
 %endif
 
-Name: emi-storm-backend-mp
+Name: storm-backend-mp
 Version: %{base_version}
 Release: %{release_version}%{?dist}
 Summary: The StoRM backend server metapackage
@@ -18,8 +18,7 @@ Url: https://github.com/italiangrid/storm-mp
 
 Requires: lcg-expiregridmapdir
 Requires: fetch-crl
-Requires: emi-version
-Requires: yaim-storm
+Requires: umd-release
 Requires: storm-backend-server
 Requires: cleanup-grid-accounts
 Requires: storm-dynamic-info-provider
@@ -40,5 +39,5 @@ StoRM Backend metapackage
 
 %changelog
 
-* Thu Jun 01 2017 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.2.1-0
-- Moved to pkg.storm
+* Mon Oct 07 2019 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.0.0-1
+- Created from old emi-storm-backend-mp

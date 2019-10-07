@@ -15,9 +15,9 @@ ALL_COMPONENTS="storm-xmlrpc-c \
                 storm-gridftp-dsi \
                 storm-native-libs \
                 cdmi-storm \
-                emi-storm-backend-mp \
-                emi-storm-frontend-mp \
-                emi-storm-globus-gridftp-mp"
+                storm-backend-mp \
+                storm-frontend-mp \
+                storm-globus-gridftp-mp"
 
 PLATFORM=${PLATFORM:-centos7}
 COMPONENTS=${COMPONENTS:-${ALL_COMPONENTS}}
