@@ -96,12 +96,10 @@ rm -f $RPM_BUILD_ROOT/%{libtype}/libglobus_gridftp_server_StoRM.la
 rm -f $RPM_BUILD_ROOT/%{libtype}/libglobus_gridftp_server_StoRM.a
 mkdir -p $RPM_BUILD_ROOT/%{_localstatedir}/log/%{prefixname}
 %if %{el7}
-  mkdir -p $RPM_BUILD_ROOT/etc/systemd/system
-  cp etc/systemd/storm-globus-gridftp.service $RPM_BUILD_ROOT/etc/systemd/system/storm-globus-gridftp.service
+  mkdir -p $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system
+  cp config/systemd/storm-globus-gridftp.service $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/storm-globus-gridftp.service
   rm -rf $RPM_BUILD_ROOT/etc/init.d/storm-globus-gridftp
 %endif
-
-
 
 %post
 #during an install, the value of the argument passed in is 1
@@ -156,7 +154,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %if %{el7}
-  %attr(644,root,root) %{_sysconfdir}/systemd/system/storm-globus-gridftp.service
+  %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/storm-globus-gridftp.service
 %else
   %{_sysconfdir}/init.d/storm-globus-gridftp
 %endif
