@@ -78,7 +78,7 @@ tar -C $RPM_BUILD_ROOT -xvzf $HOME/sources/%{name}/target/%{name}-server.tar.gz
 %if %{el7}
   rm -f $RPM_BUILD_ROOT%{_sysconfdir}/init.d/%{name}
 %else
-  rm -f $RPM_BUILD_ROOT%{_libdir}/systemd/system/%{name}.service
+  rm -f $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{name}.service
 %endif
 
 %clean
@@ -89,7 +89,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 
 %if %{el7}
-  %attr(644,root,root) %{_libdir}/systemd/system/%{name}.service
+  %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{name}.service
 %else
   %attr(755,root,root) %{_sysconfdir}/init.d/%{name}
 %endif
