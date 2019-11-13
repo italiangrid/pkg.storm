@@ -127,23 +127,38 @@ getent passwd storm > /dev/null || useradd -r -g storm \
 # when installing
 if [ "$1" = "1" ] ; then
   # add the service to chkconfig
-  /sbin/chkconfig --add %{name}
+  %if %{el7}
+    systemctl enable %{name}.service
+  %else
+    /sbin/chkconfig --add %{name}
+  %endif
 # when upgrading
 elif [ $1 -gt 1 ] ; then
   # restart the service
-  /sbin/service %{name} restart >/dev/null 2>&1 || :
+  %if %{el7}
+    systemctl restart %{name}.service
+  %else
+    /sbin/service %{name} restart >/dev/null 2>&1 || :
+  %endif
 fi
 
 %preun
 # when uninstalling
 if [ "$1" = "0" ] ; then
-  # stop the service
-  /sbin/service %{name} stop >/dev/null 2>&1 || :
-  # remove the service from chk
-  /sbin/chkconfig --del %{name}
+  # stop and disable service
+  %if %{el7}
+    systemctl stop %{name}.service
+    systemctl disable %{name}.service
+  %else
+    /sbin/service %{name} stop >/dev/null 2>&1 || :
+    /sbin/chkconfig --del %{name}
+  %endif
 fi
 
 %changelog
+
+* Wed Nov 13 2019 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.2.0-0
+- Fixed preun and post phases by addind el7 specific commands
 
 * Tue Jun 11 2019 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.2.0-0
 - Packaging for version 1.2.0
