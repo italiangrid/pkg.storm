@@ -35,7 +35,6 @@ pipeline {
     PLATFORMS = "centos7 centos6"
     PACKAGES_VOLUME = "pkg-vol-${env.BUILD_TAG}"
     STAGE_AREA_VOLUME = "sa-vol-${env.BUILD_TAG}"
-    PKG_SIGN_PACKAGES = "n"
     DOCKER_ARGS = "--rm -v /opt/cnafsd/helper-scripts/scripts/:/usr/local/bin"
   }
 
