@@ -1,55 +1,42 @@
 pipeline {
 
-  agent {
-    label 'docker'
-  }
+  agent { label 'docker' }
 
   options {
     timeout(time: 1, unit: 'HOURS')
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
 
-  triggers { cron('@daily') }
-
   parameters {
-    string(name: 'INCLUDE_BUILD_NUMBER', defaultValue: '1', description: 'OS Platform')
-  }
-
-  environment {
-    PLATFORM = "centos7"
-    INCLUDE_BUILD_NUMBER = "${params.INCLUDE_BUILD_NUMBER}"
+    choice(name: 'INCLUDE_BUILD_NUMBER', choices: '0\n1', description: 'Flag to exclude/include build number.')
+    string(name: 'PKG_BUILD_NUMBER', defaultValue: '', description: 'This is used to pass a custom build number that will be included in the package version.')
+    choice(name: 'PLATFORM', choices: 'centos7\ncentos6', description: 'Build platform.')
   }
 
   stages {
-    stage('Run') {
+    stage('package') {
+      environment {
+        DATA_CONTAINER_NAME = "stage-area-pkg.storm-${env.BUILD_NUMBER}"
+        PKG_TAG = "${env.BRANCH_NAME}"
+        MVN_REPO_CONTAINER_NAME = "mvn_repo-${env.BUILD_NUMBER}"
+        INCLUDE_BUILD_NUMBER = "${params.INCLUDE_BUILD_NUMBER}"
+        PKG_BUILD_NUMBER = "${params.PKG_BUILD_NUMBER}"
+        PLATFORM = "${params.PLATFORM}"
+      }
       steps {
+        cleanWs notFailBuild: true
+        checkout scm
+        sh 'docker create -v /stage-area --name ${DATA_CONTAINER_NAME} ${DOCKER_REGISTRY_HOST}/italiangrid/pkg.base:${PLATFORM}'
+        sh 'docker create -v /m2-repository --name ${MVN_REPO_CONTAINER_NAME} ${DOCKER_REGISTRY_HOST}/italiangrid/pkg.base:${PLATFORM}'       
         script {
-          cleanWs notFailBuild: true
-          checkout scm
-
-          def repoStr = """[storm-test-${PLATFORM}]
-name=storm-test-${PLATFORM}
-baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/rpms/${PLATFORM}/
-protect=1
-enabled=1
-priority=1
-gpgcheck=0
-"""
-          def sourceRepoStr = """[storm-test-source-${PLATFORM}]
-name=storm-test-source-${PLATFORM}
-baseurl=${env.JOB_URL}/lastSuccessfulBuild/artifact/srpms/${PLATFORM}/
-protect=1
-enabled=1
-priority=1
-gpgcheck=0
-"""
-          dir('rpm') {
-            sh 'sh build.sh'
-            writeFile file: "rpms/storm-test-${PLATFORM}.repo", text: "${repoStr}"
-            writeFile file: "srpms/storm-test-source-${PLATFORM}.repo", text: "${sourceRepoStr}"
-            archiveArtifacts 'rpms/**, srpms/**'
+          dir("rpm") {
+            sh "ls -al"
+            sh "sh build.sh"
           }
         }
+        sh 'docker cp ${DATA_CONTAINER_NAME}:/stage-area repo'
+        sh 'docker rm -f ${DATA_CONTAINER_NAME} ${MVN_REPO_CONTAINER_NAME}'
+        archiveArtifacts 'repo/**'
       }
     }
   }
