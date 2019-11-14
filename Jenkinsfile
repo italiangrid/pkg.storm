@@ -1,5 +1,27 @@
-pipeline {
+#!/usr/bin/env groovy
 
+def platform2Dir = [
+  "centos7" : 'rpm',
+  "centos6" : 'rpm'
+]
+
+def buildPackages(platform, platform2Dir) {
+  return {
+    unstash "source"
+
+    def platformDir = platform2Dir[platform]
+
+    if (!platformDir) {
+      error("Unknown platform: ${platform}")
+    }
+
+    dir(platformDir) {
+      sh "PLATFORM=${platform} pkg-build.sh"
+    }
+  }
+}
+
+pipeline {
   agent { label 'docker' }
 
   options {
@@ -7,48 +29,67 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
 
-  parameters {
-    choice(name: 'INCLUDE_BUILD_NUMBER', choices: '0\n1', description: 'Flag to exclude/include build number.')
-    string(name: 'PKG_BUILD_NUMBER', defaultValue: '', description: 'This is used to pass a custom build number that will be included in the package version.')
-    choice(name: 'PLATFORM', choices: 'centos7\ncentos6', description: 'Build platform.')
+  environment {
+    PKG_TAG = "${env.BRANCH_NAME}"
+    DOCKER_REGISTRY_HOST = "${env.DOCKER_REGISTRY_HOST}"
+    PLATFORMS = "centos7 centos6"
+    PACKAGES_VOLUME = "pkg-vol-${env.BUILD_TAG}"
+    STAGE_AREA_VOLUME = "sa-vol-${env.BUILD_TAG}"
+    PKG_SIGN_PACKAGES = "n"
+    DOCKER_ARGS = "--rm -v /opt/cnafsd/helper-scripts/scripts/:/usr/local/bin"
   }
 
-  stages {
-    stage('package') {
-      environment {
-        DATA_CONTAINER_NAME = "stage-area-pkg.storm-${env.BUILD_NUMBER}"
-        PKG_TAG = "${env.BRANCH_NAME}"
-        MVN_REPO_CONTAINER_NAME = "mvn_repo-${env.BUILD_NUMBER}"
-        INCLUDE_BUILD_NUMBER = "${params.INCLUDE_BUILD_NUMBER}"
-        PKG_BUILD_NUMBER = "${params.PKG_BUILD_NUMBER}"
-        PLATFORM = "${params.PLATFORM}"
-      }
+  stages{
+    stage('checkout') {
       steps {
-        cleanWs notFailBuild: true
+        deleteDir()
         checkout scm
-        sh 'docker create -v /stage-area --name ${DATA_CONTAINER_NAME} ${DOCKER_REGISTRY_HOST}/italiangrid/pkg.base:${PLATFORM}'
-        sh 'docker create -v /m2-repository --name ${MVN_REPO_CONTAINER_NAME} ${DOCKER_REGISTRY_HOST}/italiangrid/pkg.base:${PLATFORM}'       
+        stash name: "source", includes: "**"
+      }
+    }
+
+    stage('setup-volumes') {
+      steps {
+        sh 'pwd && ls -lR'
+        sh 'rm -rf artifacts && mkdir -p artifacts'
+        sh './setup-volumes.sh'
+      }
+    }
+
+    stage('package') {
+      steps {
         script {
-          dir("rpm") {
-            sh "ls -al"
-            sh "sh build.sh"
+          def buildStages = PLATFORMS.split(' ').collectEntries {
+            [ "${it} build packages" : buildPackages(it, platform2Dir) ]
           }
+          parallel buildStages
         }
-        sh 'docker cp ${DATA_CONTAINER_NAME}:/stage-area repo'
-        sh 'docker rm -f ${DATA_CONTAINER_NAME} ${MVN_REPO_CONTAINER_NAME}'
-        archiveArtifacts 'repo/**'
+      }
+    }
+
+    stage('archive-artifacts') {
+      steps {
+        sh './copy-artifacts.sh'
+        archiveArtifacts "artifacts/**"
+      }
+    }
+
+    stage('cleanup') {
+      steps {
+          sh 'docker volume rm ${PACKAGES_VOLUME} ${STAGE_AREA_VOLUME} || echo Volume removal failed'
       }
     }
   }
 
   post {
     failure {
-      slackSend color: 'danger', message: "${env.JOB_NAME} - #${env.BUILD_ID} Failure (<${env.BUILD_URL}|Open>)"
+      slackSend color: 'danger', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} Failure (<${env.BUILD_URL}|Open>)"
     }
+    
     changed {
       script {
-        if ('SUCCESS'.equals(currentBuild.result)) {
-          slackSend color: 'good', message: "${env.JOB_NAME} - #${env.BUILD_ID} Back to normal (<${env.BUILD_URL}|Open>)"
+        if('SUCCESS'.equals(currentBuild.currentResult)) {
+          slackSend color: 'good', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} Back to normal (<${env.BUILD_URL}|Open>)"
         }
       }
     }
