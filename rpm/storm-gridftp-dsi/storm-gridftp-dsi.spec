@@ -15,7 +15,7 @@
 %define libtype      %{_libdir}
 
 %define prefixname   storm
-%define shortname    globus-frontend-server
+%define shortname    storm-globus-gridftp
 %define longname     storm-globus-gridftp-server
 
 %global base_version 1.2.2
@@ -83,57 +83,73 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm -f $RPM_BUILD_ROOT/%{libtype}/libglobus_gridftp_server_StoRM.la
 rm -f $RPM_BUILD_ROOT/%{libtype}/libglobus_gridftp_server_StoRM.a
 mkdir -p $RPM_BUILD_ROOT/%{_localstatedir}/log/%{prefixname}
-%if %{el7}
+%if 0%{?rhel} == 7
   mkdir -p $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system
-  cp config/systemd/storm-globus-gridftp.service $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/storm-globus-gridftp.service
-  rm -rf $RPM_BUILD_ROOT/etc/init.d/storm-globus-gridftp
+  cp config/systemd/storm-globus-gridftp.service $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{shortname}.service
+  rm -rf $RPM_BUILD_ROOT/etc/init.d/%{shortname}
 %endif
 
 %post
 #during an install, the value of the argument passed in is 1
 #during an unupgrade, the value of the argument passed in is 2
 if [ "$1" = "1" ] ; then
-  echo 'add service to chkconfig'
-  /sbin/chkconfig --add storm-globus-gridftp
+  echo 'Enable service to start at boot'
+  %if 0%{?rhel} == 7
+    systemctl enable %{shortname}.service
+  %else
+    /sbin/chkconfig --add %{shortname}
+  %endif
 fi;
 if [ "$1" = "2" ] ; then
-  echo "The StoRM GridFtp DSI server has been upgraded but NOT configured yet.
-You need to use yaim to configure the server.
-"
   echo 'stop service'
-  /sbin/service storm-globus-gridftp stop >/dev/null 2>&1 || :
+  %if 0%{?rhel} == 7
+    systemctl stop %{shortname}.service
+  %else
+    /sbin/service %{shortname} stop >/dev/null 2>&1 || :
+  %endif
 fi;
 
 %preun
 #during an upgrade, the value of the argument passed in is 1
 #during an uninstall, the value of the argument passed in is 0
 if [ "$1" = "0" ] ; then
-  echo 'stop service'
-  /sbin/service storm-globus-gridftp stop >/dev/null 2>&1 || :
-  echo 'del service from chkconfig'
-  /sbin/chkconfig --del storm-globus-gridftp
+  echo 'stop service and disable automatic boot'
+  %if 0%{?rhel} == 7
+    systemctl stop %{shortname}.service
+    systemctl disable %{shortname}.service
+  %else
+    /sbin/service %{shortname} stop >/dev/null 2>&1 || :
+    /sbin/chkconfig --del %{shortname}
+  %endif
 fi;
 if [ "$1" = "1" ] ; then
-  echo "The StoRM GridFtp DSI server has been upgraded but NOT configured yet.
-You need to use yaim to configure the server.
-"
   echo 'stop service'
-  /sbin/service storm-globus-gridftp stop >/dev/null 2>&1 || :
+  %if 0%{?rhel} == 7
+    systemctl stop %{shortname}.service
+  %else
+    /sbin/service %{shortname} stop >/dev/null 2>&1 || :
+  %endif
+  /sbin/service %{shortname} stop >/dev/null 2>&1 || :
 fi;
 
 %postun
 #during an upgrade, the value of the argument passed in is 1
 #during an uninstall, the value of the argument passed in is 0
 if [ "$1" = "1" ] ; then
-  echo "The StoRM GridFtp DSI server has been upgraded but NOT configured yet.
-You need to use yaim to configure the server.
-"
   echo 'stop service'
-  /sbin/service storm-globus-gridftp stop >/dev/null 2>&1 || :
+  %if 0%{?rhel} == 7
+    systemctl stop %{shortname}.service
+  %else
+    /sbin/service %{shortname} stop >/dev/null 2>&1 || :
+  %endif
 fi;
 if [ "$1" = "0" ] ; then
-  echo 'remove old file'
-  rm -f /etc/init.d/storm-globus-gridftp.*
+  %if 0%{?rhel} == 7
+    rm -f %{_exec_prefix}/lib/systemd/system/%{shortname}.service
+  %else
+    echo 'remove old file'
+    rm -f /etc/init.d/%{shortname}.*
+  %endif
 fi
 
 %clean
@@ -141,13 +157,13 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-%if %{el7}
-  %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/storm-globus-gridftp.service
+%if 0%{?rhel} == 7
+  %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{shortname}.service
 %else
-  %{_sysconfdir}/init.d/storm-globus-gridftp
+  %{_sysconfdir}/init.d/%{shortname}
 %endif
 
-%config(noreplace) %attr(644,root,root) %{_sysconfdir}/logrotate.d/storm-globus-gridftp
+%config(noreplace) %attr(644,root,root) %{_sysconfdir}/logrotate.d/%{shortname}
 
 %{libtype}/libglobus_gridftp_server_StoRM.so
 %{libtype}/libglobus_gridftp_server_StoRM.so.0
