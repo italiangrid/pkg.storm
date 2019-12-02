@@ -17,7 +17,7 @@ COMPONENTS="storm-webdav storm-gridftp-dsi storm-globus-gridftp-mp"
 #DATA_CONTAINER_NAME=
 
 # Platform used. Values: centos6, centos7 (default)
-PLATFORM=centos7
+#PLATFORM=centos7
 
 # pkg.storm repo directory - use in case of local
 #PKG_REPO=/code/pkg.storm
