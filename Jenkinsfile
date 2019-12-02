@@ -70,6 +70,11 @@ pipeline {
       steps {
         sh './copy-artifacts.sh'
         archiveArtifacts "artifacts/**"
+        sh 'ls -latr .'
+        sh 'ls -latr artifacts'
+        sh 'ls -latr artifacts/packages'
+        sh 'ls -latr artifacts/packages/centos6'
+        stash name: "packages", includes: "artifacts/packages/**"
       }
     }
 
