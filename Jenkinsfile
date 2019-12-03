@@ -5,7 +5,7 @@ def platform2Dir = [
   "centos6" : 'rpm'
 ]
 
-def buildPackages(platform, platform2Dir) {
+def buildPackages(platform, platform2Dir, includeBuildNumber) {
   return {
     unstash "source"
 
@@ -15,8 +15,13 @@ def buildPackages(platform, platform2Dir) {
       error("Unknown platform: ${platform}")
     }
 
+    def includeEnv = ""
+    if (includeBuildNumber) {
+      includeEnv = "INCLUDE_BUILD_NUMBER=1"
+    }
+
     dir(platformDir) {
-      sh "PLATFORM=${platform} pkg-build.sh"
+      sh "PLATFORM=${platform} ${includeEnv} pkg-build.sh"
     }
   }
 }
@@ -59,23 +64,11 @@ pipeline {
       }
     }
 
-    stage('setup-environment') {
-      when {
-        expression { params.INCLUDE_BUILD_NUMBER == true }
-      }
-      environment {
-        INCLUDE_BUILD_NUMBER = "${params.INCLUDE_BUILD_NUMBER}"
-      }
-      steps {
-        print(env.INCLUDE_BUILD_NUMBER)
-      }
-    }
-
     stage('package') {
       steps {
         script {
           def buildStages = PLATFORMS.split(' ').collectEntries {
-            [ "${it} build packages" : buildPackages(it, platform2Dir) ]
+            [ "${it} build packages" : buildPackages(it, platform2Dir, ${params.INCLUDE_BUILD_NUMBER}) ]
           }
           parallel buildStages
         }
