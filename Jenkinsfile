@@ -66,6 +66,9 @@ pipeline {
       environment {
         INCLUDE_BUILD_NUMBER = "${params.INCLUDE_BUILD_NUMBER}"
       }
+      steps {
+        print(env.INCLUDE_BUILD_NUMBER)
+      }
     }
 
     stage('package') {
