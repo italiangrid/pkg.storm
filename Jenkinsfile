@@ -29,6 +29,10 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
 
+  parameters {
+    booleanParam(name: 'INCLUDE_BUILD_NUMBER', defaultValue: true, description: 'Include build number into rpm name')
+  }
+
   environment {
     PKG_TAG = "${env.BRANCH_NAME}"
     DOCKER_REGISTRY_HOST = "${env.DOCKER_REGISTRY_HOST}"
@@ -55,6 +59,15 @@ pipeline {
       }
     }
 
+    stage('setup-environment') {
+      when {
+        expression { params.INCLUDE_BUILD_NUMBER == true }
+      }
+      environment {
+        INCLUDE_BUILD_NUMBER = "${params.INCLUDE_BUILD_NUMBER}"
+      }
+    }
+
     stage('package') {
       steps {
         script {
@@ -70,10 +83,6 @@ pipeline {
       steps {
         sh './copy-artifacts.sh'
         archiveArtifacts "artifacts/**"
-        sh 'ls -latr .'
-        sh 'ls -latr artifacts'
-        sh 'ls -latr artifacts/packages'
-        sh 'ls -latr artifacts/packages/centos6'
         stash name: "packages", includes: "artifacts/packages/**"
       }
     }

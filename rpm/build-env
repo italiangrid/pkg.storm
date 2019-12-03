@@ -23,7 +23,7 @@ COMPONENTS="storm-webdav storm-gridftp-dsi storm-globus-gridftp-mp"
 #PKG_REPO=/code/pkg.storm
 
 # Use this branch of pkg.storm repo
-PKG_TAG=latest
+PKG_TAG=nightly
 
 # Set to 1 if you want to store rpms into stage area
 PKG_STAGE_RPMS=1
