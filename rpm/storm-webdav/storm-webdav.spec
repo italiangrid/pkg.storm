@@ -15,8 +15,8 @@
 ## Turn off meaningless jar repackaging
 %define __jar_repack 0
 
-%global base_version 1.2.0
-%global base_release 0
+%global base_version 1.2.1
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
@@ -156,6 +156,9 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
+
+* Fri Dec 13 2019 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.2.1-1
+- Packaging for version 1.2.1
 
 * Wed Nov 13 2019 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.2.0-0
 - Fixed preun and post phases by addind el7 specific commands
