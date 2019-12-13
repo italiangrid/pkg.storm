@@ -18,7 +18,7 @@
 %define shortname    globus-frontend-server
 %define longname     storm-globus-gridftp-server
 
-%global base_version 1.2.2
+%global base_version 1.2.3
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -162,6 +162,9 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_localstatedir}/log/%{prefixname}
 
 %changelog
+* Fri Dec 13 2019 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.2.3-1
+- Bumped version to 1.2.3-1
+
 * Fri Jul 26 2019 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.2.2-1
 - Bumped version to 1.2.2-1
 
