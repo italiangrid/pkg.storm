@@ -75,7 +75,7 @@ mvn -DskipTests -U clean package
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 tar -C $RPM_BUILD_ROOT -xvzf $HOME/sources/%{name}/target/%{name}-server.tar.gz
-%if %{el7}
+%if 0%{?rhel} == 7
   rm -f $RPM_BUILD_ROOT%{_sysconfdir}/init.d/%{name}
 %else
   rm -f $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{name}.service
@@ -88,7 +88,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 
-%if %{el7}
+%if 0%{?rhel} == 7
   %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{name}.service
 %else
   %attr(755,root,root) %{_sysconfdir}/init.d/%{name}
@@ -127,7 +127,7 @@ getent passwd storm > /dev/null || useradd -r -g storm \
 # when installing
 if [ "$1" = "1" ] ; then
   # add the service to chkconfig
-  %if %{el7}
+  %if 0%{?rhel} == 7
     systemctl enable %{name}.service
   %else
     /sbin/chkconfig --add %{name}
@@ -135,7 +135,7 @@ if [ "$1" = "1" ] ; then
 # when upgrading
 elif [ $1 -gt 1 ] ; then
   # restart the service
-  %if %{el7}
+  %if 0%{?rhel} == 7
     systemctl restart %{name}.service
   %else
     /sbin/service %{name} restart >/dev/null 2>&1 || :
@@ -146,7 +146,7 @@ fi
 # when uninstalling
 if [ "$1" = "0" ] ; then
   # stop and disable service
-  %if %{el7}
+  %if 0%{?rhel} == 7
     systemctl stop %{name}.service
     systemctl disable %{name}.service
   %else

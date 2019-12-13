@@ -83,7 +83,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm -f $RPM_BUILD_ROOT/%{libtype}/libglobus_gridftp_server_StoRM.la
 rm -f $RPM_BUILD_ROOT/%{libtype}/libglobus_gridftp_server_StoRM.a
 mkdir -p $RPM_BUILD_ROOT/%{_localstatedir}/log/%{prefixname}
-%if %{el7}
+%if 0%{?rhel} == 7
   mkdir -p $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system
   cp config/systemd/storm-globus-gridftp.service $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/storm-globus-gridftp.service
   rm -rf $RPM_BUILD_ROOT/etc/init.d/storm-globus-gridftp
@@ -141,7 +141,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
-%if %{el7}
+%if 0%{?rhel} == 7
   %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/storm-globus-gridftp.service
 %else
   %{_sysconfdir}/init.d/storm-globus-gridftp
