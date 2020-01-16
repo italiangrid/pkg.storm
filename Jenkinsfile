@@ -16,7 +16,7 @@ pipeline {
   }
 
   environment {
-    PLATFORM = "centos7"
+    PLATFORM = "centos6"
     INCLUDE_BUILD_NUMBER = "${params.INCLUDE_BUILD_NUMBER}"
   }
 

@@ -19,7 +19,7 @@ ALL_COMPONENTS="storm-xmlrpc-c \
                 storm-frontend-mp \
                 storm-globus-gridftp-mp"
 
-PLATFORM=${PLATFORM:-centos7}
+PLATFORM=${PLATFORM:-centos6}
 COMPONENTS=${COMPONENTS:-${ALL_COMPONENTS}}
 
 UMD_REPO_RPM=${UMD_REPO_RPM:-"http://repository.egi.eu/sw/production/umd/4/centos7/x86_64/updates/umd-release-4.1.3-1.el7.centos.noarch.rpm"}
