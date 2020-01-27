@@ -76,7 +76,8 @@ GPFS from IBM and Lustre from SUN.
 %build
 sh bootstrap
 %configure
-make
+. /opt/rh/devtoolset-7/enable
+make CXXFLAGS="-fsanitize=address -ansi" CFLAGS="-fsanitize=address"
 
 %pre
 TMP_FOLDER=%{_sysconfdir}/%{prefixname}/tmp/storm_permissions_mantainance
