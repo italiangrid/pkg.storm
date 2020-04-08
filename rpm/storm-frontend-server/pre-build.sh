@@ -5,7 +5,7 @@ rpm --import http://repository.egi.eu/sw/production/umd/UMD-RPM-PGP-KEY
 yum install -y yum-priorities
 
 # Install UMD repositories
-if [ ${PLATFORM} == "centos7" ]; then
+if [ $PLATFORM = "centos7" ]; then
 
   umd_release="http://repository.egi.eu/sw/production/umd/4/centos7/x86_64/updates/umd-release-4.1.3-1.el7.centos.noarch.rpm"
 
