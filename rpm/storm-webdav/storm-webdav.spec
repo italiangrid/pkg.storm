@@ -15,7 +15,7 @@
 ## Turn off meaningless jar repackaging
 %define __jar_repack 0
 
-%global base_version 1.2.0
+%global base_version 1.3.0
 %global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -32,7 +32,7 @@ Release: %{release_version}%{?dist}
 Summary: The StoRM WebDAV server
 
 Group: Applications/File
-License:  ASL 2.0
+License: ASL 2.0
 Url: https://github.com/italiangrid/storm-webdav
 Source:    %{name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -156,6 +156,11 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
+* Fri Mar 27 2020 Enrico Vianello <enrico.vianello at cnaf.intn.it> - 1.3.0-0
+- Packaging for version 1.3.0-0
+
+* Fri Dec 13 2019 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.2.1-1
+- Packaging for version 1.2.1
 
 * Wed Nov 13 2019 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.2.0-0
 - Fixed preun and post phases by addind el7 specific commands

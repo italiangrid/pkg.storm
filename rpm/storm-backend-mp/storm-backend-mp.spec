@@ -1,4 +1,4 @@
-%global base_version 1.0.0
+%global base_version 1.1.0
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -26,6 +26,10 @@ Requires: glite-yaim-bdii
 Requires: edg-mkgridmap
 Requires: lcas-lcmaps-gt4-interface
 
+%if 0%{?rhel} == 6
+Requires: yaim-storm
+%endif
+
 %description
 StoRM Backend metapackage
 
@@ -38,6 +42,9 @@ StoRM Backend metapackage
 %files
 
 %changelog
+
+* Thu Mar 31 2020 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.1.0-1
+- Requires yaim-storm for RHEL6 and bumped version to 1.1.0-1
 
 * Mon Oct 07 2019 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.0.0-1
 - Created from old emi-storm-backend-mp

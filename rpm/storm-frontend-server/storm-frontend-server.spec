@@ -4,8 +4,8 @@
 
 %define default_user root
 
-%global base_version 1.8.12
-%global base_release 1
+%global base_version 1.8.13
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -13,21 +13,18 @@
 %define release_version %{base_release}
 %endif
 
-Name: 		storm-frontend-server
+Name: storm-frontend-server
 Version: %{base_version}
 Release: %{release_version}%{?dist}
 
-Vendor:         EMI
-Packager:       Elisabetta Ronchieri <elisabetta.ronchieri@cnaf.infn.it>
-License:        Apache License
-URL:            https://github.com/italiangrid/storm-frontend
+Group: Applications/Libraries
+License: ASL 2.0
+URL: https://github.com/italiangrid/storm-frontend
 
-Source: 	%{name}.tar.gz
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Source: %{name}.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-Group:          Applications/System
-AutoReqProv:    yes
-Summary:        The StoRM FrontEnd component
+Summary: The StoRM Frontend component
 
 BuildRequires: boost-devel
 BuildRequires: curl-devel
@@ -79,108 +76,52 @@ sh bootstrap
 make
 
 %pre
-TMP_FOLDER=%{_sysconfdir}/%{prefixname}/tmp/storm_permissions_mantainance
-rm -rf ${TMP_FOLDER}
-
-if [ -d %{_sysconfdir}/%{prefixname} ] ; then
-  STORM_CONF_OWNNER_USER=`stat -c %U %{_sysconfdir}/%{prefixname}`
-  STORM_CONF_OWNNER_GROUP=`stat -c %G %{_sysconfdir}/%{prefixname}`
-  if [ ! "x${STORM_CONF_OWNNER_USER}" = "x%{default_user}" ] ; then
-    echo "preserving %{_sysconfdir}/%{prefixname} folder owner ownership"
-    umask 077 && mkdir -p ${TMP_FOLDER}
-    echo "export STORM_CONF_OWNNER_USER=${STORM_CONF_OWNNER_USER}" >> ${TMP_FOLDER}/export_vars
-    echo "unset STORM_CONF_OWNNER_USER" >> ${TMP_FOLDER}/unset_vars
-  fi
-  if [ ! "x${STORM_CONF_OWNNER_GROUP}" = "x%{default_user}" ] ; then
-    echo "preserving %{_sysconfdir}/%{prefixname} folder group ownership"
-    echo "export STORM_CONF_OWNNER_GROUP=${STORM_CONF_OWNNER_GROUP}" >> ${TMP_FOLDER}/export_vars
-    echo "unset STORM_CONF_OWNNER_GROUP" >> ${TMP_FOLDER}/unset_vars
-  fi
-fi
-if [ -d %{_localstatedir}/log/%{prefixname} ] ; then
-  STORM_LOG_OWNNER_USER=`stat -c %U %{_localstatedir}/log/%{prefixname}`
-  STORM_LOG_OWNNER_GROUP=`stat -c %G %{_localstatedir}/log/%{prefixname}`
-  if [ ! "x${STORM_LOG_OWNNER_USER}" = "x%{default_user}" ] ; then
-    echo "preserving %{_localstatedir}/log/%{prefixname} folder owner ownership"
-    umask 077 && mkdir -p ${TMP_FOLDER}
-    echo "export STORM_LOG_OWNNER_USER=${STORM_LOG_OWNNER_USER}" >> ${TMP_FOLDER}/export_vars
-    echo "unset STORM_LOG_OWNNER_USER" >> ${TMP_FOLDER}/unset_vars
-  fi
-  if [ ! "x${STORM_LOG_OWNNER_GROUP}" = "x%{default_user}" ] ; then
-    echo "preserving %{_localstatedir}/log/%{prefixname} folder group ownership"
-    echo "export STORM_LOG_OWNNER_GROUP=${STORM_LOG_OWNNER_GROUP}" >> ${TMP_FOLDER}/export_vars
-    echo "unset STORM_LOG_OWNNER_GROUP" >> ${TMP_FOLDER}/unset_vars
-  fi
-fi
-
+# create user storm, if it does not exist
+getent group storm > /dev/null || groupadd -r storm
+getent passwd storm > /dev/null || useradd -r -g storm \
+  -d %{_sysconfdir}/storm -s /sbin/nologin -c "StoRM server account" storm
 
 %install
 if [ -d $RPM_BUILD_ROOT ]; then rm -rf $RPM_BUILD_ROOT; fi
 mkdir -p $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{_localstatedir}/log/%{prefixname}
+%if 0%{?rhel} == 7
+  mkdir -p $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system
+  cp etc/systemd/%{longname}.service $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{longname}.service
+  rm -rf $RPM_BUILD_ROOT/etc/init.d/%{longname}
+%endif
 
 %post
 #during an install, the value of the argument passed in is 1
-#during an unupgrade, the value of the argument passed in is 2
 if [ "$1" = "1" ] ; then
-  echo 'add service to chkconfig'
-  /sbin/chkconfig --add %{longname}
+  # add the service to chkconfig
+  %if 0%{?rhel} == 7
+    systemctl enable %{longname}.service
+  %else
+    /sbin/chkconfig --add %{longname}
+  %endif
 fi;
+#during an upgrade, the value of the argument passed in is 2
 if [ "$1" = "2" ] ; then
-  echo "The StoRM FrontEnd server has been upgraded but NOT configured yet.
-You need to use yaim to configure the server.
-"
+  echo "The StoRM Frontend server has been upgraded but NOT configured yet."
+  %if 0%{?rhel} == 7
+    echo "Manually configure service or use StoRM Puppet module."
+  %else
+    echo "You need to use yaim to configure the server."
+  %endif
 fi;
-
-TMP_FOLDER=%{_sysconfdir}/%{prefixname}/tmp/storm_permissions_mantainance
-
-if [ -d %{_sysconfdir}/%{prefixname} ] ; then
-  if [ -d ${TMP_FOLDER} ] ; then
-    echo "restoring %{_sysconfdir}/%{prefixname} and %{_localstatedir}/log/%{prefixname} folder ownership"
-    if [ -f ${TMP_FOLDER}/export_vars -a -f ${TMP_FOLDER}/unset_vars ] ; then
-      source ${TMP_FOLDER}/export_vars
-      DONE="false"
-      if [ ! -z ${STORM_CONF_OWNNER_USER} ] ; then
-        echo "Setting %{_sysconfdir}/%{prefixname} user ownership to ${STORM_CONF_OWNNER_USER}"
-        chown ${STORM_CONF_OWNNER_USER} %{_sysconfdir}/%{prefixname}
-        DONE="true"
-      fi
-      if [ ! -z ${STORM_CONF_OWNNER_GROUP} ] ; then
-        echo "Setting %{_sysconfdir}/%{prefixname} group ownership to ${STORM_CONF_OWNNER_GROUP}"
-        chgrp ${STORM_CONF_OWNNER_GROUP} %{_sysconfdir}/%{prefixname}
-        DONE="true"
-      fi
-      if [ ! -z ${STORM_LOG_OWNNER_USER} ] ; then
-        echo "Setting %{_localstatedir}/log/%{prefixname} user ownership to ${STORM_LOG_OWNNER_USER}"
-        chown ${STORM_LOG_OWNNER_USER} %{_localstatedir}/log/%{prefixname}
-        DONE="true"
-      fi
-      if [ ! -z ${STORM_LOG_OWNNER_GROUP} ] ; then
-        echo "Setting %{_localstatedir}/log/%{prefixname} group ownership to ${STORM_LOG_OWNNER_GROUP}"
-        chgrp ${STORM_LOG_OWNNER_GROUP} %{_localstatedir}/log/%{prefixname}
-        DONE="true"
-      fi
-      if [ ! "x$DONE" = "xtrue" ] ; then
-        echo "Error. No STORM_CONF_OWNNER_GROUP or STORM_CONF_OWNNER_USER variable available"
-        exit 1
-      fi
-      source ${TMP_FOLDER}/unset_vars
-      DONE=""
-    else
-      echo "Error. No env variable files available in /tmp/storm_permissions_mantainance"
-      exit 1
-    fi
-    rm -rf ${TMP_FOLDER}
-  fi
-fi
-
 
 %preun
 #during an upgrade, the value of the argument passed in is 1
 #during an uninstall, the value of the argument passed in is 0
 if [ "$1" = "0" ] ; then
-  /sbin/chkconfig --del %{longname}
+  # disable service
+  %if 0%{?rhel} == 7
+    systemctl disable %{longname}.service
+  %else
+    /sbin/chkconfig --del %{longname}
+  %endif
 fi;
 
 %postun
@@ -190,19 +131,28 @@ if [ "$1" = "1" ] ; then
   echo "A restart of the service is needed to make the new version effective"
 fi;
 if [ "$1" = "0" ] ; then
-  rm -f /etc/init.d/%{longname}.*
-  rm -f /etc/cron.d/%{longname}.cron.*
+  %if 0%{?rhel} == 7
+    rm -f %{_exec_prefix}/lib/systemd/system/%{longname}.service
+  %else
+    rm -f %{_sysconfdir}/init.d/%{longname}
+  %endif
 fi;
 
 %files
-%defattr(-,%{default_user},%{default_user},-)
-%{_sbindir}/%{longname}
-%{_sysconfdir}/init.d/%{longname}
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_sbindir}/%{longname}
+
+%if 0%{?rhel} == 7
+  %{_exec_prefix}/lib/systemd/system/%{longname}.service
+%else
+  %{_sysconfdir}/init.d/%{longname}
+%endif
+
 %config(noreplace) %{_sysconfdir}/sysconfig/%{longname}
-%config(noreplace) %attr(644,%{default_user},%{default_user}) %{_sysconfdir}/logrotate.d/%{longname}
+%config(noreplace) %{_sysconfdir}/logrotate.d/%{longname}
 
 %dir %{_sysconfdir}/%{prefixname}/%{shortname}
-%config(noreplace) %attr(640,%{default_user},%{default_user}) %{_sysconfdir}/%{prefixname}/%{shortname}/%{longname}.conf.template
+%config(noreplace) %{_sysconfdir}/%{prefixname}/%{shortname}/%{longname}.conf.template
 
 %doc %dir %{_datadir}/doc/%{name}-%{version}
 %doc %{_datadir}/doc/%{name}-%{version}/ChangeLog
@@ -214,12 +164,15 @@ fi;
 %doc %dir %{_datadir}/wsdl
 %doc %{_datadir}/wsdl/srm.v2.2.wsdl
 
-%dir %{_localstatedir}/log/%{prefixname}
+%attr(750,storm,storm) %dir %{_localstatedir}/log/%{prefixname}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Tue Mar 17 2020 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.8.13-0
+- Bumped packaging version to 1.8.13-0 and added support to systemd unit
+
 * Fri Sep 7 2018 Andrea Ceccanti <andrea.ceccanti@cnaf.infn.it> - 1.8.12-0
 - Bumped packaging version to 1.8.12-0
 

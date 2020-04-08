@@ -18,8 +18,8 @@
 %define shortname    storm-globus-gridftp
 %define longname     storm-globus-gridftp-server
 
-%global base_version 1.2.2
-%global base_release 1
+%global base_version 1.2.4
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
@@ -27,21 +27,18 @@
 %define release_version %{base_release}
 %endif
 
-Name: 		storm-globus-gridftp-server
-Version: 	%{base_version}
-Release: 	%{release_version}%{?dist}
+Name: storm-globus-gridftp-server
+Version: %{base_version}
+Release: %{release_version}%{?dist}
 
-Vendor:         EMI
-Packager:       Elisabetta Ronchieri <elisabetta.ronchieri@cnaf.infn.it>
-License:        Apache License, Version 2.0
-URL: 		https://github.com/italiangrid/storm-gridftp-dsi.git
+Group: Applications/Libraries
+License: ASL 2.0
+URL: https://github.com/italiangrid/storm-gridftp-dsi.git
 
-Source: 	%{name}.tar.gz
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Source: %{name}.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-Group:          Applications/Libraries
-AutoReqProv:    yes
-Summary:        The StoRM GridFtp DSI component
+Summary: The StoRM GridFtp DSI component
 
 BuildRequires: automake
 BuildRequires: autoconf
@@ -175,9 +172,15 @@ rm -rf $RPM_BUILD_ROOT
 %doc %{_datadir}/doc/%{name}-%{version}/LICENSE
 %doc %{_datadir}/doc/%{name}-%{version}/README
 
-%dir %{_localstatedir}/log/%{prefixname}
+%attr(750,storm,storm) %dir %{_localstatedir}/log/%{prefixname}
 
 %changelog
+* Mon Mar 23 2020 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.2.4-0
+- Bumped version to 1.2.4-0
+
+* Fri Dec 13 2019 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.2.3-1
+- Bumped version to 1.2.3-1
+
 * Fri Jul 26 2019 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.2.2-1
 - Bumped version to 1.2.2-1
 

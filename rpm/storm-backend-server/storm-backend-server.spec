@@ -15,8 +15,8 @@
 ## Turn off meaningless jar repackaging (works only on SL6)
 %define __jar_repack 0
 
-%global base_version 1.11.15
-%global base_release 1
+%global base_version 1.11.18
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -27,7 +27,7 @@
 %define _modulename backend-server
 %define prefixname storm
 
-Name:    storm-backend-server
+Name: storm-backend-server
 Version: %{base_version}
 Release: %{release_version}%{?dist}
 Summary: The StoRM backend server
@@ -79,6 +79,11 @@ mvn -DskipTests -U clean package
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 tar -C $RPM_BUILD_ROOT -xvzf target/%{name}.tar.gz
+%if 0%{?rhel} == 7
+  mkdir -p $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system
+  cp etc/systemd/%{name}.service $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{name}.service
+  rm -rf $RPM_BUILD_ROOT/etc/init.d/%{name}
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -106,19 +111,35 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/%{prefixname}/%{_modulename}/welcome.txt
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
-%attr(755,root,root) %{_sysconfdir}/init.d/%{name}
 
-%dir %{_localstatedir}/log/%{prefixname}
+%if 0%{?rhel} == 7
+  %{_exec_prefix}/lib/systemd/system/%{name}.service
+%else
+  %attr(755,root,root) %{_sysconfdir}/init.d/%{name}
+%endif
+
+%attr(750,storm,storm) %dir %{_localstatedir}/log/%{prefixname}
+
+%pre
+# create user storm, if it does not exist
+getent group storm > /dev/null || groupadd -r storm
+getent passwd storm > /dev/null || useradd -r -g storm \
+  -d %{_sysconfdir}/storm -s /sbin/nologin -c "StoRM server account" storm
 
 %post
-# when installing
-if [ "$1" = 1 ] ; then
-  # add the service to chk
-  /sbin/chkconfig --add %{name}
+#during an install, the value of the argument passed in is 1
+if [ "$1" = "1" ] ; then
+  # add the service to chkconfig
+  %if 0%{?rhel} == 7
+    systemctl enable %{name}.service
+  %else
+    /sbin/chkconfig --add %{name}
+  %endif
   # create mysql-connector-java jar link
   /bin/ln -sf /usr/share/java/mysql-connector-java.jar %{_javadir}/%{name}/mysql-connector-java.jar
-# when upgrading
-elif [ "$1" -gt 1 ] ; then
+fi;
+#during an upgrade, the value of the argument passed in is 2
+if [ "$1" = "2" ] ; then
   # create mysql-connector-java jar link if it does not exist
   if [ ! -L %{_javadir}/%{name}/mysql-connector-java.jar ] ; then
     /bin/ln -sf /usr/share/java/mysql-connector-java.jar %{_javadir}/%{name}/mysql-connector-java.jar
@@ -127,22 +148,44 @@ elif [ "$1" -gt 1 ] ; then
   if [ -L %{_javadir}/%{name}/mysql-connector-java-5.1.12.jar ] ; then
     /bin/unlink %{_javadir}/%{name}/mysql-connector-java-5.1.12.jar
   fi
-  # kill processes
-  pslist=$( ps -ef | grep java | grep storm-backend-server | awk '{print $2}' | tr '\n' ' ' | sed -e s/\ $// )
-  [ -z "$pslist" ] && echo "no running processes found" || kill -9 $pslist
-  # start the service
-  /sbin/service %{name} restart
+  %if 0%{?rhel} == 7
+    systemctl restart %{name}.service
+  %else
+    # kill processes
+    pslist=$( ps -ef | grep java | grep storm-backend-server | awk '{print $2}' | tr '\n' ' ' | sed -e s/\ $// )
+    [ -z "$pslist" ] && echo "no running processes found" || kill -9 $pslist
+    # start the service
+    /sbin/service %{name} restart
+  %endif
 fi;
 
 %preun
 # when uninstalling
 if [ "$1" = "0" ] ; then
-  # stop the service
-  /sbin/service %{name} stop >/dev/null 2>&1 || :
-  # remove the service from chk
-  /sbin/chkconfig --del %{name}
+  # stop and disable service
+  %if 0%{?rhel} == 7
+    systemctl stop %{name}
+    systemctl disable %{name}.service
+  %else
+    /sbin/service %{name} stop >/dev/null 2>&1 || :
+    /sbin/chkconfig --del %{name}
+  %endif
   # remove mysql-connector-java jar link
   /bin/unlink %{_javadir}/%{name}/mysql-connector-java.jar
+fi;
+
+%postun
+#during an upgrade, the value of the argument passed in is 1
+#during an uninstall, the value of the argument passed in is 0
+if [ "$1" = "1" ] ; then
+  echo "A restart of the service is needed to make the new version effective"
+fi;
+if [ "$1" = "0" ] ; then
+  %if 0%{?rhel} == 7
+    rm -f %{_exec_prefix}/lib/systemd/system/%{name}.service
+  %else
+    rm -f %{_sysconfdir}/init.d/%{name}
+  %endif
 fi;
 
 %changelog
