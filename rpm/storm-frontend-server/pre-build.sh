@@ -2,16 +2,22 @@
 set -ex
 
 rpm --import http://repository.egi.eu/sw/production/umd/UMD-RPM-PGP-KEY
-yum install -y ${UMD_REPO_RPM}
+yum install -y yum-priorities
+
+# Install UMD repositories
+if [ ${PLATFORM} == "centos7" ]; then
+
+  umd_release="http://repository.egi.eu/sw/production/umd/4/centos7/x86_64/updates/umd-release-4.1.3-1.el7.centos.noarch.rpm"
+
+#  # storm is not currently included into UMD-4 RHEL7 repository
+#  wget http://italiangrid.github.io/storm/repo/storm_sl6.repo -O /etc/yum.repos.d/storm_sl6.repo
+else 
+  umd_release="http://repository.egi.eu/sw/production/umd/4/sl6/x86_64/updates/umd-release-4.1.3-1.el6.noarch.rpm"
+fi
+yum localinstall -y $umd_release
 
 # We want to give more priority to the stage area repo than UMD
 sed -i "s/priority=1/priority=2/" /etc/yum.repos.d/UMD-*-base.repo /etc/yum.repos.d/UMD-*-updates.repo 
-
-#if [ ${PLATFORM} == "centos7" ]; then
-#
-#  # storm is not currently included into UMD-4 RHEL7 repository
-#  wget http://italiangrid.github.io/storm/repo/storm_sl6.repo -O /etc/yum.repos.d/storm_sl6.repo
-#fi
 
 yum install -y pkgconfig \
   curl-devel \
