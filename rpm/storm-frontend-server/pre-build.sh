@@ -2,7 +2,7 @@
 set -ex
 
 rpm --import http://repository.egi.eu/sw/production/umd/UMD-RPM-PGP-KEY
-yum install -y yum-priorities lsb_release
+yum install -y yum-priorities redhat-lsb
 
 majversion=$(lsb_release -rs | cut -f1 -d.)
 
