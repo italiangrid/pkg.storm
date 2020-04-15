@@ -80,8 +80,13 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 tar -C $RPM_BUILD_ROOT -xvzf target/%{name}.tar.gz
 %if 0%{?rhel} == 7
+  # unit
   mkdir -p $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system
   cp etc/systemd/%{name}.service $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{name}.service
+  # env file
+  mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service.d
+  cp etc/systemd/service.d/%{name}.conf $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
+  # rm init.d file
   rm -rf $RPM_BUILD_ROOT/etc/init.d/%{name}
 %endif
 
@@ -114,6 +119,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %if 0%{?rhel} == 7
   %{_exec_prefix}/lib/systemd/system/%{name}.service
+  %dir %{_sysconfdir}/systemd/system/%{name}.service.d
+  %{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
 %else
   %attr(755,root,root) %{_sysconfdir}/init.d/%{name}
 %endif
@@ -183,6 +190,7 @@ fi;
 if [ "$1" = "0" ] ; then
   %if 0%{?rhel} == 7
     rm -f %{_exec_prefix}/lib/systemd/system/%{name}.service
+    rm -rf %{_sysconfdir}/systemd/system/%{name}.service.d
   %else
     rm -f %{_sysconfdir}/init.d/%{name}
   %endif
