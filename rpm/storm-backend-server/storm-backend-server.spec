@@ -50,9 +50,6 @@ Requires(preun):  initscripts
 Requires(postun): initscripts
 
 Requires: java-1.8.0-openjdk
-Requires: mysql
-Requires: mysql-server
-Requires: nc
 Requires: xml-commons-apis
 Requires: mysql-connector-java
 Requires: jpackage-utils
