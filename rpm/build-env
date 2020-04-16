@@ -21,7 +21,7 @@ COMPONENTS_centos7="storm-webdav storm-gridftp-dsi storm-xmlrpc-c storm-frontend
 #PKG_REPO=/code/pkg.storm
 
 # Use this branch of pkg.storm repo
-PKG_TAG=nightly
+PKG_TAG=v1.11.18
 
 # Set to 1 if you want to store rpms into stage area
 PKG_STAGE_RPMS=1
