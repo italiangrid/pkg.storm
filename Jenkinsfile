@@ -39,11 +39,12 @@ pipeline {
   }
 
   environment {
-    PKG_TAG = "${env.BRANCH_NAME}"
-    DOCKER_REGISTRY_HOST = "${env.DOCKER_REGISTRY_HOST}"
     PLATFORMS = "centos7 centos6"
+    PKG_TAG = "${env.BRANCH_NAME}"
     PACKAGES_VOLUME = "pkg-vol-${env.BUILD_TAG}"
     STAGE_AREA_VOLUME = "sa-vol-${env.BUILD_TAG}"
+    PKG_BUILD_NUMBER = "${env.BUILD_NUMBER}"
+    DOCKER_REGISTRY_HOST = "${env.DOCKER_REGISTRY_HOST}"
     DOCKER_ARGS = "--rm -v /opt/cnafsd/helper-scripts/scripts/:/usr/local/bin"
   }
 

@@ -2,39 +2,17 @@
 COMPONENTS_centos6="storm-webdav storm-gridftp-dsi storm-xmlrpc-c storm-frontend-server storm-globus-gridftp-mp storm-backend-mp storm-frontend-mp storm-backend-server yaim-storm"
 COMPONENTS_centos7="storm-webdav storm-gridftp-dsi storm-xmlrpc-c storm-frontend-server storm-globus-gridftp-mp storm-backend-mp storm-frontend-mp storm-backend-server storm-dynamic-info-provider storm-native-libs"
 
+PKG_TAG=v1.11.18
+
 # Set to 1 if you want to skip the pull of the build image
 #SKIP_PKG_BASE_PULL_IMAGE=1
-
-# If you have a private DOCKER_REGISTRY_HOST
-#DOCKER_REGISTRY_HOST=
-
-# Packages volume name
-#PACKAGES_VOLUME=
-
-# Stage area volume name
-#STAGE_AREA_VOLUME=
 
 # List of build platforms. Allowed values: centos6, centos7
 #PLATFORM=centos7 centos6
 
-# pkg.storm repo directory - use in case of local
-#PKG_REPO=/code/pkg.storm
-
-# Use this branch of pkg.storm repo
-PKG_TAG=v1.11.18
-
 # Set to 1 if you want to store rpms into stage area
 PKG_STAGE_RPMS=1
 
-# Set true if you want to add build number on enabled rpms. Otherwise, comment it.
-#INCLUDE_BUILD_NUMBER=true
-
-# Other variables used to set local git pkg repo
-#STORM_FRONTEND_SERVER_PKG_REPO=/code/storm-frontend
-#BUILD_REPO_STORM_GRIDFTP_DSI=/code/dsi
-#BUILD_REPO_STORM_BACKEND_SERVER=/code/storm
-
-# History of used DOCKER_ARGS:
-#DOCKER_ARGS="--cap-add SYS_PTRACE"
-#DOCKER_ARGS="-v ${HOME}/git/pkg.storm:/code/pkg.storm:ro --cap-add SYS_PTRACE"
-# -v ${HOME}/git/storm-frontend:/code/storm-frontend:ro --cap-add SYS_PTRACE"
+# Comment out this if you want to test locally the changes
+#PKG_REPO=/code/pkg.storm
+#DOCKER_ARGS="-v ${HOME}/git/pkg.storm:/code/pkg.storm:ro"
