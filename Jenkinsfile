@@ -67,7 +67,7 @@ pipeline {
     stage('package') {
       steps {
         script {
-          if params.INCLUDE_BUILD_NUMBER {
+          if (params.INCLUDE_BUILD_NUMBER) {
             env.INCLUDE_BUILD_NUMBER = '1'
           }
           def buildStages = PLATFORMS.split(' ').collectEntries {
