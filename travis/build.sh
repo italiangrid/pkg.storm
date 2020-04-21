@@ -1,25 +1,5 @@
 #!/bin/bash
 set -ex
-TRAVIS_REPO_SLUG=${TRAVIS_REPO_SLUG:-italiangrid/pkg.storm}
-TRAVIS_JOB_ID=${TRAVIS_JOB_ID:-0}
-DATA_CONTAINER_NAME="stage-area-pkg.storm-${TRAVIS_JOB_ID}"
-
-export PING_SLEEP=30s
-export BUILD_OUTPUT=$(pwd)/travis/travis-build.out
-
-upload_report() {
-  BUILD_REPORT_URL=${PKG_NEXUS_HOST}/repository/${PKG_NEXUS_REPONAME}/travis-build.out
-  curl --user "${PKG_NEXUS_USERNAME}:${PKG_NEXUS_PASSWORD}" --upload-file travis/travis-build.out \
-      ${PKG_NEXUS_HOST}/repository/${PKG_NEXUS_REPONAME}/travis-build.out
-
-  echo "Build report available at:"
-  echo ${BUILD_REPORT_URL}
-}
-
-dump_output() {
-   echo Tailing the last 1000 lines of output:
-   tail -1000 $BUILD_OUTPUT
-}
 
 error_handler() {
   echo ERROR: An error was encountered with the build.
@@ -30,26 +10,12 @@ error_handler() {
 
 trap 'error_handler' ERR
 
-# Setup stage area container
-docker create -v /stage-area --name ${DATA_CONTAINER_NAME} \
-  italiangrid/pkg.base:centos7
-
-bash -c "while true; do echo \$(date) - building ...; sleep $PING_SLEEP; done" &
-
-PING_LOOP_PID=$!
-
+rm -rf artifacts
+mkdir -p artifacts
+./setup-volumes.sh
 pushd rpm
-export PKG_NEXUS_REPONAME="travis/${TRAVIS_REPO_SLUG}/$(date -I)/${TRAVIS_JOB_ID}"
-bash build.sh 2>&1 | tee ${BUILD_OUTPUT}
-rc=$?
+pkg-build.sh
 popd
-if [[ $rc != 0 ]]; then
-  echo "pkg.storm build completed with error(s)"
-else
-  echo "pkg.storm build completed succesfully!"
-fi
-kill ${PING_LOOP_PID}
-
-upload_report
+./copy-artifacts.sh
 
 exit $rc
