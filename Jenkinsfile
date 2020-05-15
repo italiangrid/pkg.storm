@@ -34,6 +34,8 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
 
+  triggers { cron('@daily') }
+
   parameters {
     booleanParam(name: 'INCLUDE_BUILD_NUMBER', defaultValue: true, description: 'Include build number into rpm name')
   }
