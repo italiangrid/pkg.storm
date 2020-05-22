@@ -92,12 +92,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %files
-%defattr(644,root,root,755)
+%defattr(644,storm,storm,755)
 
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/*.jar
+%attr(755,root,root) %dir %{_javadir}/%{name}
+%attr(755,root,root) %{_javadir}/%{name}/*.jar
 
-%attr(755,root,root) %{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_database_config.sh
+%dir %{_sysconfdir}/%{prefixname}/%{_modulename}
+%{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_database_config.sh
 %{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_be_ISAM_mysql_update_from_1.0.0_to_1.1.0.sql
 %{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_mysql_grant.sql
 %{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_mysql_tbl.sql
@@ -111,13 +112,13 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/%{prefixname}/%{_modulename}/storm.properties.template
 %{_sysconfdir}/%{prefixname}/%{_modulename}/used-space.ini.template
 %{_sysconfdir}/%{prefixname}/%{_modulename}/welcome.txt
-%config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
-%config(noreplace) %{_sysconfdir}/sysconfig/%{name}
+%attr(644,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
+%attr(644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 
 %if 0%{?rhel} == 7
-  %{_exec_prefix}/lib/systemd/system/%{name}.service
-  %dir %{_sysconfdir}/systemd/system/%{name}.service.d
-  %{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
+  %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{name}.service
+  %attr(755,root,root) %dir %{_sysconfdir}/systemd/system/%{name}.service.d
+  %attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
 %else
   %attr(755,root,root) %{_sysconfdir}/init.d/%{name}
 %endif
