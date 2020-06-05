@@ -22,7 +22,6 @@ Requires: umd-release
 Requires: storm-backend-server
 Requires: cleanup-grid-accounts
 Requires: storm-dynamic-info-provider
-Requires: glite-yaim-bdii
 Requires: edg-mkgridmap
 Requires: lcas-lcmaps-gt4-interface
 
@@ -32,6 +31,7 @@ Requires: mysql-server
 Requires: nc
 
 %if 0%{?rhel} == 6
+Requires: glite-yaim-bdii
 Requires: yaim-storm
 %endif
 
