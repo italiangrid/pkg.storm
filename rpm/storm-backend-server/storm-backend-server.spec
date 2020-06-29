@@ -140,19 +140,9 @@ if [ "$1" = "1" ] ; then
   %else
     /sbin/chkconfig --add %{name}
   %endif
-  # create mysql-connector-java jar link
-  /bin/ln -sf /usr/share/java/mysql-connector-java.jar %{_javadir}/%{name}/mysql-connector-java.jar
 fi;
 #during an upgrade, the value of the argument passed in is 2
 if [ "$1" = "2" ] ; then
-  # create mysql-connector-java jar link if it does not exist
-  if [ ! -L %{_javadir}/%{name}/mysql-connector-java.jar ] ; then
-    /bin/ln -sf /usr/share/java/mysql-connector-java.jar %{_javadir}/%{name}/mysql-connector-java.jar
-  fi
-  # remove old mysql-connector-java jar link
-  if [ -L %{_javadir}/%{name}/mysql-connector-java-5.1.12.jar ] ; then
-    /bin/unlink %{_javadir}/%{name}/mysql-connector-java-5.1.12.jar
-  fi
   %if 0%{?rhel} == 7
     systemctl restart %{name}.service
   %else
@@ -175,8 +165,6 @@ if [ "$1" = "0" ] ; then
     /sbin/service %{name} stop >/dev/null 2>&1 || :
     /sbin/chkconfig --del %{name}
   %endif
-  # remove mysql-connector-java jar link
-  /bin/unlink %{_javadir}/%{name}/mysql-connector-java.jar
 fi;
 
 %postun
