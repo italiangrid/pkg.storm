@@ -77,8 +77,10 @@ mkdir -p $RPM_BUILD_ROOT
 tar -C $RPM_BUILD_ROOT -xvzf $HOME/sources/%{name}/target/%{name}-server.tar.gz
 %if 0%{?rhel} == 7
   rm -f $RPM_BUILD_ROOT%{_sysconfdir}/init.d/%{name}
+  rm -f $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
 %else
   rm -f $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{name}.service
+  rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service.d
 %endif
 
 %clean
@@ -90,15 +92,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %if 0%{?rhel} == 7
   %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{name}.service
+  %dir %attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service.d
+  %attr(644,root,root) %config(noreplace) %{_sysconfdir}/systemd/system/%{name}.service.d/filelimit.conf
+  %attr(644,root,root) %config(noreplace) %{_sysconfdir}/systemd/system/%{name}.service.d/storm-webdav.conf
 %else
   %attr(755,root,root) %{_sysconfdir}/init.d/%{name}
+  %attr(644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %endif
 
 %defattr(644,root,root,755)
 %dir %{_javadir}/%{name}
 %{_javadir}/%{name}/%{name}-server.jar
 
-%config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %config(noreplace) %{_sysconfdir}/%{slash_name}/logback.xml
 %config(noreplace) %{_sysconfdir}/%{slash_name}/logback-access.xml
 %{_sysconfdir}/%{slash_name}/README.md
