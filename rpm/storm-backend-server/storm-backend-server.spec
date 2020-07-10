@@ -77,14 +77,15 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 tar -C $RPM_BUILD_ROOT -xvzf target/%{name}.tar.gz
 %if 0%{?rhel} == 7
-  # unit
-  mkdir -p $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system
-  cp etc/systemd/%{name}.service $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{name}.service
-  # env file
-  mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service.d
-  cp etc/systemd/service.d/%{name}.conf $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
   # rm init.d file
-  rm -rf $RPM_BUILD_ROOT/etc/init.d/%{name}
+  rm -f $RPM_BUILD_ROOT%{_sysconfdir}/init.d/%{name}
+  # rm sysconfig file
+  rm -f $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
+%else
+  # rm service unit
+  rm -f $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{name}.service
+  # rm service conf dir
+  rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service.d  
 %endif
 
 %clean
@@ -113,14 +114,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/%{prefixname}/%{_modulename}/used-space.ini.template
 %{_sysconfdir}/%{prefixname}/%{_modulename}/welcome.txt
 %attr(644,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
-%attr(644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 
 %if 0%{?rhel} == 7
   %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{name}.service
-  %attr(755,root,root) %dir %{_sysconfdir}/systemd/system/%{name}.service.d
-  %attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
+  %dir %attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service.d
+  %attr(644,root,root) %config(noreplace) %{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
 %else
   %attr(755,root,root) %{_sysconfdir}/init.d/%{name}
+  %attr(644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %endif
 
 %attr(750,storm,storm) %dir %{_localstatedir}/log/%{prefixname}
