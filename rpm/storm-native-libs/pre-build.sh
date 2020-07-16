@@ -7,6 +7,6 @@ yum install dkms -y
 yum -y install pkgconfig \
   swig \
   libacl-devel \
-  gpfs.base-3.5.0 \
+  gpfs.base-3.4.0 \
   lcmaps-without-gsi-devel \
   lcmaps-interface
