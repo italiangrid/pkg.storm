@@ -34,16 +34,19 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
 
+  triggers { cron('@daily') }
+
   parameters {
     booleanParam(name: 'INCLUDE_BUILD_NUMBER', defaultValue: true, description: 'Include build number into rpm name')
   }
 
   environment {
-    PKG_TAG = "${env.BRANCH_NAME}"
-    DOCKER_REGISTRY_HOST = "${env.DOCKER_REGISTRY_HOST}"
     PLATFORMS = "centos7 centos6"
+    PKG_TAG = "${env.BRANCH_NAME}"
     PACKAGES_VOLUME = "pkg-vol-${env.BUILD_TAG}"
     STAGE_AREA_VOLUME = "sa-vol-${env.BUILD_TAG}"
+    PKG_BUILD_NUMBER = "${env.BUILD_NUMBER}"
+    DOCKER_REGISTRY_HOST = "${env.DOCKER_REGISTRY_HOST}"
     DOCKER_ARGS = "--rm -v /opt/cnafsd/helper-scripts/scripts/:/usr/local/bin"
   }
 
@@ -67,6 +70,9 @@ pipeline {
     stage('package') {
       steps {
         script {
+          if (params.INCLUDE_BUILD_NUMBER) {
+            env.INCLUDE_BUILD_NUMBER = '1'
+          }
           def buildStages = PLATFORMS.split(' ').collectEntries {
             [ "${it} build packages" : buildPackages(it, platform2Dir, "${params.INCLUDE_BUILD_NUMBER}" ) ]
           }

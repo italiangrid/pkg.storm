@@ -77,14 +77,15 @@ rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 tar -C $RPM_BUILD_ROOT -xvzf target/%{name}.tar.gz
 %if 0%{?rhel} == 7
-  # unit
-  mkdir -p $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system
-  cp etc/systemd/%{name}.service $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{name}.service
-  # env file
-  mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service.d
-  cp etc/systemd/service.d/%{name}.conf $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
   # rm init.d file
-  rm -rf $RPM_BUILD_ROOT/etc/init.d/%{name}
+  rm -f $RPM_BUILD_ROOT%{_sysconfdir}/init.d/%{name}
+  # rm sysconfig file
+  rm -f $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
+%else
+  # rm service unit
+  rm -f $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{name}.service
+  # rm service conf dir
+  rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service.d  
 %endif
 
 %clean
@@ -92,12 +93,13 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %files
-%defattr(644,root,root,755)
+%defattr(644,storm,storm,755)
 
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/*.jar
+%attr(755,root,root) %dir %{_javadir}/%{name}
+%attr(755,root,root) %{_javadir}/%{name}/*.jar
 
-%attr(755,root,root) %{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_database_config.sh
+%dir %{_sysconfdir}/%{prefixname}/%{_modulename}
+%{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_database_config.sh
 %{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_be_ISAM_mysql_update_from_1.0.0_to_1.1.0.sql
 %{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_mysql_grant.sql
 %{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_mysql_tbl.sql
@@ -111,15 +113,15 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/%{prefixname}/%{_modulename}/storm.properties.template
 %{_sysconfdir}/%{prefixname}/%{_modulename}/used-space.ini.template
 %{_sysconfdir}/%{prefixname}/%{_modulename}/welcome.txt
-%config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
-%config(noreplace) %{_sysconfdir}/sysconfig/%{name}
+%attr(644,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 
 %if 0%{?rhel} == 7
-  %{_exec_prefix}/lib/systemd/system/%{name}.service
-  %dir %{_sysconfdir}/systemd/system/%{name}.service.d
-  %{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
+  %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{name}.service
+  %dir %attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service.d
+  %attr(644,root,root) %config(noreplace) %{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
 %else
   %attr(755,root,root) %{_sysconfdir}/init.d/%{name}
+  %attr(644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %endif
 
 %attr(750,storm,storm) %dir %{_localstatedir}/log/%{prefixname}
@@ -139,19 +141,9 @@ if [ "$1" = "1" ] ; then
   %else
     /sbin/chkconfig --add %{name}
   %endif
-  # create mysql-connector-java jar link
-  /bin/ln -sf /usr/share/java/mysql-connector-java.jar %{_javadir}/%{name}/mysql-connector-java.jar
 fi;
 #during an upgrade, the value of the argument passed in is 2
 if [ "$1" = "2" ] ; then
-  # create mysql-connector-java jar link if it does not exist
-  if [ ! -L %{_javadir}/%{name}/mysql-connector-java.jar ] ; then
-    /bin/ln -sf /usr/share/java/mysql-connector-java.jar %{_javadir}/%{name}/mysql-connector-java.jar
-  fi
-  # remove old mysql-connector-java jar link
-  if [ -L %{_javadir}/%{name}/mysql-connector-java-5.1.12.jar ] ; then
-    /bin/unlink %{_javadir}/%{name}/mysql-connector-java-5.1.12.jar
-  fi
   %if 0%{?rhel} == 7
     systemctl restart %{name}.service
   %else
@@ -174,8 +166,6 @@ if [ "$1" = "0" ] ; then
     /sbin/service %{name} stop >/dev/null 2>&1 || :
     /sbin/chkconfig --del %{name}
   %endif
-  # remove mysql-connector-java jar link
-  /bin/unlink %{_javadir}/%{name}/mysql-connector-java.jar
 fi;
 
 %postun
