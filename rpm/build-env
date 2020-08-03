@@ -1,8 +1,8 @@
 # Components list - Default value is the complete list
-COMPONENTS_centos6="storm-webdav storm-gridftp-dsi storm-xmlrpc-c storm-frontend-server storm-globus-gridftp-mp storm-backend-mp storm-frontend-mp storm-backend-server storm-dynamic-info-provider yaim-storm"
-COMPONENTS_centos7="storm-webdav storm-gridftp-dsi storm-xmlrpc-c storm-frontend-server storm-globus-gridftp-mp storm-backend-mp storm-frontend-mp storm-backend-server storm-dynamic-info-provider storm-native-libs cdmi-storm"
+COMPONENTS_centos6="storm-native-libs"
+COMPONENTS_centos7="storm-native-libs"
 
-PKG_TAG=v1.11.18
+PKG_TAG=STOR-1223
 
 # Set to 1 if you want to skip the pull of the build image
 #SKIP_PKG_BASE_PULL_IMAGE=1
