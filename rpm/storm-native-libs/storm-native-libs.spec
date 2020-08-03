@@ -14,7 +14,7 @@
 
 
 %global base_version 1.0.5
-%global base_release 2
+%global base_release 3
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -42,7 +42,7 @@ BuildRequires: libacl-devel
 BuildRequires: lcmaps-without-gsi-devel
 BuildRequires: lcmaps-interface
 BuildRequires: java-1.8.0-openjdk-devel
-BuildRequires: gpfs.base = 3.4.0
+BuildRequires: gpfs.base >= 3.4.0
 
 %description
 This package provides the StoRM backend interface to posix libraries.
@@ -62,7 +62,7 @@ Summary: The StoRM backend server interface to GPFS native libraries
 Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
 Requires: libacl
-Requires: gpfs.base >= 3.3
+Requires: gpfs.base >= 3.4
 
 %description gpfs
 This package provides the StoRM backend interface to GPFS libraries.
