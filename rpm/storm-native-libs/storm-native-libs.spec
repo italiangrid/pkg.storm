@@ -150,15 +150,3 @@ rm -rf $RPM_BUILD_ROOT
 - Use posix acl calls also for GPFS filesystems
 * Tue May 15 2018 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.5-2
 - Require GPFS-3.4.0 at build time
-* Tue Jun 06 2017 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.5-1
-  Fix for https://issues.infn.it/jira/browse/STOR-945
-* Tue Apr 14 2015 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.4-1
-  Fix for https://issues.infn.it/jira/browse/STOR-474
-* Wed Nov 12 2014 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.3-1
-  Fix for https://issues.infn.it/jira/browse/STOR-419
-* Wed Jun 26 2014 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.2-1
-- Force dependency on GPFS v. 3.3
-* Wed Jun 12 2013 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.1-1
-- Fix for https://issues.infn.it/jira/browse/STOR-250
-* Fri Mar 1 2013 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.0-1
-- StoRM native libraries first packaging
