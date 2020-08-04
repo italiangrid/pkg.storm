@@ -13,8 +13,8 @@
 # limitations under the License.
 
 
-%global base_version 1.0.5
-%global base_release 2
+%global base_version 1.0.6
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -42,7 +42,7 @@ BuildRequires: libacl-devel
 BuildRequires: lcmaps-without-gsi-devel
 BuildRequires: lcmaps-interface
 BuildRequires: java-1.8.0-openjdk-devel
-BuildRequires: gpfs.base = 3.4.0
+BuildRequires: gpfs.base >= 3.4.0
 
 %description
 This package provides the StoRM backend interface to posix libraries.
@@ -62,7 +62,7 @@ Summary: The StoRM backend server interface to GPFS native libraries
 Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
 Requires: libacl
-Requires: gpfs.base >= 3.3
+Requires: gpfs.base >= 3.4
 
 %description gpfs
 This package provides the StoRM backend interface to GPFS libraries.
@@ -146,17 +146,7 @@ rm -rf $RPM_BUILD_ROOT
 %postun lcmaps -p /sbin/ldconfig
 
 %changelog
+* Tue Aug 4 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.6-1
+- Use posix acl calls also for GPFS filesystems
 * Tue May 15 2018 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.5-2
 - Require GPFS-3.4.0 at build time
-* Tue Jun 06 2017 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.5-1
-  Fix for https://issues.infn.it/jira/browse/STOR-945
-* Tue Apr 14 2015 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.4-1
-  Fix for https://issues.infn.it/jira/browse/STOR-474
-* Wed Nov 12 2014 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.3-1
-  Fix for https://issues.infn.it/jira/browse/STOR-419
-* Wed Jun 26 2014 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.2-1
-- Force dependency on GPFS v. 3.3
-* Wed Jun 12 2013 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.1-1
-- Fix for https://issues.infn.it/jira/browse/STOR-250
-* Fri Mar 1 2013 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.0-1
-- StoRM native libraries first packaging
