@@ -26,13 +26,15 @@ Requires: edg-mkgridmap
 Requires: lcas-lcmaps-gt4-interface
 
 # moved from backend spec file
-Requires: mysql
-Requires: mysql-server
 Requires: nc
 
 %if 0%{?rhel} == 6
 Requires: glite-yaim-bdii
 Requires: yaim-storm
+
+# moved from backend spec file
+Requires: mysql
+Requires: mysql-server
 %endif
 
 %description
