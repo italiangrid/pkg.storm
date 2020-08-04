@@ -13,8 +13,8 @@
 # limitations under the License.
 
 
-%global base_version 1.0.5
-%global base_release 3
+%global base_version 1.0.6
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -146,6 +146,8 @@ rm -rf $RPM_BUILD_ROOT
 %postun lcmaps -p /sbin/ldconfig
 
 %changelog
+* Tue Aug 4 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.6-1
+- Use posix acl calls also for GPFS filesystems
 * Tue May 15 2018 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.5-2
 - Require GPFS-3.4.0 at build time
 * Tue Jun 06 2017 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.5-1
