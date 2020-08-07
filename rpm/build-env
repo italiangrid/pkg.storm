@@ -1,5 +1,5 @@
 # Components list - Default value is the complete list
-COMPONENTS_centos6="storm-webdav storm-gridftp-dsi storm-frontend-server storm-globus-gridftp-mp storm-backend-mp storm-frontend-mp storm-backend-server storm-dynamic-info-provider storm-native-libs"
+COMPONENTS_centos6="storm-webdav storm-gridftp-dsi storm-frontend-server storm-globus-gridftp-mp storm-backend-mp storm-frontend-mp storm-backend-server storm-dynamic-info-provider storm-native-libs yaim-storm"
 COMPONENTS_centos7="storm-webdav storm-gridftp-dsi storm-xmlrpc-c storm-frontend-server storm-globus-gridftp-mp storm-backend-mp storm-frontend-mp storm-backend-server storm-dynamic-info-provider storm-native-libs cdmi-storm"
 
 PKG_TAG=v1.11.18
