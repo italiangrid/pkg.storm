@@ -16,7 +16,7 @@
 %define __jar_repack 0
 
 %global base_version 0.1.1
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -91,6 +91,9 @@ rm -rf $RPM_BUILD_ROOT
 %preun
 
 %changelog
+
+* Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 0.1.1-1
+Bumped version to 0.1.1-1
 
 * Tue Jun 30 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 0.1.1-0
 Bumped version to 0.1.1-0

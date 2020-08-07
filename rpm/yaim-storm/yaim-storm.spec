@@ -13,7 +13,7 @@
 # limitations under the License.
 
 %global base_version 4.3.13
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -93,7 +93,7 @@ rm -rf $RPM_BUILD_ROOT
 %{default_prefix}/yaim/node-info.d
 
 %changelog
-* Fri Aug 07 2020 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 4.3.13-0
+* Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 4.3.13-1
 
 * Wed Oct 10 2018 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 4.3.12-0
 

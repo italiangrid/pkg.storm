@@ -16,7 +16,7 @@
 %define __jar_repack 0
 
 %global base_version 1.3.0
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
@@ -161,6 +161,9 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
+* Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.3.0-1
+- Packaging for version to 1.3.0-1
+
 * Fri Mar 27 2020 Enrico Vianello <enrico.vianello at cnaf.intn.it> - 1.3.0-0
 - Packaging for version 1.3.0-0
 
