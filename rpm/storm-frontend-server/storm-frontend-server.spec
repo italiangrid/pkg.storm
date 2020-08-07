@@ -145,7 +145,7 @@ fi;
 %if 0%{?rhel} == 7
   %{_exec_prefix}/lib/systemd/system/%{longname}.service
 %else
-  %{_sysconfdir}/init.d/%{longname}
+  %attr(755,root,root) %{_sysconfdir}/init.d/%{longname}
 %endif
 
 %config(noreplace) %{_sysconfdir}/sysconfig/%{longname}
