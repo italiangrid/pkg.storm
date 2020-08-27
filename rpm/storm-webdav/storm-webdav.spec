@@ -15,8 +15,8 @@
 ## Turn off meaningless jar repackaging
 %define __jar_repack 0
 
-%global base_version 1.3.0
-%global base_release 1
+%global base_version 1.3.1
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
