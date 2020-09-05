@@ -106,6 +106,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %config(noreplace) %{_sysconfdir}/%{slash_name}/logback.xml
 %config(noreplace) %{_sysconfdir}/%{slash_name}/logback-access.xml
+%config(noreplace) %{_sysconfdir}/%{slash_name}/config/application.yml
+
 %{_sysconfdir}/%{slash_name}/README.md
 
 %dir %{_sysconfdir}/%{slash_name}/sa.d
