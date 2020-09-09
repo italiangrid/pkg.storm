@@ -1,5 +1,5 @@
 BUILD_NAME=cdmi-storm
 BUILD_REPO=git://github.com/italiangrid/cdmi-storm
-BUILD_TAG=develop
+BUILD_TAG=v0.1.1
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_SPEC_FILE=cdmi-storm/rpm/cdmi-storm/cdmi-storm.spec
