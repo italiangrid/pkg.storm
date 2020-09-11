@@ -103,7 +103,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %dir %{_javadir}/%{name}
 %attr(644,root,root) %{_javadir}/%{name}/%{name}-server.jar
 
-%defattr(640,root,root,755)
+%defattr(640,root,storm,755)
 
 %config(noreplace) %{_sysconfdir}/%{slash_name}/logback.xml
 %config(noreplace) %{_sysconfdir}/%{slash_name}/logback-access.xml
