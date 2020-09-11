@@ -114,6 +114,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/%{slash_name}/sa.d
 %{_sysconfdir}/%{slash_name}/sa.d/README.md
 %{_sysconfdir}/%{slash_name}/sa.d/*.template
+%config(noreplace) %{_sysconfdir}/%{slash_name}/sa.d/*.properties
 
 %dir %{_sysconfdir}/%{slash_name}/config
 %{_sysconfdir}/%{slash_name}/config/README.md
