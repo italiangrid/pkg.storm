@@ -1,6 +1,6 @@
 # Components list - Default value is the complete list
-COMPONENTS_centos6="storm-webdav"
-COMPONENTS_centos7="storm-webdav"
+COMPONENTS_centos6="storm-webdav storm-backend-server"
+COMPONENTS_centos7="storm-webdav storm-backend-server"
 
 PKG_TAG=v1.11.19
 

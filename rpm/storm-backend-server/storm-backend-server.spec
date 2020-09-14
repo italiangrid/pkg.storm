@@ -15,8 +15,8 @@
 ## Turn off meaningless jar repackaging (works only on SL6)
 %define __jar_repack 0
 
-%global base_version 1.11.18
-%global base_release 1
+%global base_version 1.11.19
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -184,6 +184,9 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
+* Mon Sep 14 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.19-0
+- Bumped version to 1.11.19-0
+
 * Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.18-1
 - Bumped version to 1.11.18-1
 
