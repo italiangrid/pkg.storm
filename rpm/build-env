@@ -14,5 +14,5 @@ PKG_TAG=v1.11.19
 PKG_STAGE_RPMS=1
 
 # Comment out this if you want to test locally the changes
-#PKG_REPO=/code/pkg.storm
-#DOCKER_ARGS="-v ${HOME}/git/pkg.storm:/code/pkg.storm:ro"
+# PKG_REPO=/code/pkg.storm
+# DOCKER_ARGS="-v ${HOME}/git/pkg.storm:/code/pkg.storm:ro"
