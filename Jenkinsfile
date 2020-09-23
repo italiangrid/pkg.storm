@@ -74,7 +74,7 @@ pipeline {
             env.INCLUDE_BUILD_NUMBER = '1'
           }
           def buildStages = PLATFORMS.split(' ').collectEntries {
-            [ "${it} build packages" : buildPackages(it, platform2Dir, "${params.INCLUDE_BUILD_NUMBER}" ) ]
+            [ "${it} build packages" : buildPackages(it, platform2Dir, params.INCLUDE_BUILD_NUMBER ) ]
           }
           parallel buildStages
         }

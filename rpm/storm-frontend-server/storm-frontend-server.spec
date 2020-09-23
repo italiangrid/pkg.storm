@@ -5,7 +5,7 @@
 %define default_user root
 
 %global base_version 1.8.13
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -145,7 +145,7 @@ fi;
 %if 0%{?rhel} == 7
   %{_exec_prefix}/lib/systemd/system/%{longname}.service
 %else
-  %{_sysconfdir}/init.d/%{longname}
+  %attr(755,root,root) %{_sysconfdir}/init.d/%{longname}
 %endif
 
 %config(noreplace) %{_sysconfdir}/sysconfig/%{longname}
@@ -170,6 +170,9 @@ fi;
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.13-1
+- Bumped version to 1.8.13-1
+
 * Tue Mar 17 2020 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.8.13-0
 - Bumped packaging version to 1.8.13-0 and added support to systemd unit
 

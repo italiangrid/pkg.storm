@@ -15,8 +15,8 @@
 ## Turn off meaningless jar repackaging
 %define __jar_repack 0
 
-%global base_version 1.3.0
-%global base_release 0
+%global base_version 1.3.1
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
@@ -100,12 +100,15 @@ rm -rf $RPM_BUILD_ROOT
   %attr(644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 %endif
 
-%defattr(644,root,root,755)
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/%{name}-server.jar
+%attr(755,root,root) %dir %{_javadir}/%{name}
+%attr(644,root,root) %{_javadir}/%{name}/%{name}-server.jar
+
+%defattr(640,root,storm,755)
 
 %config(noreplace) %{_sysconfdir}/%{slash_name}/logback.xml
 %config(noreplace) %{_sysconfdir}/%{slash_name}/logback-access.xml
+%config(noreplace) %{_sysconfdir}/%{slash_name}/config/application.yml
+
 %{_sysconfdir}/%{slash_name}/README.md
 
 %dir %{_sysconfdir}/%{slash_name}/sa.d
@@ -114,7 +117,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %dir %{_sysconfdir}/%{slash_name}/config
 %{_sysconfdir}/%{slash_name}/config/README.md
-%{_sysconfdir}/%{slash_name}/config/application.yml
 
 %dir %{_sysconfdir}/%{slash_name}/vo-mapfiles.d
 %{_sysconfdir}/%{slash_name}/vo-mapfiles.d/README.md
@@ -141,6 +143,7 @@ if [ "$1" = "1" ] ; then
 elif [ $1 -gt 1 ] ; then
   # restart the service
   %if 0%{?rhel} == 7
+    systemctl daemon-reload
     systemctl restart %{name}.service
   %else
     /sbin/service %{name} restart >/dev/null 2>&1 || :
@@ -161,6 +164,12 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
+* Mon Sep 14 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.3.0-1
+- Packaging for version 1.3.0-1
+
+* Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.3.0-1
+- Packaging for version to 1.3.0-1
+
 * Fri Mar 27 2020 Enrico Vianello <enrico.vianello at cnaf.intn.it> - 1.3.0-0
 - Packaging for version 1.3.0-0
 
