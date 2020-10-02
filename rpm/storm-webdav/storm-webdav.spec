@@ -164,8 +164,8 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
-* Mon Sep 14 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.3.0-1
-- Packaging for version 1.3.0-1
+* Mon Sep 14 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.3.1-1
+- Packaging for version 1.3.1-1
 
 * Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.3.0-1
 - Packaging for version to 1.3.0-1
