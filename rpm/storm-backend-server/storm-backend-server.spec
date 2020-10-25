@@ -184,6 +184,7 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
+
 * Mon Sep 14 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.19-0
 - Bumped version to 1.11.19-0
 
