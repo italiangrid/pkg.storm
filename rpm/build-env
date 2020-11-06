@@ -1,6 +1,6 @@
 # Components list - Default value is the complete list
-COMPONENTS_centos6="storm-frontend-server"
-COMPONENTS_centos7="storm-frontend-server"
+COMPONENTS_centos6="storm-xmlrpc-c storm-frontend-server"
+COMPONENTS_centos7="storm-xmlrpc-c storm-frontend-server"
 
 PKG_TAG=STOR-1029
 
