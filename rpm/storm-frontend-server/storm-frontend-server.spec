@@ -4,8 +4,8 @@
 
 %define default_user root
 
-%global base_version 1.8.13
-%global base_release 1
+%global base_version 1.8.14
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
