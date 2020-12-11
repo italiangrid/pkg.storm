@@ -15,8 +15,8 @@
 ## Turn off meaningless jar repackaging
 %define __jar_repack 0
 
-%global base_version 1.3.1
-%global base_release 1
+%global base_version 1.4.0
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
@@ -41,14 +41,14 @@ BuildArch: noarch
 
 BuildRequires: apache-maven
 BuildRequires: jpackage-utils
-BuildRequires: java-1.8.0-openjdk-devel
+BuildRequires: java-11-openjdk-devel
 
 Requires(post):   chkconfig
 Requires(preun):  chkconfig
 Requires(preun):  initscripts
 Requires(postun): initscripts
 
-Requires: java-1.8.0-openjdk
+Requires: java-11-openjdk
 Requires: jpackage-utils
 
 %description
@@ -164,6 +164,9 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
+* Mon Dec 11 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.4.0-0
+- Packaging for version 1.4.0-0
+
 * Mon Sep 14 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.3.1-1
 - Packaging for version 1.3.1-1
 

@@ -1,5 +1,5 @@
 BUILD_NAME=storm-webdav
 BUILD_REPO=git://github.com/italiangrid/storm-webdav
-BUILD_TAG=v1.3.1
+BUILD_TAG=develop
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_SPEC_FILE=storm-webdav/rpm/storm-webdav/storm-webdav.spec
