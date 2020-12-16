@@ -2,7 +2,7 @@
 
 def platform2Dir = [
   "centos7" : 'rpm',
-  "centos6" : 'rpm'
+  "centos8" : 'rpm'
 ]
 
 def buildPackages(platform, platform2Dir, includeBuildNumber) {
@@ -41,7 +41,7 @@ pipeline {
   }
 
   environment {
-    PLATFORMS = "centos7 centos6"
+    PLATFORMS = "centos7 centos8"
     PKG_TAG = "${env.BRANCH_NAME}"
     PACKAGES_VOLUME = "pkg-vol-${env.BUILD_TAG}"
     STAGE_AREA_VOLUME = "sa-vol-${env.BUILD_TAG}"

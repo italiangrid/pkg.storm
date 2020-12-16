@@ -1,4 +1,4 @@
-%global base_version 1.1.0
+%global base_version 1.2.0
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -28,15 +28,6 @@ Requires: lcas-lcmaps-gt4-interface
 # moved from backend spec file
 Requires: nc
 
-%if 0%{?rhel} == 6
-Requires: glite-yaim-bdii
-Requires: yaim-storm
-
-# moved from backend spec file
-Requires: mysql
-Requires: mysql-server
-%endif
-
 %description
 StoRM Backend metapackage
 
@@ -49,6 +40,9 @@ StoRM Backend metapackage
 %files
 
 %changelog
+
+* Wed Dec 16 2020 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.2.0-1
+- Removed CentOS 6 stuff
 
 * Thu Mar 31 2020 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.1.0-1
 - Requires yaim-storm for RHEL6 and bumped version to 1.1.0-1
