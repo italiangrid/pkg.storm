@@ -75,13 +75,6 @@ mvn -DskipTests -U clean package
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 tar -C $RPM_BUILD_ROOT -xvzf $HOME/sources/%{name}/target/%{name}-server.tar.gz
-%if 0%{?rhel} == 7
-  rm -f $RPM_BUILD_ROOT%{_sysconfdir}/init.d/%{name}
-  rm -f $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
-%else
-  rm -f $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{name}.service
-  rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service.d
-%endif
 
 %clean
 cd $HOME/sources/%{name}
@@ -90,15 +83,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 
-%if 0%{?rhel} == 7
-  %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{name}.service
-  %dir %attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service.d
-  %attr(644,root,root) %config(noreplace) %{_sysconfdir}/systemd/system/%{name}.service.d/filelimit.conf
-  %attr(644,root,root) %config(noreplace) %{_sysconfdir}/systemd/system/%{name}.service.d/storm-webdav.conf
-%else
-  %attr(755,root,root) %{_sysconfdir}/init.d/%{name}
-  %attr(644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
-%endif
+%attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{name}.service
+%dir %attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service.d
+%attr(644,root,root) %config(noreplace) %{_sysconfdir}/systemd/system/%{name}.service.d/filelimit.conf
+%attr(644,root,root) %config(noreplace) %{_sysconfdir}/systemd/system/%{name}.service.d/storm-webdav.conf
 
 %attr(755,root,root) %dir %{_javadir}/%{name}
 %attr(644,root,root) %{_javadir}/%{name}/%{name}-server.jar
@@ -121,6 +109,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/%{slash_name}/vo-mapfiles.d
 %{_sysconfdir}/%{slash_name}/vo-mapfiles.d/README.md
 
+%attr(750,storm,storm) %dir %{_localstatedir}/log
 %attr(750,storm,storm) %dir %{_localstatedir}/log/%{slash_name}
 %attr(755,storm,storm) %dir %{_localstatedir}/lib/%{name}/work
 
@@ -134,36 +123,26 @@ getent passwd storm > /dev/null || useradd -r -g storm \
 # when installing
 if [ "$1" = "1" ] ; then
   # add the service to chkconfig
-  %if 0%{?rhel} == 7
-    systemctl enable %{name}.service
-  %else
-    /sbin/chkconfig --add %{name}
-  %endif
+  systemctl enable %{name}.service
 # when upgrading
 elif [ $1 -gt 1 ] ; then
   # restart the service
-  %if 0%{?rhel} == 7
-    systemctl daemon-reload
-    systemctl restart %{name}.service
-  %else
-    /sbin/service %{name} restart >/dev/null 2>&1 || :
-  %endif
+  systemctl daemon-reload
+  systemctl restart %{name}.service
 fi
 
 %preun
 # when uninstalling
 if [ "$1" = "0" ] ; then
   # stop and disable service
-  %if 0%{?rhel} == 7
-    systemctl stop %{name}.service
-    systemctl disable %{name}.service
-  %else
-    /sbin/service %{name} stop >/dev/null 2>&1 || :
-    /sbin/chkconfig --del %{name}
-  %endif
+  systemctl stop %{name}.service
 fi
 
 %changelog
+* Mon Feb 1 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.4.0-0
+- Removed stuff related to centos6: init script and sysconfig file, service commands and others
+- Added right permissions and ownership to log parent directory
+
 * Mon Dec 11 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.4.0-0
 - Packaging for version 1.4.0-0
 
