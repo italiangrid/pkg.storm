@@ -15,8 +15,8 @@
 ## Turn off meaningless jar repackaging (works only on SL6)
 %define __jar_repack 0
 
-%global base_version 1.11.19
-%global base_release 1
+%global base_version 1.12.0
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -53,9 +53,9 @@ Requires: java-1.8.0-openjdk
 Requires: xml-commons-apis
 Requires: mysql-connector-java
 Requires: jpackage-utils
-Requires: storm-native-libs >= 1.0.2
-Requires: storm-native-libs-lcmaps >= 1.0.2
-Requires: storm-native-libs-java >= 1.0.2
+Requires: storm-native-libs >= 1.0.6
+Requires: storm-native-libs-lcmaps >= 1.0.6
+Requires: storm-native-libs-java >= 1.0.6
 
 %description
 StoRM provides an SRM interface to any POSIX filesystem with direct file
@@ -76,17 +76,6 @@ mvn -DskipTests -U clean package
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 tar -C $RPM_BUILD_ROOT -xvzf target/%{name}.tar.gz
-%if 0%{?rhel} == 7
-  # rm init.d file
-  rm -f $RPM_BUILD_ROOT%{_sysconfdir}/init.d/%{name}
-  # rm sysconfig file
-  rm -f $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
-%else
-  # rm service unit
-  rm -f $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{name}.service
-  # rm service conf dir
-  rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service.d  
-%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -115,14 +104,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/%{prefixname}/%{_modulename}/welcome.txt
 %attr(644,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
 
-%if 0%{?rhel} == 7
-  %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{name}.service
-  %dir %attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service.d
-  %attr(644,root,root) %config(noreplace) %{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
-%else
-  %attr(755,root,root) %{_sysconfdir}/init.d/%{name}
-  %attr(644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
-%endif
+%attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{name}.service
+%dir %attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service.d
+%attr(644,root,root) %config(noreplace) %{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
 
 %attr(750,storm,storm) %dir %{_localstatedir}/log/%{prefixname}
 
@@ -136,36 +120,19 @@ getent passwd storm > /dev/null || useradd -r -g storm \
 #during an install, the value of the argument passed in is 1
 if [ "$1" = "1" ] ; then
   # add the service to chkconfig
-  %if 0%{?rhel} == 7
-    systemctl enable %{name}.service
-  %else
-    /sbin/chkconfig --add %{name}
-  %endif
+  systemctl enable %{name}.service
 fi;
 #during an upgrade, the value of the argument passed in is 2
 if [ "$1" = "2" ] ; then
-  %if 0%{?rhel} == 7
-    systemctl restart %{name}.service
-  %else
-    # kill processes
-    pslist=$( ps -ef | grep java | grep storm-backend-server | awk '{print $2}' | tr '\n' ' ' | sed -e s/\ $// )
-    [ -z "$pslist" ] && echo "no running processes found" || kill -9 $pslist
-    # start the service
-    /sbin/service %{name} restart
-  %endif
+  systemctl restart %{name}.service
 fi;
 
 %preun
 # when uninstalling
 if [ "$1" = "0" ] ; then
   # stop and disable service
-  %if 0%{?rhel} == 7
-    systemctl stop %{name}
-    systemctl disable %{name}.service
-  %else
-    /sbin/service %{name} stop >/dev/null 2>&1 || :
-    /sbin/chkconfig --del %{name}
-  %endif
+  systemctl stop %{name}
+  systemctl disable %{name}.service
 fi;
 
 %postun
@@ -175,15 +142,14 @@ if [ "$1" = "1" ] ; then
   echo "A restart of the service is needed to make the new version effective"
 fi;
 if [ "$1" = "0" ] ; then
-  %if 0%{?rhel} == 7
-    rm -f %{_exec_prefix}/lib/systemd/system/%{name}.service
-    rm -rf %{_sysconfdir}/systemd/system/%{name}.service.d
-  %else
-    rm -f %{_sysconfdir}/init.d/%{name}
-  %endif
+  rm -f %{_exec_prefix}/lib/systemd/system/%{name}.service
+  rm -rf %{_sysconfdir}/systemd/system/%{name}.service.d
 fi;
 
 %changelog
+
+* Tue Feb 23 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.12.0-0
+- Drop support for CentOS 6
 
 * Wed Oct 28 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.19-1
 - Bumped version to 1.11.19-1
