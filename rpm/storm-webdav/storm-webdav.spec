@@ -109,7 +109,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/%{slash_name}/vo-mapfiles.d
 %{_sysconfdir}/%{slash_name}/vo-mapfiles.d/README.md
 
-%attr(750,storm,storm) %dir %{_localstatedir}/log/%{slash_name}
+%attr(750,storm,storm) %dir %{_localstatedir}/log/storm
+%attr(750,storm,storm) %dir %{_localstatedir}/log/storm/webdav
 %attr(755,storm,storm) %dir %{_localstatedir}/lib/%{name}/work
 
 %pre
