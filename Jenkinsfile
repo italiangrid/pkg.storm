@@ -41,7 +41,7 @@ pipeline {
   }
 
   environment {
-    PLATFORMS = "centos7 centos7java11"
+    PLATFORMS = "centos7java11"
     PKG_TAG = "${env.BRANCH_NAME}"
     PACKAGES_VOLUME = "pkg-vol-${env.BUILD_TAG}"
     STAGE_AREA_VOLUME = "sa-vol-${env.BUILD_TAG}"

@@ -42,14 +42,9 @@ BuildArch: noarch
 
 BuildRequires: apache-maven
 BuildRequires: jpackage-utils
-BuildRequires: java-1.8.0-openjdk-devel
+BuildRequires: java-11-openjdk-devel
 
-Requires(post):   chkconfig
-Requires(preun):  chkconfig
-Requires(preun):  initscripts
-Requires(postun): initscripts
-
-Requires: java-1.8.0-openjdk
+Requires: java-11-openjdk
 Requires: xml-commons-apis
 Requires: mysql-connector-java
 Requires: jpackage-utils
@@ -119,7 +114,7 @@ getent passwd storm > /dev/null || useradd -r -g storm \
 %post
 #during an install, the value of the argument passed in is 1
 if [ "$1" = "1" ] ; then
-  # add the service to chkconfig
+  # start a service at boot
   systemctl enable %{name}.service
 fi;
 #during an upgrade, the value of the argument passed in is 2
@@ -147,6 +142,9 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
+
+* Tue Mar 23 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-0
+- Requires Java 11
 
 * Mon Mar 15 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-0
 - Bumped version to 1.11.20-0
