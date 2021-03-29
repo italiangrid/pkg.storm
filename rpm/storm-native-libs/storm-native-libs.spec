@@ -14,7 +14,7 @@
 
 
 %global base_version 1.0.6
-%global base_release 1
+%global base_release 2
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -41,7 +41,7 @@ BuildRequires: swig
 BuildRequires: libacl-devel
 BuildRequires: lcmaps-without-gsi-devel
 BuildRequires: lcmaps-interface
-BuildRequires: java-1.8.0-openjdk-devel
+BuildRequires: java-11-openjdk-devel
 BuildRequires: gpfs.base >= 3.4.0
 
 %description
@@ -51,7 +51,7 @@ This package provides the StoRM backend interface to posix libraries.
 Summary: The StoRM backend server interface to native libraries (java part)
 Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
-Requires: java-1.8.0-openjdk
+Requires: java-11-openjdk
 
 %description java
 This package provides the StoRM backend interface to posix libraries.
@@ -146,6 +146,8 @@ rm -rf $RPM_BUILD_ROOT
 %postun lcmaps -p /sbin/ldconfig
 
 %changelog
+* Mon Mar 29 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.6-2
+- Java 11 required
 * Tue Aug 4 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.6-1
 - Use posix acl calls also for GPFS filesystems
 * Tue May 15 2018 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.5-2
