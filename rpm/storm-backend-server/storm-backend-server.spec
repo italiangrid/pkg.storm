@@ -45,8 +45,6 @@ BuildRequires: jpackage-utils
 BuildRequires: java-11-openjdk-devel
 
 Requires: java-11-openjdk
-Requires: xml-commons-apis
-Requires: mysql-connector-java
 Requires: jpackage-utils
 Requires: storm-native-libs >= 1.0.6
 Requires: storm-native-libs-lcmaps >= 1.0.6
