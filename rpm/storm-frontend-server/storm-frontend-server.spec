@@ -5,7 +5,7 @@
 %define default_user root
 
 %global base_version 1.8.14
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -170,6 +170,9 @@ fi;
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Thu Apr 1 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.14-1
+- Bumped version to 1.8.14-1
+
 * Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.13-1
 - Bumped version to 1.8.13-1
 

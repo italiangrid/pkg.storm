@@ -16,7 +16,7 @@
 %define __jar_repack 0
 
 %global base_version 1.11.20
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -140,6 +140,9 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
+
+* Thu Apr 1 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-1
+- Bumped version to 1.11.20-1
 
 * Tue Mar 23 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-0
 - Requires Java 11

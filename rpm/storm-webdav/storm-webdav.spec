@@ -16,7 +16,7 @@
 %define __jar_repack 0
 
 %global base_version 1.4.0
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
@@ -139,6 +139,10 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
+
+* Thu Apr 1 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.4.0-1
+- Packaging for version 1.4.0-1
+
 * Mon Feb 1 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.4.0-0
 - Removed stuff related to centos6: init script and sysconfig file, service commands and others
 - Added right permissions and ownership to log parent directory
