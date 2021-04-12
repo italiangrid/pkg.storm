@@ -37,7 +37,7 @@ pipeline {
   triggers { cron('@daily') }
 
   parameters {
-    booleanParam(name: 'INCLUDE_BUILD_NUMBER', defaultValue: true, description: 'Include build number into rpm name')
+    booleanParam(name: 'INCLUDE_BUILD_NUMBER', defaultValue: false, description: 'Include build number into rpm name')
   }
 
   environment {
