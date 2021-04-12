@@ -86,30 +86,22 @@ if [ -d $RPM_BUILD_ROOT ]; then rm -rf $RPM_BUILD_ROOT; fi
 mkdir -p $RPM_BUILD_ROOT
 make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{_localstatedir}/log/%{prefixname}
-%if 0%{?rhel} == 7
-  mkdir -p $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system
-  cp etc/systemd/%{longname}.service $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{longname}.service
-  rm -rf $RPM_BUILD_ROOT/etc/init.d/%{longname}
-%endif
+mkdir -p $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system
+cp etc/systemd/%{longname}.service $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{longname}.service
+rm -rf $RPM_BUILD_ROOT/etc/init.d/%{longname}
 
 %post
 #during an install, the value of the argument passed in is 1
 if [ "$1" = "1" ] ; then
-  # add the service to chkconfig
-  %if 0%{?rhel} == 7
-    systemctl enable %{longname}.service
-  %else
-    /sbin/chkconfig --add %{longname}
-  %endif
+  # enable service
+  systemctl enable %{longname}.service
+  echo "The StoRM Frontend server has been installed but NOT configured yet."
+  echo "Manually configure service or use StoRM Puppet module."
 fi;
 #during an upgrade, the value of the argument passed in is 2
 if [ "$1" = "2" ] ; then
-  echo "The StoRM Frontend server has been upgraded but NOT configured yet."
-  %if 0%{?rhel} == 7
-    echo "Manually configure service or use StoRM Puppet module."
-  %else
-    echo "You need to use yaim to configure the server."
-  %endif
+  systemctl daemon-reload
+  systemctl restart %{longname}.service
 fi;
 
 %preun
@@ -117,11 +109,7 @@ fi;
 #during an uninstall, the value of the argument passed in is 0
 if [ "$1" = "0" ] ; then
   # disable service
-  %if 0%{?rhel} == 7
-    systemctl disable %{longname}.service
-  %else
-    /sbin/chkconfig --del %{longname}
-  %endif
+  systemctl disable %{longname}.service
 fi;
 
 %postun
@@ -131,22 +119,14 @@ if [ "$1" = "1" ] ; then
   echo "A restart of the service is needed to make the new version effective"
 fi;
 if [ "$1" = "0" ] ; then
-  %if 0%{?rhel} == 7
-    rm -f %{_exec_prefix}/lib/systemd/system/%{longname}.service
-  %else
-    rm -f %{_sysconfdir}/init.d/%{longname}
-  %endif
+  rm -f %{_exec_prefix}/lib/systemd/system/%{longname}.service
 fi;
 
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_sbindir}/%{longname}
 
-%if 0%{?rhel} == 7
-  %{_exec_prefix}/lib/systemd/system/%{longname}.service
-%else
-  %attr(755,root,root) %{_sysconfdir}/init.d/%{longname}
-%endif
+%{_exec_prefix}/lib/systemd/system/%{longname}.service
 
 %config(noreplace) %{_sysconfdir}/sysconfig/%{longname}
 %config(noreplace) %{_sysconfdir}/logrotate.d/%{longname}
@@ -170,6 +150,9 @@ fi;
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Mon Apr 12 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.14-1
+- Removed CentOS 6 support and added daemon reload on restart
+
 * Thu Apr 1 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.14-1
 - Bumped version to 1.8.14-1
 

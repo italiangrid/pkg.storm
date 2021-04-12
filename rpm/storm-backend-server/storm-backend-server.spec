@@ -117,6 +117,7 @@ if [ "$1" = "1" ] ; then
 fi;
 #during an upgrade, the value of the argument passed in is 2
 if [ "$1" = "2" ] ; then
+  systemctl daemon-reload
   systemctl restart %{name}.service
 fi;
 
@@ -140,6 +141,9 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
+
+* Mon Apr 12 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-1
+- Added daemon reload on restart
 
 * Thu Apr 1 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-1
 - Bumped version to 1.11.20-1
