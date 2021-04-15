@@ -16,7 +16,7 @@
 %define __jar_repack 0
 
 %global base_version 1.11.20
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -42,20 +42,13 @@ BuildArch: noarch
 
 BuildRequires: apache-maven
 BuildRequires: jpackage-utils
-BuildRequires: java-1.8.0-openjdk-devel
+BuildRequires: java-11-openjdk-devel
 
-Requires(post):   chkconfig
-Requires(preun):  chkconfig
-Requires(preun):  initscripts
-Requires(postun): initscripts
-
-Requires: java-1.8.0-openjdk
-Requires: xml-commons-apis
-Requires: mysql-connector-java
+Requires: java-11-openjdk
 Requires: jpackage-utils
-Requires: storm-native-libs >= 1.0.6
-Requires: storm-native-libs-lcmaps >= 1.0.6
-Requires: storm-native-libs-java >= 1.0.6
+Requires: storm-native-libs >= 1.0.6-2
+Requires: storm-native-libs-lcmaps >= 1.0.6-2
+Requires: storm-native-libs-java >= 1.0.6-2
 
 %description
 StoRM provides an SRM interface to any POSIX filesystem with direct file
@@ -119,11 +112,12 @@ getent passwd storm > /dev/null || useradd -r -g storm \
 %post
 #during an install, the value of the argument passed in is 1
 if [ "$1" = "1" ] ; then
-  # add the service to chkconfig
+  # start a service at boot
   systemctl enable %{name}.service
 fi;
 #during an upgrade, the value of the argument passed in is 2
 if [ "$1" = "2" ] ; then
+  systemctl daemon-reload
   systemctl restart %{name}.service
 fi;
 
@@ -148,8 +142,19 @@ fi;
 
 %changelog
 
-* Wed Dec 16 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-0
-- Removed CentOS 6 stuff
+* Mon Apr 12 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-1
+- Added daemon reload on restart
+
+* Thu Apr 1 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-1
+- Bumped version to 1.11.20-1
+
+* Tue Mar 23 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-0
+- Requires Java 11
+
+* Mon Mar 15 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-0
+- Bumped version to 1.11.20-0
+- Removed support for CentOS 6
+- Requires native libs v1.0.6
 
 * Wed Oct 28 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.19-1
 - Bumped version to 1.11.19-1

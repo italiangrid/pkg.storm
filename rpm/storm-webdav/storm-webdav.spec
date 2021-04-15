@@ -16,7 +16,7 @@
 %define __jar_repack 0
 
 %global base_version 1.4.0
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
@@ -41,14 +41,14 @@ BuildArch: noarch
 
 BuildRequires: apache-maven
 BuildRequires: jpackage-utils
-BuildRequires: java-1.8.0-openjdk-devel
+BuildRequires: java-11-openjdk-devel
 
 Requires(post):   chkconfig
 Requires(preun):  chkconfig
 Requires(preun):  initscripts
 Requires(postun): initscripts
 
-Requires: java-1.8.0-openjdk
+Requires: java-11-openjdk
 Requires: jpackage-utils
 
 %description
@@ -75,9 +75,6 @@ mvn -DskipTests -U clean package
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 tar -C $RPM_BUILD_ROOT -xvzf $HOME/sources/%{name}/target/%{name}-server.tar.gz
-# remove CentOS 6 stuff
-rm -f $RPM_BUILD_ROOT%{_sysconfdir}/init.d/%{name}
-rm -f $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
 
 %clean
 cd $HOME/sources/%{name}
@@ -112,8 +109,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_sysconfdir}/%{slash_name}/vo-mapfiles.d
 %{_sysconfdir}/%{slash_name}/vo-mapfiles.d/README.md
 
-%attr(750,storm,storm) %dir %{_localstatedir}/log
-%attr(750,storm,storm) %dir %{_localstatedir}/log/%{slash_name}
+%attr(750,storm,storm) %dir %{_localstatedir}/log/storm
+%attr(750,storm,storm) %dir %{_localstatedir}/log/storm/webdav
 %attr(755,storm,storm) %dir %{_localstatedir}/lib/%{name}/work
 
 %pre
@@ -143,8 +140,16 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
-* Wed Dec 16 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.4.0-0
-- Packaging for version to 1.4.0-0
+
+* Thu Apr 1 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.4.0-1
+- Packaging for version 1.4.0-1
+
+* Mon Feb 1 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.4.0-0
+- Removed stuff related to centos6: init script and sysconfig file, service commands and others
+- Added right permissions and ownership to log parent directory
+
+* Mon Dec 11 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.4.0-0
+- Packaging for version 1.4.0-0
 
 * Mon Sep 14 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.3.1-1
 - Packaging for version 1.3.1-1

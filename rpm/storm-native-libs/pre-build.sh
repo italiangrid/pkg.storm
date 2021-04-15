@@ -7,3 +7,6 @@ yum -y install pkgconfig \
   gpfs.base \
   lcmaps-without-gsi-devel \
   lcmaps-interface
+
+yum -y install java-11-openjdk-devel
+javac -version

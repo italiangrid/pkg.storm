@@ -3,3 +3,4 @@ BUILD_REPO=git://github.com/italiangrid/storm-webdav
 BUILD_TAG=develop
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_SPEC_FILE=storm-webdav/rpm/storm-webdav/storm-webdav.spec
+PKG_PREBUILD_SCRIPT=storm-webdav/rpm/storm-webdav/pre-build.sh

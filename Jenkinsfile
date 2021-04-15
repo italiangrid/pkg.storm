@@ -3,6 +3,7 @@
 def platform2Dir = [
   "centos7" : 'rpm',
   "centos8" : 'rpm'
+  "centos7java11" : 'rpm'
 ]
 
 def buildPackages(platform, platform2Dir, includeBuildNumber) {
@@ -37,11 +38,11 @@ pipeline {
   triggers { cron('@daily') }
 
   parameters {
-    booleanParam(name: 'INCLUDE_BUILD_NUMBER', defaultValue: true, description: 'Include build number into rpm name')
+    booleanParam(name: 'INCLUDE_BUILD_NUMBER', defaultValue: false, description: 'Include build number into rpm name')
   }
 
   environment {
-    PLATFORMS = "centos7 centos8"
+    PLATFORMS = "centos7java11 centos8"
     PKG_TAG = "${env.BRANCH_NAME}"
     PACKAGES_VOLUME = "pkg-vol-${env.BUILD_TAG}"
     STAGE_AREA_VOLUME = "sa-vol-${env.BUILD_TAG}"

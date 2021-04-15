@@ -1,5 +1,5 @@
-%global base_version 1.2.0
-%global base_release 1
+%global base_version 1.1.0
+%global base_release 2
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -41,7 +41,7 @@ StoRM Backend metapackage
 
 %changelog
 
-* Wed Dec 16 2020 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.2.0-1
+* Mon Mar 29 2021 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.1.0-2
 - Removed CentOS 6 stuff
 
 * Thu Mar 31 2020 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.1.0-1

@@ -5,7 +5,7 @@
 %define default_user root
 
 %global base_version 1.8.14
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -94,13 +94,15 @@ rm -rf $RPM_BUILD_ROOT/etc/init.d/%{longname}
 %post
 #during an install, the value of the argument passed in is 1
 if [ "$1" = "1" ] ; then
-  # add the service to chkconfig
+  # enable service
   systemctl enable %{longname}.service
+  echo "The StoRM Frontend server has been installed but NOT configured yet."
+  echo "Manually configure service or use StoRM Puppet module."
 fi;
 #during an upgrade, the value of the argument passed in is 2
 if [ "$1" = "2" ] ; then
-  echo "The StoRM Frontend server has been upgraded but NOT configured yet."
-  echo "Manually configure service or use StoRM Puppet module."
+  systemctl daemon-reload
+  systemctl restart %{longname}.service
 fi;
 
 %preun
@@ -149,8 +151,12 @@ fi;
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
-* Wed Dec 16 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.14-0
-- Bumped version to 1.8.14-0 and removed CentOS 6 stuff
+
+* Mon Apr 12 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.14-1
+- Removed CentOS 6 support and added daemon reload on restart
+
+* Thu Apr 1 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.14-1
+- Bumped version to 1.8.14-1
 
 * Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.13-1
 - Bumped version to 1.8.13-1
