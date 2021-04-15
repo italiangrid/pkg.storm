@@ -1,7 +1,7 @@
 # Components list - Default value is the complete list
 # COMPONENTS="storm-webdav storm-frontend-server storm-native-libs storm-backend-server storm-backend-mp"
 
-COMPONENTS_centos7="storm-backend-mp storm-backend-server storm-native-libs storm-dynamic-info-provider storm-webdav storm-frontend-mp storm-xmlrpc-c storm-gridftp-dsi storm-globus-gridftp-mp storm-client storm-frontend-server"
+COMPONENTS_centos7java11="storm-backend-mp storm-backend-server storm-native-libs storm-dynamic-info-provider storm-webdav storm-frontend-mp storm-xmlrpc-c storm-gridftp-dsi storm-globus-gridftp-mp storm-client storm-frontend-server"
 COMPONENTS_centos8="storm-backend-mp storm-backend-server storm-native-libs storm-dynamic-info-provider storm-webdav storm-frontend-mp storm-xmlrpc-c storm-gridftp-dsi storm-globus-gridftp-mp storm-client"
 
 PKG_TAG=nightly
