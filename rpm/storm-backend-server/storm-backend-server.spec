@@ -15,8 +15,8 @@
 ## Turn off meaningless jar repackaging (works only on SL6)
 %define __jar_repack 0
 
-%global base_version 1.11.20
-%global base_release 1
+%global base_version 1.12.0
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -141,6 +141,9 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
+
+* Thu Apr 15 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.12.0-0
+- Bumped version to 1.12.0-0
 
 * Mon Apr 12 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-1
 - Added daemon reload on restart
