@@ -15,7 +15,7 @@
 ## Turn off meaningless jar repackaging
 %define __jar_repack 0
 
-%global base_version 0.1.0
+%global base_version 0.1.1
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -91,6 +91,12 @@ rm -rf $RPM_BUILD_ROOT
 %preun
 
 %changelog
+
+* Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 0.1.1-1
+Bumped version to 0.1.1-1
+
+* Tue Jun 30 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 0.1.1-0
+Bumped version to 0.1.1-0
 
 * Mon May 1 2017 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 0.1.0-0
 - Initial packaging

@@ -19,7 +19,7 @@
 %define longname     storm-globus-gridftp-server
 
 %global base_version 1.2.4
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version 0.build.%{build_number}
@@ -175,6 +175,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(750,storm,storm) %dir %{_localstatedir}/log/%{prefixname}
 
 %changelog
+* Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.2.4-1
+- Bumped version to 1.2.4-1
+
 * Mon Mar 23 2020 Enrico Vianello <enrico.vianello@cnaf.infn.it> - 1.2.4-0
 - Bumped version to 1.2.4-0
 

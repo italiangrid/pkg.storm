@@ -15,7 +15,7 @@
 ## Turn off meaningless jar repackaging (works only on SL6)
 %define __jar_repack 0
 
-%global base_version 1.11.18
+%global base_version 1.12.0
 %global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -42,20 +42,13 @@ BuildArch: noarch
 
 BuildRequires: apache-maven
 BuildRequires: jpackage-utils
-BuildRequires: java-1.8.0-openjdk-devel
+BuildRequires: java-11-openjdk-devel
 
-Requires(post):   chkconfig
-Requires(preun):  chkconfig
-Requires(preun):  initscripts
-Requires(postun): initscripts
-
-Requires: java-1.8.0-openjdk
-Requires: xml-commons-apis
-Requires: mysql-connector-java
+Requires: java-11-openjdk
 Requires: jpackage-utils
-Requires: storm-native-libs >= 1.0.2
-Requires: storm-native-libs-lcmaps >= 1.0.2
-Requires: storm-native-libs-java >= 1.0.2
+Requires: storm-native-libs >= 1.0.6-2
+Requires: storm-native-libs-lcmaps >= 1.0.6-2
+Requires: storm-native-libs-java >= 1.0.6-2
 
 %description
 StoRM provides an SRM interface to any POSIX filesystem with direct file
@@ -76,16 +69,6 @@ mvn -DskipTests -U clean package
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 tar -C $RPM_BUILD_ROOT -xvzf target/%{name}.tar.gz
-%if 0%{?rhel} == 7
-  # unit
-  mkdir -p $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system
-  cp etc/systemd/%{name}.service $RPM_BUILD_ROOT%{_exec_prefix}/lib/systemd/system/%{name}.service
-  # env file
-  mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service.d
-  cp etc/systemd/service.d/%{name}.conf $RPM_BUILD_ROOT%{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
-  # rm init.d file
-  rm -rf $RPM_BUILD_ROOT/etc/init.d/%{name}
-%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -113,15 +96,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/%{prefixname}/%{_modulename}/used-space.ini.template
 %{_sysconfdir}/%{prefixname}/%{_modulename}/welcome.txt
 %attr(644,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/%{name}
-%attr(644,root,root) %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
 
-%if 0%{?rhel} == 7
-  %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{name}.service
-  %attr(755,root,root) %dir %{_sysconfdir}/systemd/system/%{name}.service.d
-  %attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
-%else
-  %attr(755,root,root) %{_sysconfdir}/init.d/%{name}
-%endif
+%attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{name}.service
+%dir %attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service.d
+%attr(644,root,root) %config(noreplace) %{_sysconfdir}/systemd/system/%{name}.service.d/%{name}.conf
 
 %attr(750,storm,storm) %dir %{_localstatedir}/log/%{prefixname}
 
@@ -134,49 +112,21 @@ getent passwd storm > /dev/null || useradd -r -g storm \
 %post
 #during an install, the value of the argument passed in is 1
 if [ "$1" = "1" ] ; then
-  # add the service to chkconfig
-  %if 0%{?rhel} == 7
-    systemctl enable %{name}.service
-  %else
-    /sbin/chkconfig --add %{name}
-  %endif
-  # create mysql-connector-java jar link
-  /bin/ln -sf /usr/share/java/mysql-connector-java.jar %{_javadir}/%{name}/mysql-connector-java.jar
+  # start a service at boot
+  systemctl enable %{name}.service
 fi;
 #during an upgrade, the value of the argument passed in is 2
 if [ "$1" = "2" ] ; then
-  # create mysql-connector-java jar link if it does not exist
-  if [ ! -L %{_javadir}/%{name}/mysql-connector-java.jar ] ; then
-    /bin/ln -sf /usr/share/java/mysql-connector-java.jar %{_javadir}/%{name}/mysql-connector-java.jar
-  fi
-  # remove old mysql-connector-java jar link
-  if [ -L %{_javadir}/%{name}/mysql-connector-java-5.1.12.jar ] ; then
-    /bin/unlink %{_javadir}/%{name}/mysql-connector-java-5.1.12.jar
-  fi
-  %if 0%{?rhel} == 7
-    systemctl restart %{name}.service
-  %else
-    # kill processes
-    pslist=$( ps -ef | grep java | grep storm-backend-server | awk '{print $2}' | tr '\n' ' ' | sed -e s/\ $// )
-    [ -z "$pslist" ] && echo "no running processes found" || kill -9 $pslist
-    # start the service
-    /sbin/service %{name} restart
-  %endif
+  systemctl daemon-reload
+  systemctl restart %{name}.service
 fi;
 
 %preun
 # when uninstalling
 if [ "$1" = "0" ] ; then
   # stop and disable service
-  %if 0%{?rhel} == 7
-    systemctl stop %{name}
-    systemctl disable %{name}.service
-  %else
-    /sbin/service %{name} stop >/dev/null 2>&1 || :
-    /sbin/chkconfig --del %{name}
-  %endif
-  # remove mysql-connector-java jar link
-  /bin/unlink %{_javadir}/%{name}/mysql-connector-java.jar
+  systemctl stop %{name}
+  systemctl disable %{name}.service
 fi;
 
 %postun
@@ -186,15 +136,38 @@ if [ "$1" = "1" ] ; then
   echo "A restart of the service is needed to make the new version effective"
 fi;
 if [ "$1" = "0" ] ; then
-  %if 0%{?rhel} == 7
-    rm -f %{_exec_prefix}/lib/systemd/system/%{name}.service
-    rm -rf %{_sysconfdir}/systemd/system/%{name}.service.d
-  %else
-    rm -f %{_sysconfdir}/init.d/%{name}
-  %endif
+  rm -f %{_exec_prefix}/lib/systemd/system/%{name}.service
+  rm -rf %{_sysconfdir}/systemd/system/%{name}.service.d
 fi;
 
 %changelog
+
+* Thu Apr 15 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.12.0-0
+- Bumped version to 1.12.0-0
+
+* Mon Apr 12 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-1
+- Added daemon reload on restart
+
+* Thu Apr 1 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-1
+- Bumped version to 1.11.20-1
+
+* Tue Mar 23 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-0
+- Requires Java 11
+
+* Mon Mar 15 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-0
+- Bumped version to 1.11.20-0
+- Removed support for CentOS 6
+- Requires native libs v1.0.6
+
+* Wed Oct 28 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.19-1
+- Bumped version to 1.11.19-1
+
+* Mon Sep 14 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.19-0
+- Bumped version to 1.11.19-0
+
+* Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.18-1
+- Bumped version to 1.11.18-1
+
 * Tue Sep 11 2018 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.11.15-0
 - Bumped packaging version to 1.11.15-0
 
