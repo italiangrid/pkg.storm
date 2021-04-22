@@ -12,15 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-%{!?__python2: %global __python2 /usr/bin/python2}
-%{!?python2_sitelib: %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-%{!?python2_sitearch: %global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
+%{!?__python3: %global __python3 /usr/bin/python3}
+%{!?python3_sitelib: %global python3_sitelib %(%{__python3} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
+%{!?python3_sitearch: %global python3_sitearch %(%{__python3} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
 
 %define _confdir /etc/storm/info-provider
 %define _bdiidir /var/lib/bdii/gip
 
-%global base_version 1.8.2
-%global base_release 1
+%global base_version 2.0.0
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -62,14 +62,14 @@ mkdir -p $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libexecdir}
 install -pm 0755 src/storm-info-provider $RPM_BUILD_ROOT%{_libexecdir}
 
-install -d $RPM_BUILD_ROOT%{python2_sitelib}/info_provider
-install -d $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/glue
-install -d $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/model
-install -d $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/utils
-install -pm 0644 src/info_provider/glue/* $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/glue
-install -pm 0644 src/info_provider/model/* $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/model
-install -pm 0644 src/info_provider/utils/* $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/utils
-install -pm 0644 src/info_provider/*.py $RPM_BUILD_ROOT%{python2_sitelib}/info_provider
+install -d $RPM_BUILD_ROOT%{python3_sitelib}/info_provider
+install -d $RPM_BUILD_ROOT%{python3_sitelib}/info_provider/glue
+install -d $RPM_BUILD_ROOT%{python3_sitelib}/info_provider/model
+install -d $RPM_BUILD_ROOT%{python3_sitelib}/info_provider/utils
+install -pm 0644 src/info_provider/glue/* $RPM_BUILD_ROOT%{python3_sitelib}/info_provider/glue
+install -pm 0644 src/info_provider/model/* $RPM_BUILD_ROOT%{python3_sitelib}/info_provider/model
+install -pm 0644 src/info_provider/utils/* $RPM_BUILD_ROOT%{python3_sitelib}/info_provider/utils
+install -pm 0644 src/info_provider/*.py $RPM_BUILD_ROOT%{python3_sitelib}/info_provider
 
 install -d $RPM_BUILD_ROOT%{_confdir}
 install -d $RPM_BUILD_ROOT%{_confdir}/templates
@@ -81,7 +81,7 @@ install -pm 0644 man/* $RPM_BUILD_ROOT%{_mandir}/man1
 %files
 %defattr(-,root,root,-)
 %{_libexecdir}/storm-info-provider
-%{python2_sitelib}/info_provider
+%{python3_sitelib}/info_provider
 %{_confdir}/templates
 %{_mandir}/man1/*
 
@@ -97,6 +97,9 @@ rm -rf %{_bdiidir}/provider/storm-glue2-provider
 rm -rf %{_bdiidir}/plugin/storm-glue2-plugin
 
 %changelog
+* Thu Apr 22 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 2.0.0-0
+  Bumped version to 2.0.0-0 and ported to python3
+
 * Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.2-1
   Bumped version to 1.8.2-1
 
