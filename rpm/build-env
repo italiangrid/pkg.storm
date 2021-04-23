@@ -1,13 +1,10 @@
 # Components list - Default value is the complete list
-COMPONENTS="storm-webdav storm-frontend-server storm-native-libs storm-backend-server storm-backend-mp"
+COMPONENTS="storm-backend-server"
 
-PKG_TAG=v1.11.20
+PKG_TAG=v1.11.21
 
 # Set to 1 if you want to skip the pull of the build image
 #SKIP_PKG_BASE_PULL_IMAGE=1
-
-# List of build platforms. Allowed values: centos6, centos7
-#PLATFORM=centos7 centos6
 
 # Set to 1 if you want to store rpms into stage area
 PKG_STAGE_RPMS=1
