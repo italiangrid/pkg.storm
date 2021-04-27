@@ -1,5 +1,5 @@
 # Components list - Default value is the complete list
-COMPONENTS="storm-backend-server"
+COMPONENTS="storm-backend-server storm-frontend-server"
 
 PKG_TAG=v1.11.21
 

@@ -4,8 +4,8 @@
 
 %define default_user root
 
-%global base_version 1.8.14
-%global base_release 1
+%global base_version 1.8.15
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -150,6 +150,9 @@ fi;
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
+* Tue Apr 27 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.15-0
+- Bumped version to 1.8.15-0
+
 * Mon Apr 12 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.14-1
 - Removed CentOS 6 support and added daemon reload on restart
 
