@@ -1,5 +1,5 @@
-%global base_version 1.1.0
-%global base_release 2
+%global base_version 1.2.0
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -24,6 +24,7 @@ Requires: cleanup-grid-accounts
 Requires: storm-dynamic-info-provider
 Requires: edg-mkgridmap
 Requires: lcas-lcmaps-gt4-interface
+Requires: storm-utils
 
 # moved from backend spec file
 Requires: nc
@@ -40,6 +41,10 @@ StoRM Backend metapackage
 %files
 
 %changelog
+
+* Thu May 6 2021 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.2.0-0
+- Requires storm-utils
+- Bumped version to 1.2.0-0
 
 * Mon Mar 29 2021 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.1.0-2
 - Removed CentOS 6 stuff
