@@ -16,7 +16,7 @@
 %define __jar_repack 0
 
 %global base_version 1.11.21
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -141,6 +141,9 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
+* Tue May 11 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.21-1
+- Bumped version to 1.11.21-1
+
 * Fri Apr 23 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.21-0
 - Bumped version to 1.11.21-0
 

@@ -1,5 +1,5 @@
 %global base_version 1.0.0
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -36,6 +36,8 @@ install -m 755 %{_sourcedir}/%{name}/space-reporting/storm-update-used-space.sh 
 /usr/local/sbin/storm-update-used-space.sh
 
 %changelog
+* Tue May 11 2021 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.0.0-1
+- Bumped version to v1.0.0-1
 
 * Thu Apr 29 2021 Enrico Vianello <enrico.vianello@cnaf.infn.it> 1.0.0-0
 - First 2 scripts added
