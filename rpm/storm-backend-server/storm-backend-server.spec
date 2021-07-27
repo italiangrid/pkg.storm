@@ -141,9 +141,14 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
-
-* Thu Apr 15 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.12.0-0
+* Thu Jul 15 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.12.0-0
 - Bumped version to 1.12.0-0
+
+* Tue May 11 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.21-1
+- Bumped version to 1.11.21-1
+
+* Fri Apr 23 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.21-0
+- Bumped version to 1.11.21-0
 
 * Mon Apr 12 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.20-1
 - Added daemon reload on restart

@@ -1,0 +1,5 @@
+BUILD_NAME=storm-utils
+BUILD_REPO=git://github.com/italiangrid/storm-utils
+BUILD_TAG=main
+PKG_REPO=git://github.com/italiangrid/pkg.storm.git
+PKG_SPEC_FILE=storm-utils/rpm/storm-utils/storm-utils.spec
