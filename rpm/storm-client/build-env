@@ -1,6 +1,6 @@
 BUILD_NAME=storm-srm-client
 BUILD_REPO=git://github.com/italiangrid/storm-client
-BUILD_TAG=1_6_1
+BUILD_TAG=v1.6.1
 PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_SPEC_FILE=storm-srm-client/rpm/storm-client/storm-srm-client.spec
 PKG_PREBUILD_SCRIPT=storm-srm-client/rpm/storm-client/pre-build.sh
