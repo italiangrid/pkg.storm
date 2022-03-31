@@ -15,8 +15,8 @@
 ## Turn off meaningless jar repackaging (works only on SL6)
 %define __jar_repack 0
 
-%global base_version 1.11.21
-%global base_release 1
+%global base_version 1.11.22
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
