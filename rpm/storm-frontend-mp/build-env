@@ -1,5 +1,5 @@
 BUILD_NAME=storm-frontend-mp
-BUILD_REPO=git://github.com/italiangrid/storm-mp
+BUILD_REPO=https://github.com/italiangrid/storm-mp.git
 BUILD_TAG=master
-PKG_REPO=git://github.com/italiangrid/pkg.storm.git
+PKG_REPO=https://github.com/italiangrid/pkg.storm.git
 PKG_SPEC_FILE=storm-frontend-mp/rpm/storm-frontend-mp/storm-frontend-mp.spec
