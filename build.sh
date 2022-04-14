@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-PLATFORMS=${PLATFORMS:-"centos7 centos6"}
+PLATFORMS=${PLATFORMS:-"centos7java11"}
 
 rm -rf artifacts
 mkdir -p artifacts
