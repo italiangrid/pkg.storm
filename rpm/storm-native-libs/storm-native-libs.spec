@@ -13,8 +13,8 @@
 # limitations under the License.
 
 
-%global base_version 1.0.6
-%global base_release 2
+%global base_version 1.0.7
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -146,6 +146,8 @@ rm -rf $RPM_BUILD_ROOT
 %postun lcmaps -p /sbin/ldconfig
 
 %changelog
+* Fri Nov 19 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.7-0
+- Bump version to 1.0.7-0
 * Mon Mar 29 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.6-2
 - Java 11 required
 * Tue Aug 4 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.6-1
