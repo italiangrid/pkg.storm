@@ -84,9 +84,6 @@ rm -rf $RPM_BUILD_ROOT
 %files
 
 %attr(644,root,root) %{_exec_prefix}/lib/systemd/system/%{name}.service
-%dir %attr(644,root,root) %{_sysconfdir}/systemd/system/%{name}.service.d
-%attr(644,root,root) %config(noreplace) %{_sysconfdir}/systemd/system/%{name}.service.d/filelimit.conf
-%attr(644,root,root) %config(noreplace) %{_sysconfdir}/systemd/system/%{name}.service.d/storm-webdav.conf
 
 %attr(755,root,root) %dir %{_javadir}/%{name}
 %attr(644,root,root) %{_javadir}/%{name}/%{name}-server.jar
@@ -139,6 +136,9 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
+* Mon May 9 2022 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.4.2-0
+- Removed systemd drop-in files. Only directory will be created.
+
 * Fri Oct 1 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.4.2-0
 - Packaging for version 1.4.2-0
 
