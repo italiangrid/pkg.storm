@@ -1,4 +1,4 @@
-%global base_version 1.2.0
+%global base_version 1.3.0
 %global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -19,9 +19,9 @@ Url: https://github.com/italiangrid/storm-mp
 Requires: lcg-expiregridmapdir
 Requires: fetch-crl
 Requires: umd-release
-Requires: storm-backend-server
+Requires: storm-backend-server >= 1.11.22
 Requires: cleanup-grid-accounts
-Requires: storm-dynamic-info-provider
+Requires: storm-dynamic-info-provider >= 1.9.0
 Requires: edg-mkgridmap
 Requires: lcas-lcmaps-gt4-interface
 Requires: storm-utils
