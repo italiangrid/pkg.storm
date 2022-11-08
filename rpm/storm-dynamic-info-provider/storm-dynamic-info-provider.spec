@@ -48,7 +48,7 @@ Requires: python-ldap
 Requires: python-argparse
 Requires: bdii
 Requires: glite-info-provider-service
-Requires: storm-backend-server>=1.11.22
+Requires: storm-backend-server >= 1.11.22
 
 %description
 This is the installation bundle for the StoRM info provider component.
