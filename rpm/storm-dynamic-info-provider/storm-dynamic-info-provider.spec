@@ -19,8 +19,8 @@
 %define _confdir /etc/storm/info-provider
 %define _bdiidir /var/lib/bdii/gip
 
-%global base_version 1.8.2
-%global base_release 1
+%global base_version 1.9.0
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -48,6 +48,7 @@ Requires: python-ldap
 Requires: python-argparse
 Requires: bdii
 Requires: glite-info-provider-service
+Requires: storm-backend-server>=1.11.22
 
 %description
 This is the installation bundle for the StoRM info provider component.
@@ -97,6 +98,9 @@ rm -rf %{_bdiidir}/provider/storm-glue2-provider
 rm -rf %{_bdiidir}/plugin/storm-glue2-plugin
 
 %changelog
+* Tue Nov 8 2022 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.9.0-0
+  Bumped version to 1.9.0 and required storm-backend-server specific version
+
 * Fri Aug 07 2020 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.2-1
   Bumped version to 1.8.2-1
 
