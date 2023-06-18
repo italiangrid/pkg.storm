@@ -46,9 +46,20 @@ BuildRequires: java-11-openjdk-devel
 
 Requires: java-11-openjdk
 Requires: jpackage-utils
-Requires: storm-native-libs >= 1.0.6-2
-Requires: storm-native-libs-lcmaps >= 1.0.6-2
-Requires: storm-native-libs-java >= 1.0.6-2
+Requires: storm-native-libs >= 1.0.7
+Requires: storm-native-libs-lcmaps >= 1.0.7
+Requires: storm-native-libs-java >= 1.0.7
+
+Requires: lcg-expiregridmapdir
+Requires: fetch-crl
+Requires: umd-release
+Requires: cleanup-grid-accounts
+Requires: edg-mkgridmap
+Requires: lcas-lcmaps-gt4-interface
+
+Requires: storm-utils
+Requires: storm-dynamic-info-provider >= 1.8.3
+
 
 %description
 StoRM provides an SRM interface to any POSIX filesystem with direct file

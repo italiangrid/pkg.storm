@@ -59,6 +59,12 @@ Requires: boost-program-options
 Requires: boost-thread
 Requires: gsoap
 
+Requires: lcg-expiregridmapdir
+Requires: fetch-crl
+Requires: umd-release
+Requires: cleanup-grid-accounts
+Requires: edg-mkgridmap
+
 %description
 This is the installation bundle for the StoRM FrontEnd server.
 

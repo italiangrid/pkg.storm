@@ -1,5 +1,5 @@
 # Components list - Default value is the complete list
-COMPONENTS="storm-native-libs storm-backend-server storm-webdav storm-dynamic-info-provider"
+COMPONENTS="storm-dynamic-info-provider storm-native-libs storm-backend-server storm-webdav"
 
 PKG_TAG=v1.11.22
 
