@@ -50,6 +50,8 @@ Requires: storm-native-libs >= 1.0.7
 Requires: storm-native-libs-lcmaps >= 1.0.7
 Requires: storm-native-libs-java >= 1.0.7
 
+Requires: acl
+Requires: attr
 Requires: lcg-expiregridmapdir
 Requires: fetch-crl
 Requires: umd-release

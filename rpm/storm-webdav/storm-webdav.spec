@@ -50,6 +50,7 @@ Requires(postun): initscripts
 
 Requires: java-11-openjdk
 Requires: jpackage-utils
+Requires: attr
 
 %description
 StoRM provides an SRM interface to any POSIX filesystem with direct file
