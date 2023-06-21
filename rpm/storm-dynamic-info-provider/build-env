@@ -1,6 +1,6 @@
 BUILD_NAME=storm-dynamic-info-provider
 BUILD_REPO=https://github.com/italiangrid/storm-info-provider.git
-BUILD_TAG=STOR-1506
+BUILD_TAG=develop
 PKG_REPO=https://github.com/italiangrid/pkg.storm.git
 PKG_SPEC_FILE=storm-dynamic-info-provider/rpm/storm-dynamic-info-provider/storm-dynamic-info-provider.spec
 PKG_PREBUILD_SCRIPT=storm-dynamic-info-provider/rpm/storm-dynamic-info-provider/pre-build.sh
