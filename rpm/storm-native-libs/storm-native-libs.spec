@@ -14,7 +14,7 @@
 
 
 %global base_version 1.0.7
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -146,6 +146,8 @@ rm -rf $RPM_BUILD_ROOT
 %postun lcmaps -p /sbin/ldconfig
 
 %changelog
+* Mon Jun 26 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.7-1
+- Bump version to 1.0.7-1
 * Fri Nov 19 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.7-0
 - Bump version to 1.0.7-0
 * Mon Mar 29 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.6-2
