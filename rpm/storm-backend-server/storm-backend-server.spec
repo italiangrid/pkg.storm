@@ -15,8 +15,8 @@
 ## Turn off meaningless jar repackaging (works only on SL6)
 %define __jar_repack 0
 
-%global base_version 1.11.22
-%global base_release 1
+%global base_version 1.12.0
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -102,7 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_mysql_update_from_1.7.1_to_1.7.2.sql
 %{_sysconfdir}/%{prefixname}/%{_modulename}/lcmaps.db
 %config(noreplace) %{_sysconfdir}/%{prefixname}/%{_modulename}/logging.xml
-%{_sysconfdir}/%{prefixname}/%{_modulename}/namespace-1.5.0.xsd
+%{_sysconfdir}/%{prefixname}/%{_modulename}/namespace-1.5.1.xsd
 %config(noreplace) %{_sysconfdir}/%{prefixname}/%{_modulename}/namespace.xml
 %config(noreplace) %{_sysconfdir}/%{prefixname}/%{_modulename}/path-authz.db
 %{_sysconfdir}/%{prefixname}/%{_modulename}/storm.properties.template
@@ -154,6 +154,9 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
+* Thu Jul 13 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.12.0-0
+- Bumped version to 1.12.0-0
+
 * Mon Jun 26 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.22-1
 - Bumped version to 1.11.22-1
 
