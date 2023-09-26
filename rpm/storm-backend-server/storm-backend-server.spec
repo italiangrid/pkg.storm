@@ -102,7 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_mysql_update_from_1.7.1_to_1.7.2.sql
 %{_sysconfdir}/%{prefixname}/%{_modulename}/lcmaps.db
 %config(noreplace) %{_sysconfdir}/%{prefixname}/%{_modulename}/logging.xml
-%{_sysconfdir}/%{prefixname}/%{_modulename}/namespace-1.5.1.xsd
+%{_sysconfdir}/%{prefixname}/%{_modulename}/namespace-1.5.0.xsd
 %config(noreplace) %{_sysconfdir}/%{prefixname}/%{_modulename}/namespace.xml
 %config(noreplace) %{_sysconfdir}/%{prefixname}/%{_modulename}/path-authz.db
 %{_sysconfdir}/%{prefixname}/%{_modulename}/storm.properties.template
@@ -154,7 +154,7 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
-* Thu Jul 13 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.12.0-0
+* Tue Sep 26 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.12.0-0
 - Bumped version to 1.12.0-0
 
 * Mon Jun 26 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.22-1
@@ -219,10 +219,10 @@ fi;
 * Fri Mar 13 2015 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.11.8-1
 - Bumped packaging version for 1.11.8 release.
 
-* Tue Jan 29 2015 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.11.7-1
+* Wed Jan 29 2015 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.11.7-1
 - Bumped packaging version for 1.11.7 release.
 
-* Tue Jan 19 2015 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.11.6-1
+* Mon Jan 19 2015 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.11.6-1
 - Bumped packaging version for 1.11.6 release.
 
 * Tue Jan 14 2014 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.11.5-1
