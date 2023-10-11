@@ -20,7 +20,7 @@
 %define _bdiidir /var/lib/bdii/gip
 
 %global base_version 1.8.4
-%global base_release 0
+%global base_release 1
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -97,6 +97,9 @@ rm -rf %{_bdiidir}/provider/storm-glue2-provider
 rm -rf %{_bdiidir}/plugin/storm-glue2-plugin
 
 %changelog
+* Wed Oct 11 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.4-1
+  Bumped version to 1.8.4-1
+
 * Wed Sep 27 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.4-0
   Bumped version to 1.8.4-0
 
