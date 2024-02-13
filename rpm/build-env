@@ -1,5 +1,5 @@
 # Components list - Default value is the complete list
-COMPONENTS="storm-webdav"
+COMPONENTS="storm-webdav storm-native-libs storm-xmlrpc-c storm-utils storm-backend-server storm-backend-mp storm-client storm-frontend-mp storm-dynamic-info-provider storm-frontend-server"
 
 PKG_TAG=almalinux9
 
