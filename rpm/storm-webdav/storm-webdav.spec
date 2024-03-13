@@ -162,7 +162,7 @@ fi
 - Removed stuff related to centos6: init script and sysconfig file, service commands and others
 - Added right permissions and ownership to log parent directory
 
-* Mon Dec 11 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.4.0-0
+* Fri Dec 11 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.4.0-0
 - Packaging for version 1.4.0-0
 
 * Mon Sep 14 2020 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.3.1-1
