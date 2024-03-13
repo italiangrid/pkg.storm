@@ -1,7 +1,7 @@
 # Components list - Default value is the complete list
-COMPONENTS="storm-backend-server"
+COMPONENTS="storm-backend-server storm-webdav"
 
-PKG_TAG=no-acl
+PKG_TAG=v1.12.0
 
 # Set to 1 if you want to skip the pull of the build image
 #SKIP_PKG_BASE_PULL_IMAGE=1
