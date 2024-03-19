@@ -1,6 +1,6 @@
 BUILD_NAME=storm-webdav
 BUILD_REPO=https://github.com/italiangrid/storm-webdav.git
-BUILD_TAG=fix-tp
+BUILD_TAG=forward-nginx
 PKG_REPO=https://github.com/italiangrid/pkg.storm.git
 PKG_SPEC_FILE=storm-webdav/rpm/storm-webdav/storm-webdav.spec
 PKG_PREBUILD_SCRIPT=storm-webdav/rpm/storm-webdav/pre-build.sh
