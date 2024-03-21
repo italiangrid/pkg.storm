@@ -1,7 +1,7 @@
 # Components list - Default value is the complete list
 COMPONENTS="storm-webdav"
 
-PKG_TAG=forward-nginx
+PKG_TAG=fix-macaroon
 
 # Set to 1 if you want to skip the pull of the build image
 #SKIP_PKG_BASE_PULL_IMAGE=1
