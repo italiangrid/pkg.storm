@@ -82,7 +82,7 @@ This package provides the StoRM backend interface to LCMAPS libraries.
 
 %prep
 %setup -q -n %{name}
-%_javahome %{getenv:JAVA_HOME}
+echo "JAVA_HOME=$JAVA_HOME"
 
 %build
 pushd native
@@ -90,7 +90,7 @@ pushd native
 export CFLAGS="-O0 -ggdb -Wall"
 export CXXFLAGS="-O0 -ggdb -Wall"
 autoconf
-%configure --with-java_home=%{_javahome} --enable-gpfs --host=x86_64
+%configure --with-java_home=${JAVA_HOME} --enable-gpfs --host=x86_64
 make
 popd
 
