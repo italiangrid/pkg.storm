@@ -89,7 +89,6 @@ pushd native
 ./bootstrap
 export CFLAGS="-O0 -ggdb -Wall"
 export CXXFLAGS="-O0 -ggdb -Wall"
-autoconf
 %configure --with-java_home=${JAVA_HOME} --enable-gpfs --host=x86_64
 make
 popd
