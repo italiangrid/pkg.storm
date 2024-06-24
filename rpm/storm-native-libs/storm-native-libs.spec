@@ -62,7 +62,7 @@ Summary: The StoRM backend server interface to GPFS native libraries
 Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
 Requires: libacl
-Requires: gpfs.base >= 3.4
+Requires: gpfs.base >= 5.1.9
 
 %description gpfs
 This package provides the StoRM backend interface to GPFS libraries.
@@ -89,6 +89,9 @@ pushd native
 export CFLAGS="-O0 -ggdb -Wall"
 export CXXFLAGS="-O0 -ggdb -Wall"
 autoconf
+echo %{java_home}
+env | grep 'JAVA'
+env | grep 'PATH'
 %configure --with-java_home=%{java_home} --enable-gpfs --host=x86_64
 make
 popd
