@@ -13,8 +13,8 @@
 # limitations under the License.
 
 
-%global base_version 1.0.7
-%global base_release 1
+%global base_version 2.0.0
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -42,7 +42,7 @@ BuildRequires: libacl-devel
 BuildRequires: lcmaps-without-gsi-devel
 BuildRequires: lcmaps-interface
 BuildRequires: java-11-openjdk-devel
-BuildRequires: gpfs.base >= 3.4.0
+BuildRequires: gpfs.base >= 5.1.9
 
 %description
 This package provides the StoRM backend interface to posix libraries.
@@ -146,6 +146,8 @@ rm -rf $RPM_BUILD_ROOT
 %postun lcmaps -p /sbin/ldconfig
 
 %changelog
+* Mon Jun 24 2024 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 2.0.0-0
+- Bump version to 2.0.0-0
 * Mon Jun 26 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.7-1
 - Bump version to 1.0.7-1
 * Fri Nov 19 2021 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.7-0
