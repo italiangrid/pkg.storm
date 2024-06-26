@@ -27,6 +27,8 @@
 %define _modulename backend-server
 %define prefixname storm
 
+%define  debug_package %{nil}
+
 Name: storm-backend-server
 Version: %{base_version}
 Release: %{release_version}%{?dist}
@@ -94,15 +96,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_javadir}/%{name}/*.jar
 
 %dir %{_sysconfdir}/%{prefixname}/%{_modulename}
-%{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_database_config.sh
-%{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_be_ISAM_mysql_update_from_1.0.0_to_1.1.0.sql
-%{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_mysql_grant.sql
-%{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_mysql_tbl.sql
-%{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_mysql_update_from_1.7.0_to_1.7.1.sql
-%{_sysconfdir}/%{prefixname}/%{_modulename}/db/storm_mysql_update_from_1.7.1_to_1.7.2.sql
 %{_sysconfdir}/%{prefixname}/%{_modulename}/lcmaps.db
 %config(noreplace) %{_sysconfdir}/%{prefixname}/%{_modulename}/logging.xml
-%{_sysconfdir}/%{prefixname}/%{_modulename}/namespace-1.5.1.xsd
+%{_sysconfdir}/%{prefixname}/%{_modulename}/namespace-1.5.0.xsd
 %config(noreplace) %{_sysconfdir}/%{prefixname}/%{_modulename}/namespace.xml
 %config(noreplace) %{_sysconfdir}/%{prefixname}/%{_modulename}/path-authz.db
 %{_sysconfdir}/%{prefixname}/%{_modulename}/storm.properties.template
@@ -154,7 +150,7 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
-* Thu Jul 13 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.12.0-0
+* Wed Jun 26 2024 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.12.0-0
 - Bumped version to 1.12.0-0
 
 * Mon Jun 26 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.22-1
