@@ -87,9 +87,9 @@ echo "JAVA_HOME=$JAVA_HOME"
 %build
 pushd native
 ./bootstrap
-export CFLAGS="-O0 -ggdb -Wall"
-export CXXFLAGS="-O0 -ggdb -Wall"
-%configure --with-java_home=${JAVA_HOME} --enable-gpfs
+# export CFLAGS="-O0 -ggdb -Wall"
+# export CXXFLAGS="-O0 -ggdb -Wall"
+%configure --with-java_home=${JAVA_HOME} --enable-gpfs --build=x86_64
 make
 popd
 
