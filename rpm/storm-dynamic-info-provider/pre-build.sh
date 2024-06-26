@@ -3,4 +3,4 @@ set -ex
 
 # install addictional packages
 yum -y install pkgconfig \
-  python2-devel
+  python3-devel

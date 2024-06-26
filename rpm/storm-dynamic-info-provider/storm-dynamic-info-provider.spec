@@ -19,8 +19,8 @@
 %define _confdir /etc/storm/info-provider
 %define _bdiidir /var/lib/bdii/gip
 
-%global base_version 1.8.4
-%global base_release 1
+%global base_version 2.0.0
+%global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
 %define release_version %{base_release}.build.%{build_number}
@@ -62,14 +62,14 @@ mkdir -p $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_libexecdir}
 install -pm 0755 src/storm-info-provider $RPM_BUILD_ROOT%{_libexecdir}
 
-install -d $RPM_BUILD_ROOT%{python2_sitelib}/info_provider
-install -d $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/glue
-install -d $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/model
-install -d $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/utils
-install -pm 0644 src/info_provider/glue/* $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/glue
-install -pm 0644 src/info_provider/model/* $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/model
-install -pm 0644 src/info_provider/utils/* $RPM_BUILD_ROOT%{python2_sitelib}/info_provider/utils
-install -pm 0644 src/info_provider/*.py $RPM_BUILD_ROOT%{python2_sitelib}/info_provider
+install -d $RPM_BUILD_ROOT%{python3_sitelib}/info_provider
+install -d $RPM_BUILD_ROOT%{python3_sitelib}/info_provider/glue
+install -d $RPM_BUILD_ROOT%{python3_sitelib}/info_provider/model
+install -d $RPM_BUILD_ROOT%{python3_sitelib}/info_provider/utils
+install -pm 0644 src/info_provider/glue/* $RPM_BUILD_ROOT%{python3_sitelib}/info_provider/glue
+install -pm 0644 src/info_provider/model/* $RPM_BUILD_ROOT%{python3_sitelib}/info_provider/model
+install -pm 0644 src/info_provider/utils/* $RPM_BUILD_ROOT%{python3_sitelib}/info_provider/utils
+install -pm 0644 src/info_provider/*.py $RPM_BUILD_ROOT%{python3_sitelib}/info_provider
 
 install -d $RPM_BUILD_ROOT%{_confdir}
 install -d $RPM_BUILD_ROOT%{_confdir}/templates
@@ -81,7 +81,7 @@ install -pm 0644 man/* $RPM_BUILD_ROOT%{_mandir}/man1
 %files
 %defattr(-,root,root,-)
 %{_libexecdir}/storm-info-provider
-%{python2_sitelib}/info_provider
+%{python3_sitelib}/info_provider
 %{_confdir}/templates
 %{_mandir}/man1/*
 
@@ -97,6 +97,9 @@ rm -rf %{_bdiidir}/provider/storm-glue2-provider
 rm -rf %{_bdiidir}/plugin/storm-glue2-plugin
 
 %changelog
+* Wed Jun 26 2024 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 2.0.0-0
+  Bumped version to 2.0.0-0
+
 * Wed Oct 11 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.8.4-1
   Bumped version to 1.8.4-1
 

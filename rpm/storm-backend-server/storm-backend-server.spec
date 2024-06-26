@@ -62,7 +62,7 @@ Requires: edg-mkgridmap
 Requires: lcas-lcmaps-gt4-interface
 
 Requires: storm-utils
-#Requires: storm-dynamic-info-provider >= 1.8.3
+Requires: storm-dynamic-info-provider >= 2.0.0
 
 
 %description
