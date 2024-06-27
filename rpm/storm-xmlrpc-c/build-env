@@ -1,7 +1,7 @@
 BUILD_NAME=storm-xmlrpc-c
 BUILD_REPO=https://github.com/italiangrid/storm-xmlrpc.git
 BUILD_TAG=v1.39.12
-PKG_REPO=git://github.com/italiangrid/pkg.storm.git
+PKG_REPO=https://github.com/italiangrid/pkg.storm.git
 PKG_STAGE_RPMS=1
 PKG_SKIP_SOURCE_TARBALL_CREATION=y
 TARBALL_VERSION=1.39.12
