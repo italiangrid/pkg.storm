@@ -15,7 +15,7 @@
 ## Turn off meaningless jar repackaging (works only on SL6)
 %define __jar_repack 0
 
-%global base_version 1.11.22
+%global base_version 1.12.0
 %global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -150,8 +150,8 @@ if [ "$1" = "0" ] ; then
 fi;
 
 %changelog
-* Wed Jun 26 2024 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.22-0
-- EL9 upgrades
+* Wed Jun 26 2024 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.12.0-0
+- EL9 upgrades and new developments
 
 * Mon Jun 26 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.11.22-1
 - Bumped version to 1.11.22-1

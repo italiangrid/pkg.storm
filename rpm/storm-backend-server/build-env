@@ -1,7 +1,6 @@
 BUILD_NAME=storm-backend-server
 BUILD_REPO=https://github.com/italiangrid/storm.git
-#BUILD_TAG=no-acl-no-zero-file
-BUILD_TAG=develop
+BUILD_TAG=no-acl-no-zero-file
 PKG_REPO=https://github.com/italiangrid/pkg.storm.git
 #PKG_REPO=git://github.com/italiangrid/pkg.storm.git
 PKG_SPEC_FILE=storm-backend-server/rpm/storm-backend-server/storm-backend-server.spec
