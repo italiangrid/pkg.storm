@@ -7,20 +7,23 @@ yum install -y yum-utils
 # Install StoRM stable repository
 yum-config-manager --add-repo https://repo.cloud.cnaf.infn.it/repository/storm/storm-stable-redhat9.repo
 
-yum install -y pkgconfig \
-  curl-devel \
+yum install -y autoconf \
+  autoconf-archive \
+  automake \
+  bear \
+  bison \
   boost-devel \
-  mysql-devel \
-  globus-gssapi-gsi-devel \
-  globus-gss-assist-devel \
-  globus-common-devel \
-  globus-gridmap-callout-error-devel \
-  globus-gsi-credential-devel \
-  krb5-devel \
-  gsoap-devel \
+  diffutils \
   CGSI-gSOAP-devel \
-  libuuid-devel \
-  voms \
-  gcc \
+  file \
   gcc-c++ \
-  storm-xmlrpc-c-devel
+  gdb \
+  git \
+  globus-common-devel \
+  gsoap-devel \
+  libtool \
+  libuuid-devel \
+  make \
+  mariadb-devel \
+  openssl-devel \
+  xmlrpc-c-devel
