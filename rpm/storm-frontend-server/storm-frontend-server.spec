@@ -60,7 +60,7 @@ Requires: boost-thread
 Requires: gsoap
 
 #Requires: lcg-expiregridmapdir
-#Requires: fetch-crl
+Requires: fetch-crl
 #Requires: umd-release
 #Requires: cleanup-grid-accounts
 #Requires: edg-mkgridmap

@@ -12,9 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-%{!?__python2: %global __python2 /usr/bin/python2}
-%{!?python2_sitelib: %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
-%{!?python2_sitearch: %global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
+%global python3_pkgversion 3.9
 
 %define _confdir /etc/storm/info-provider
 %define _bdiidir /var/lib/bdii/gip
@@ -41,11 +39,13 @@ Source:    %{name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildArch: noarch
-BuildRequires: python2-devel
+BuildRequires: python%{python3_pkgversion}-devel
+BuildRequires: python%{python3_pkgversion}-ldap
+BuildRequires: python%{python3_pkgversion}-argparse
 
-Requires: python
-Requires: python-ldap
-Requires: python-argparse
+Requires: python%{python3_pkgversion}
+Requires: python%{python3_pkgversion}-ldap
+Requires: python%{python3_pkgversion}-argparse
 Requires: bdii
 Requires: glite-info-provider-service
 
