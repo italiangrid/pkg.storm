@@ -26,44 +26,44 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 Summary: The StoRM Frontend component
 
+BuildRequires: autoconf-archive
+BuildRequires: automake
+BuildRequires: bear
+BuildRequires: bison
 BuildRequires: boost-devel
-BuildRequires: curl-devel
-BuildRequires: mysql-devel
-BuildRequires: globus-gssapi-gsi-devel
-BuildRequires: globus-gss-assist-devel
-BuildRequires: globus-common-devel
-BuildRequires: globus-gridmap-callout-error-devel
-BuildRequires: globus-gsi-credential-devel
-BuildRequires: krb5-devel
-BuildRequires: gsoap-devel
 BuildRequires: CGSI-gSOAP-devel
+BuildRequires: curl-devel
+BuildRequires: gcc-c++
+BuildRequires: globus-common-devel
+BuildRequires: globus-gsi-credential-devel
+BuildRequires: gsoap-devel
+BuildRequires: libtool
+BuildRequires: libuuid-devel
+BuildRequires: make
+BuildRequires: mariadb-devel
+BuildRequires: openssl-devel
 BuildRequires: voms
-BuildRequires: storm-xmlrpc-c-devel
-BuildRequires: argus-pep-api-c
-BuildRequires: argus-pep-api-c-devel
+BuildRequires: xmlrpc-c-devel
 
 Requires(post):   chkconfig
 Requires(preun):  chkconfig
 Requires(preun):  initscripts
 Requires(postun): initscripts
 
-Requires: argus-pep-api-c
 Requires: curl
 Requires: globus-gssapi-gsi
-Requires: mysql
-Requires: storm-xmlrpc-c
-Requires: storm-xmlrpc-c-client
+Requires: mariadb
 Requires: voms
 Requires: CGSI-gSOAP
 Requires: boost-program-options
 Requires: boost-thread
 Requires: gsoap
 
-Requires: lcg-expiregridmapdir
-Requires: fetch-crl
-Requires: umd-release
-Requires: cleanup-grid-accounts
-Requires: edg-mkgridmap
+#Requires: lcg-expiregridmapdir
+#Requires: fetch-crl
+#Requires: umd-release
+#Requires: cleanup-grid-accounts
+#Requires: edg-mkgridmap
 
 %description
 This is the installation bundle for the StoRM FrontEnd server.
