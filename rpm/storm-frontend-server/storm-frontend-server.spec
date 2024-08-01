@@ -52,7 +52,6 @@ Requires(postun): initscripts
 
 Requires: curl
 Requires: globus-gssapi-gsi
-Requires: mariadb
 Requires: voms
 Requires: CGSI-gSOAP
 Requires: boost-program-options

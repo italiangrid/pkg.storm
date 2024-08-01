@@ -37,17 +37,14 @@ URL: https://github.com/italiangrid/storm-info-provider
 
 Source:    %{name}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-
 BuildArch: noarch
+
 BuildRequires: python%{python3_pkgversion}-devel
 BuildRequires: python%{python3_pkgversion}-ldap
-BuildRequires: python%{python3_pkgversion}-argparse
 
 Requires: python%{python3_pkgversion}
 Requires: python%{python3_pkgversion}-ldap
-Requires: python%{python3_pkgversion}-argparse
 Requires: bdii
-Requires: glite-info-provider-service
 
 %description
 This is the installation bundle for the StoRM info provider component.
