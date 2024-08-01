@@ -54,12 +54,9 @@ Requires: storm-native-libs-java >= 2.0.0
 
 Requires: acl
 Requires: attr
-Requires: lcg-expiregridmapdir
 Requires: fetch-crl
-Requires: umd-release
-Requires: cleanup-grid-accounts
 Requires: edg-mkgridmap
-Requires: lcas-lcmaps-gt4-interface
+Requires: lcmaps
 
 Requires: storm-utils
 Requires: storm-dynamic-info-provider >= 2.0.0
