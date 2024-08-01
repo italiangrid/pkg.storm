@@ -72,10 +72,6 @@ Summary: The StoRM backend server interface to LCMAPS native libraries
 Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
 Requires: lcmaps
-Requires: lcmaps-without-gsi
-Requires: lcas-lcmaps-gt4-interface
-Requires: lcmaps-plugins-basic
-Requires: lcmaps-plugins-voms
 
 %description lcmaps
 This package provides the StoRM backend interface to LCMAPS libraries.
