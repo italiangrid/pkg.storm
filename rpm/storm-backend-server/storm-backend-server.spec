@@ -55,7 +55,6 @@ Requires: storm-native-libs-java >= 2.0.0
 Requires: acl
 Requires: attr
 Requires: fetch-crl
-Requires: edg-mkgridmap
 Requires: lcmaps
 
 Requires: storm-utils
