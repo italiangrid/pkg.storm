@@ -42,6 +42,7 @@ BuildRequires: libuuid-devel
 BuildRequires: make
 BuildRequires: mariadb-devel
 BuildRequires: openssl-devel
+BuildRequires: storm-xmlrpc-c
 BuildRequires: voms
 BuildRequires: xmlrpc-c-devel
 
@@ -57,6 +58,7 @@ Requires: CGSI-gSOAP
 Requires: boost-program-options
 Requires: boost-thread
 Requires: gsoap
+Requires: storm-xmlrpc-c
 
 #Requires: lcg-expiregridmapdir
 Requires: fetch-crl

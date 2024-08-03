@@ -26,4 +26,5 @@ yum install -y autoconf \
   make \
   mariadb-devel \
   openssl-devel \
-  xmlrpc-c-devel
+  xmlrpc-c-devel \
+  storm-xmlrpc-c
