@@ -58,7 +58,7 @@ Requires: CGSI-gSOAP
 Requires: boost-program-options
 Requires: boost-thread
 Requires: gsoap
-Requires: storm-xmlrpc-c
+#Requires: storm-xmlrpc-c
 
 #Requires: lcg-expiregridmapdir
 Requires: fetch-crl
