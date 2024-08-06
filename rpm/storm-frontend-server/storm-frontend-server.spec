@@ -42,7 +42,7 @@ BuildRequires: libuuid-devel
 BuildRequires: make
 BuildRequires: mariadb-devel
 BuildRequires: openssl-devel
-BuildRequires: storm-xmlrpc-c
+# BuildRequires: storm-xmlrpc-c
 BuildRequires: voms
 BuildRequires: xmlrpc-c-devel
 
