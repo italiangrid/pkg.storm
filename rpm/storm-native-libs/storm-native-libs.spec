@@ -83,7 +83,7 @@ This package provides the StoRM backend interface to LCMAPS libraries.
 %define _javahome /usr/lib/jvm/java-openjdk/
 %else
 %define _javahome %{getenv:JAVA_HOME}
-%end
+%endif
 echo JAVA_HOME=%{_javahome}
 
 %build
