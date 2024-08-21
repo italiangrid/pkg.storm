@@ -43,7 +43,7 @@ pipeline {
   }
 
   environment {
-    PLATFORMS = "almalinux9java11"
+    PLATFORMS = "centos7java11 almalinux9java11"
     PKG_TAG = "${env.BRANCH_NAME}"
     PACKAGES_VOLUME = "pkg-vol-${env.BUILD_TAG}"
     STAGE_AREA_VOLUME = "sa-vol-${env.BUILD_TAG}"
