@@ -79,6 +79,7 @@ This package provides the StoRM backend interface to LCMAPS libraries.
 %prep
 %setup -q -n %{name}
 %_javahome %{getenv:JAVA_HOME}
+echo JAVA_HOME=%{_javahome}
 
 %build
 pushd native
