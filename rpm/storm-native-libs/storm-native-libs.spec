@@ -41,7 +41,7 @@ BuildRequires: swig
 BuildRequires: libacl-devel
 BuildRequires: lcmaps-without-gsi-devel
 BuildRequires: lcmaps-interface
-BuildRequires: java-11-openjdk-devel
+BuildRequires: java-17-openjdk-devel
 BuildRequires: gpfs.base >= 5.1.9
 
 %description

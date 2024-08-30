@@ -44,13 +44,13 @@ BuildArch: noarch
 
 BuildRequires: apache-maven
 BuildRequires: jpackage-utils
-BuildRequires: java-11-openjdk-devel
+BuildRequires: java-17-openjdk-devel
 
-Requires: java-11-openjdk
+Requires: java-17-openjdk
 Requires: jpackage-utils
-Requires: storm-native-libs >= 2.0.0
-Requires: storm-native-libs-lcmaps >= 2.0.0
-Requires: storm-native-libs-java >= 2.0.0
+Requires: storm-native-libs >= 2.1.0
+Requires: storm-native-libs-lcmaps >= 2.1.0
+Requires: storm-native-libs-java >= 2.1.0
 
 Requires: acl
 Requires: attr
