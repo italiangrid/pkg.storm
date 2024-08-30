@@ -13,7 +13,7 @@
 # limitations under the License.
 
 
-%global base_version 2.0.0
+%global base_version 2.1.0
 %global base_release 0
 
 %if %{?build_number:1}%{!?build_number:0}
