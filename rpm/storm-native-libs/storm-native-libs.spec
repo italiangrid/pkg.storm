@@ -51,7 +51,7 @@ This package provides the StoRM backend interface to posix libraries.
 Summary: The StoRM backend server interface to native libraries (java part)
 Group: Development/Libraries
 Requires: %{name}%{?_isa} = %{version}-%{release}
-Requires: java-11-openjdk
+Requires: java-17-openjdk
 
 %description java
 This package provides the StoRM backend interface to posix libraries.
