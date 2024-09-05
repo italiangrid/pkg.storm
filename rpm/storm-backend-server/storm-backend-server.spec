@@ -56,6 +56,8 @@ Requires: acl
 Requires: attr
 Requires: fetch-crl
 Requires: lcmaps
+Requires: lcmaps-plugins-voms
+Requires: lcmaps-plugins-basic
 
 Requires: storm-utils
 Requires: storm-dynamic-info-provider >= 2.0.0
