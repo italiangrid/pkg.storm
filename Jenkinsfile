@@ -3,6 +3,7 @@
 def platform2Dir = [
   "centos7" : 'rpm',
   "centos7java11" : 'rpm',
+  "almalinux9java11": 'rpm',
   "almalinux9java17": 'rpm'
 ]
 
@@ -42,7 +43,7 @@ pipeline {
   }
 
   environment {
-    PLATFORMS = "centos7java11 almalinux9java17"
+    PLATFORMS = "centos7java11 almalinux9java11"
     PKG_TAG = "${env.BRANCH_NAME}"
     PACKAGES_VOLUME = "pkg-vol-${env.BUILD_TAG}"
     STAGE_AREA_VOLUME = "sa-vol-${env.BUILD_TAG}"
