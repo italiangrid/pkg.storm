@@ -2,14 +2,6 @@
 set -ex
 
 # install addictional packages
-yum -y install autoconf-latest \
-  autoconf-archive \
-  automake \
-  pkgconfig \
-  globus-gssapi-gsi-devel \
+yum -y install globus-gssapi-gsi-devel \
   globus-gss-assist-devel \
-  globus-common-devel \
-  globus-gsi-credential-devel \
-  gsoap-devel \
-  CGSI-gSOAP-devel \
-  voms
+  globus-gsi-credential-devel
