@@ -2,7 +2,7 @@
 set -ex
 
 # install addictional packages
-yum -y install autoconf \
+yum -y install autoconf-latest \
   autoconf-archive \
   automake \
   pkgconfig \
