@@ -2,6 +2,10 @@
 set -ex
 
 # install addictional packages
-yum -y install globus-gssapi-gsi-devel \
-  globus-gss-assist-devel \
-  globus-gsi-credential-devel
+yum -y install g++ \
+  gsoap-devel \
+  voms \
+  CGSI-gSOAP-devel \
+  which \
+  openssl-devel \
+  zlib-devel
