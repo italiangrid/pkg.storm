@@ -2,9 +2,10 @@
 set -ex
 
 # install addictional packages
-yum -y install pkgconfig \
-  globus-gssapi-gsi-devel \
-  globus-gss-assist-devel \
+yum -y install g++ \
   gsoap-devel \
+  voms \
   CGSI-gSOAP-devel \
-  voms
+  which \
+  openssl-devel \
+  zlib-devel

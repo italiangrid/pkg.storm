@@ -1,7 +1,6 @@
 # Components list - Default value is the complete list
 # COMPONENTS_centos7java17="storm-webdav"
-COMPONENTS_almalinux9java17="storm-native-libs storm-frontend-server storm-dynamic-info-provider storm-backend-server storm-webdav"
-# storm-utils storm-webdav"
+COMPONENTS_almalinux9java17="storm-native-libs storm-frontend-server storm-dynamic-info-provider storm-backend-server storm-webdav storm-client"
 
 PKG_TAG=redhat9java17
 
