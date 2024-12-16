@@ -35,8 +35,10 @@ BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 Summary: Provides the the StoRM SRM v2.2 clients
 
 BuildRequires: automake
-BuildRequires: autoconf
+BuildRequires: autoconf-archive
 BuildRequires: libtool
+BuildRequires: globus-common-devel
+BuildRequires: globus-gsi-credential-devel
 BuildRequires: globus-gssapi-gsi-devel
 BuildRequires: globus-gss-assist-devel
 BuildRequires: gsoap-devel
