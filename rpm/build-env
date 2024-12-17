@@ -1,8 +1,9 @@
 # Components list - Default value is the complete list
 # COMPONENTS_centos7java17="storm-webdav"
-COMPONENTS_almalinux9java17="storm-utils storm-native-libs storm-frontend-server storm-dynamic-info-provider storm-backend-server storm-webdav storm-client"
+COMPONENTS_almalinux9java17="storm-utils"
+# storm-native-libs storm-frontend-server storm-dynamic-info-provider storm-backend-server storm-webdav storm-client"
 
-PKG_TAG=redhat9java17
+PKG_TAG=storm-utils-el9
 
 # Set to 1 if you want to skip the pull of the build image
 #SKIP_PKG_BASE_PULL_IMAGE=1
