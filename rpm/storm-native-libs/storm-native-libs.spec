@@ -147,6 +147,8 @@ rm -rf $RPM_BUILD_ROOT
 %postun lcmaps -p /sbin/ldconfig
 
 %changelog
+* Mon Mar 3 2025 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 2.1.0-0
+- Bump version to 2.1.0-0
 * Mon Jun 24 2024 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 2.0.0-0
 - Bump version to 2.0.0-0
 * Mon Jun 26 2023 Enrico Vianello <enrico.vianello at cnaf.infn.it> - 1.0.7-1
